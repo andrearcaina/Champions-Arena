@@ -14,7 +14,7 @@ public class GameView implements ActionListener{
 	
 	//once you press play panels: UX4 - UX8
 	LPanel lobbyPanel = new LPanel(); //lobby creation/entering lobby + usernames
-	///CPanel charPanel = new CPanel(); //character selection panel
+	CPanel charPanel = new CPanel(); //character selection panel
 	///GPanel gamePanel = new GPanel(); //actual gameplay panel
 	
 	//leaderboard/win/lost/end panel: UX9
@@ -39,6 +39,12 @@ public class GameView implements ActionListener{
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
+		}else if(evt.getSource() == lobbyPanel.createLobby){
+			frame.setContentPane(charPanel);
+			frame.pack();
+		}else if(evt.getSource() == lobbyPanel.joinLobby){
+			frame.setContentPane(charPanel);
+			frame.pack();
 		}
 	}
 	
@@ -61,5 +67,7 @@ public class GameView implements ActionListener{
 	
 		//LobbyPanel
 		lobbyPanel.Return.addActionListener(this);
+		lobbyPanel.joinLobby.addActionListener(this);
+		lobbyPanel.createLobby.addActionListener(this);
 	} 
 }
