@@ -8,10 +8,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	
 	///methods
-	//method for ActionListener
-	public void actionPerformed(ActionEvent evt){
-		
-	}
 	//methods for KeyListener
 	public void keyReleased(KeyEvent evt){
 		
