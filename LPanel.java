@@ -8,14 +8,14 @@ import java.io.*;
 
 public class LPanel extends JPanel implements ActionListener{
 	///properties
-	SuperSocketMaster SSM;
+	SuperSocketMaster ssm;
 	
 	Timer timer = new Timer(1000/60, this);
 	
 	Icon create = new ImageIcon("createLobby.png");
 	Icon join = new ImageIcon("joinLobby.png");
 	JButton createLobby = new JButton(create);
-	JButton joinLobby = new JButton("Waiting for server to host...");
+	JButton joinLobby = new JButton(join);
 	JButton Return = new JButton("Main Menu");
 	JTextField serverInfo = new JTextField("IP Information");
 	JTextField enterIP = new JTextField("Enter IP Address");
@@ -35,14 +35,29 @@ public class LPanel extends JPanel implements ActionListener{
 		if(evt.getSource() == timer){
 			this.repaint();
 		}else if(evt.getSource() == createLobby){ //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL ; this doesn't actually do anything for the game
-			Return.setEnabled(false);
-			Return.setVisible(false);
-			joinLobby.setIcon(join);
-			joinLobby.setEnabled(true); //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL
-			enterIP.setEditable(true);
+			ssm = new SuperSocketMaster(6112, this);
+			boolean blnConnect = ssm.connect();
 			
-			SSM = new SuperSocketMaster(6112, this);
-			boolean blnConnect = SSM.connect();
+			serverInfo.setText("IP: "+ssm.getMyAddress());
+			
+			
+		}else if(evt.getSource() == joinLobby){
+			ssm = new SuperSocketMaster(enterIP.getText(), 6112, this);
+			boolean blnConnect = ssm.connect();
+			String strConnect = "connect,"+enterUsername.getText();
+			if(ssm != null){
+				ssm.sendText(strConnect);
+			}
+			
+			
+		}else if(evt.getSource() == ssm){
+			String strParts[] = ssm.readText().split(",");
+			
+			// Message type: connect
+			if(strParts[0].equals("connect")){
+				
+				// textchat.append(strParts[1]+" has joined. \n");
+			}
 		}
 	}
 	
@@ -96,9 +111,8 @@ public class LPanel extends JPanel implements ActionListener{
 		serverInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		enterIP.setBackground(new Color(153, 153, 153));
 		enterIP.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		serverInfo.setEditable(false);
-		enterIP.setEditable(false);
-		joinLobby.setEnabled(false);
 		
 		createLobby.addActionListener(this);
 		
