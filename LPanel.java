@@ -8,6 +8,8 @@ import java.io.*;
 
 public class LPanel extends JPanel implements ActionListener{
 	///properties
+	SuperSocketMaster SSM;
+	
 	Timer timer = new Timer(1000/60, this);
 	
 	Icon create = new ImageIcon("createLobby.png");
@@ -38,6 +40,9 @@ public class LPanel extends JPanel implements ActionListener{
 			joinLobby.setIcon(join);
 			joinLobby.setEnabled(true); //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL
 			enterIP.setEditable(true);
+			
+			SSM = new SuperSocketMaster(6112, this);
+			boolean blnConnect = SSM.connect();
 		}
 	}
 	
