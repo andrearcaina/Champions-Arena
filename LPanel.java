@@ -49,7 +49,8 @@ public class LPanel extends JPanel implements ActionListener{
 				ssm.sendText(strConnect);
 			}
 			
-			
+		//2d array created where?
+		//should it be in the Model?	
 		}else if(evt.getSource() == ssm){
 			String strParts[] = ssm.readText().split(",");
 			
@@ -115,6 +116,7 @@ public class LPanel extends JPanel implements ActionListener{
 		serverInfo.setEditable(false);
 		
 		createLobby.addActionListener(this);
+		joinLobby.addActionListener(this);
 		
 		this.add(createLobby);
 		this.add(joinLobby);

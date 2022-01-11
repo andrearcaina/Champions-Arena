@@ -39,7 +39,7 @@ public class GameView implements ActionListener{
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.createLobby){
+		}else if(evt.getSource() == lobbyPanel.createLobby){ //if this happens, who will be able to see the server's IP information? 
 			frame.setContentPane(charPanel);
 			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.joinLobby){

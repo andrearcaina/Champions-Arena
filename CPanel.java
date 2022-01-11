@@ -48,7 +48,35 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	///constructor
 	public CPanel(){
+		//c1Name.setBounds(0, 0, 0, 0);
+		//c2Name.setBounds(0, 0, 0, 0);
+		//c3Name.setBounds(0, 0, 0, 0);
+		//c4Name.setBounds(0, 0, 0, 0);
+		//c1Button.setBounds(0, 0, 0, 0);
+		//c2Button.setBounds(0, 0, 0, 0);
+		//c3Button.setBounds(0, 0, 0, 0);
+		//c4Button.setBounds(0, 0, 0, 0);
+		//readyUp.setBounds(0, 0, 0, 0);
+		//startGame.setBounds(0, 0, 0, 0);
+		//serverIP.setBounds(0, 0, 0, 0);
+		//waitHost.setBounds(0, 0, 0, 0);
+		//chatMessage.setBounds(0, 0, 0, 0);
+		//chatPane.setBounds(0, 0, 0, 0);
 		
+		//this.add(c1Name);
+		//this.add(c2Name);
+		//this.add(c3Name);
+		//this.add(c4Name);
+		//this.add(c1Button);
+		//this.add(c2Button);
+		//this.add(c3Button);
+		//this.add(c4Button);
+		//this.add(readyUp);
+		//this.add(startGame);
+		//this.add(serverIP);
+		//this.add(waitHost);
+		//this.add(chatMessage);
+		//this.add(chatPane);
 	}
 	
 }
