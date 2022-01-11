@@ -39,12 +39,6 @@ public class GameView implements ActionListener{
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.createLobby){ //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL ; this doesn't actually do anything for the game
-			lobbyPanel.Return.setEnabled(false);
-			lobbyPanel.Return.setVisible(false);
-			lobbyPanel.joinLobby.setIcon(lobbyPanel.join);
-			lobbyPanel.joinLobby.setEnabled(true); //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL
-			lobbyPanel.enterIP.setEditable(true);
 		}
 	}
 	
@@ -66,7 +60,6 @@ public class GameView implements ActionListener{
 		helpPanel.Return.addActionListener(this);
 	
 		//LobbyPanel
-		lobbyPanel.createLobby.addActionListener(this);
 		lobbyPanel.Return.addActionListener(this);
 	} 
 }

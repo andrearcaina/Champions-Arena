@@ -32,6 +32,12 @@ public class LPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent evt){
 		if(evt.getSource() == timer){
 			this.repaint();
+		}else if(evt.getSource() == createLobby){ //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL ; this doesn't actually do anything for the game
+			Return.setEnabled(false);
+			Return.setVisible(false);
+			joinLobby.setIcon(join);
+			joinLobby.setEnabled(true); //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL
+			enterIP.setEditable(true);
 		}
 	}
 	
@@ -88,6 +94,8 @@ public class LPanel extends JPanel implements ActionListener{
 		serverInfo.setEditable(false);
 		enterIP.setEditable(false);
 		joinLobby.setEnabled(false);
+		
+		createLobby.addActionListener(this);
 		
 		this.add(createLobby);
 		this.add(joinLobby);
