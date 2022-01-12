@@ -75,14 +75,13 @@ public class LPanel extends JPanel implements ActionListener{
 		super();
 		this.setLayout(null);
 
-		try{
+		try{ //Game Model maybe?
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
 			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(20f);
 			enterUsername.setFont(customFont1);
 			serverInfo.setFont(customFont1);
 			enterIP.setFont(customFont1);
-			joinLobby.setFont(customFont2);
 			Return.setFont(customFont2);
 		}catch(FileNotFoundException e){
 			System.out.println(e);
