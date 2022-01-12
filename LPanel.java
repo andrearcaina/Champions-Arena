@@ -67,8 +67,12 @@ public class LPanel extends JPanel implements ActionListener{
 		g.fillRect(0, 0, 1280, 720);
 		g.drawImage(lobbyTitle, 290, 10, null);
 		g.drawImage(inputUser, 100, 120, null);
-		g.drawImage(hostGame, 40, 265, null);
-		g.drawImage(joinGame, 350, 265, null);
+		g.drawImage(hostGame, 40, 285, null);
+		g.drawImage(joinGame, 350, 285, null);
+		
+		g.setColor(new Color(34, 72, 109));
+		g.fillRect(620, 280, 150, 200);
+		g.drawImage(championOne, 620, 280, null);
 	}
 	///constructor
 	public LPanel(){
@@ -95,10 +99,10 @@ public class LPanel extends JPanel implements ActionListener{
 		enterUsername.setBackground(new Color(153, 153, 153));
 		enterUsername.setForeground(Color.WHITE);
 		enterUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		createLobby.setBounds(15, 315, 280, 110);
-		joinLobby.setBounds(325, 315, 280, 110);
-		serverInfo.setBounds(15, 440, 280, 70);
-		enterIP.setBounds(325, 440, 280, 70);
+		createLobby.setBounds(15, 350, 280, 110);
+		joinLobby.setBounds(325, 350, 280, 110);
+		serverInfo.setBounds(15, 470, 280, 70);
+		enterIP.setBounds(325, 470, 280, 70);
 		Return.setBounds(1050, 20, 180, 80);
 		
 		serverInfo.setForeground(Color.WHITE);
@@ -111,7 +115,6 @@ public class LPanel extends JPanel implements ActionListener{
 		serverInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		enterIP.setBackground(new Color(153, 153, 153));
 		enterIP.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		serverInfo.setEditable(false);
 		
 		createLobby.addActionListener(this);
@@ -132,7 +135,7 @@ public class LPanel extends JPanel implements ActionListener{
 			inputUser = ImageIO.read(new File("userFile.png"));
 			hostGame = ImageIO.read(new File("hostGame.png"));
 			joinGame = ImageIO.read(new File("joinGame.png"));
-			//championOne = ImageIO.read(new File("c1.png"));
+			championOne = ImageIO.read(new File("c1.png"));
 			//championTwo = ImageIO.read(new File("c2.png"));
 			//championThree = ImageIO.read(new File("c3.png"));
 			//championFour = ImageIO.read(new File("c4.png"));
