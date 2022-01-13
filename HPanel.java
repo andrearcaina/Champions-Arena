@@ -12,6 +12,7 @@ public class HPanel extends JPanel implements ActionListener{
 	
 	//Icon return = new ImageIcon("Return.png");
 	JButton Return = new JButton("Return");
+	JButton Tutorial = new JButton("Tutorial");
 	
 	BufferedImage HelpTitle;
 	BufferedImage Logo;
@@ -35,8 +36,10 @@ public class HPanel extends JPanel implements ActionListener{
 		this.setLayout(null);
 		
 		Return.setBounds(1000, 10, 150, 80);
+		Tutorial.setBounds(100, 10, 150, 80);
 		
 		this.add(Return);
+		this.add(Tutorial);
 		
 		timer.start();
 		

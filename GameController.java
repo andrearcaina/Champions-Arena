@@ -5,10 +5,15 @@ import javax.swing.event.*;
 
 public class GameController implements ActionListener, KeyListener, MouseListener{
 	///properties
-	
+	Timer thetimer = new Timer(1000/60, this);
 	
 	///methods
 	//methods for KeyListener
+	
+	public void actionPerformed(ActionEvent evt){
+		
+	}
+	
 	public void keyReleased(KeyEvent evt){
 		
 	} 

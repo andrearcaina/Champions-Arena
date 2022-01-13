@@ -8,8 +8,8 @@ public class GameModel{
 	///properties 
 	ArrayList<String> strConnectInfo = new ArrayList<String>();
 	String[][] strMUInfo = new String[4][10]; // 10 is flex number we see later
-	int[][] intMap = new int[700][700];
-	
+	int[][] intMap = new int[360][360]; 
+
 	///methods
 	
 	///constructor
@@ -22,20 +22,28 @@ public class GameModel{
 		int intY;
 		int intHP;
 		int intAttack;
-		int intSpeedX;
-		int intSpeedY;
+		int intSpeedX = 0;
+		int intSpeedY = 0;
+		int intSizeX = 40;
+		int intSizeY = 40;
+		String strChar;
 	
 		///methods
 		public void spawn(){
 		}
 		
 		public void move(){
+			this.intSizeX += intSpeedX;
+			this.intSizeY += intSpeedY;
 		}
 		
 		public void basic(){
 		}
 		
 		public void skill(){
+		}
+		
+		public void collision(){
 		}
 		
 		///constructor
@@ -64,6 +72,11 @@ public class GameModel{
 		int intDamage;
 		
 		/// methods
+		
+		public void collision(){
+			
+		}
+		
 		///constructor
 	}
 	
