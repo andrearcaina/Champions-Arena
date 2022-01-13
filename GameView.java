@@ -17,7 +17,6 @@ public class GameView implements ActionListener, KeyListener{
 	LPanel lobbyPanel = new LPanel(); //lobby creation/entering lobby + usernames
 	CPanel charPanel = new CPanel(); //character selection panel
 	GPanel gamePanel = new GPanel(); //actual gameplay panel
-	GameController model = new GameController();
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g"); //accessing the Character object in the GameModel class
 
 	
@@ -68,31 +67,31 @@ public class GameView implements ActionListener, KeyListener{
 	
 	public void keyReleased(KeyEvent evt){
 		if(evt.getKeyChar() == 'w'){
-			c1.intSpeedY = model.up(0); 
+			c1.up(0); 
 			System.out.println("W");
 		}else if(evt.getKeyChar() == 'a'){
-			c1.intSpeedX = model.right(0); 
+			c1.right(0); 
 			System.out.println("A");
 		}else if(evt.getKeyChar() == 's'){
-			c1.intSpeedY = model.down(0);
+			c1.down(0);
 			System.out.println("S");
 		}else if(evt.getKeyChar() == 'd'){
-			c1.intSpeedX = model.left(0); 
+			c1.left(0); 
 			System.out.println("D");
 		}
 	} 
 	public void keyPressed(KeyEvent evt){
 		if(evt.getKeyChar() == 'w'){
-			c1.intSpeedY = model.up(5); 
+			c1.up(5); 
 			System.out.println("W");
 		}else if(evt.getKeyChar() == 'a'){
-			c1.intSpeedX = model.right(5); 
+			c1.right(5); 
 			System.out.println("A");
 		}else if(evt.getKeyChar() == 's'){
-			c1.intSpeedY = model.down(5);
+			c1.down(5);
 			System.out.println("S");
 		}else if(evt.getKeyChar() == 'd'){
-			c1.intSpeedX = model.left(5);
+			c1.left(5);
 			System.out.println("D");
 		}
 	}

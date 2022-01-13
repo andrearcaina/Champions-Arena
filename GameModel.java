@@ -41,6 +41,20 @@ public class GameModel{
 			this.intY += intSpeedY;
 		}
 		
+		//speed calculations
+		public void up(int intSpeedYIn){
+			intSpeedY = -intSpeedYIn;
+		}
+		public void down(int intSpeedYIn){
+			intSpeedY = intSpeedYIn;
+		}
+		public void right(int intSpeedXIn){
+			intSpeedX = intSpeedXIn;
+		}
+		public void left(int intSpeedXIn){
+			intSpeedX = -intSpeedXIn;
+		}
+		
 		public void basic(){
 		}
 		

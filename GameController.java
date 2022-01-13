@@ -16,19 +16,6 @@ public class GameController implements ActionListener{
 		}
 	}
 	
-	public int up(int intSpeedY){
-		return -intSpeedY;
-	}
-	public int down(int intSpeedY){
-		return intSpeedY;
-	}
-	public int right(int intSpeedX){
-		return intSpeedX;
-	}
-	public int left(int intSpeedX){
-		return -intSpeedX;
-	}
-	
 	///constructor ?
 	public GameController(){
 		theTimer.start();
