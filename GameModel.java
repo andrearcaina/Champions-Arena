@@ -2,9 +2,13 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+import java.util.ArrayList;
 
 public class GameModel{
-	///properties
+	///properties 
+	ArrayList<String> strConnectInfo = new ArrayList<String>();
+	String[][] strMUInfo = new String[4][10]; // 10 is flex number we see later
+	int[][] intMap = new int[700][700];
 	
 	///methods
 	
