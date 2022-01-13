@@ -7,6 +7,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	///properties
 	Timer thetimer = new Timer(1000/60, this);
 	
+	GameModel.Character1 c1 = new GameModel().new Character1(); //accessing the Character object in the GameModel class
+	
+	
 	///methods
 	//methods for KeyListener
 	
@@ -15,10 +18,23 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	
 	public void keyReleased(KeyEvent evt){
-		
+		c1.moveX(0); //after releasing A, D, character stops moving
+		c1.moveY(0); //after releasing W, S, character stops moving
 	} 
 	public void keyPressed(KeyEvent evt){
-		
+		if(evt.getKeyChar() == 'w'){
+			c1.moveY(-5);
+			System.out.println("W");
+		}else if(evt.getKeyChar() == 'a'){
+			c1.moveX(-5);
+			System.out.println("A");
+		}else if(evt.getKeyChar() == 's'){
+			c1.moveY(5);
+			System.out.println("S");
+		}else if(evt.getKeyChar() == 'd'){
+			c1.moveX(5);
+			System.out.println("D");
+		}
 	}
 	public void keyTyped(KeyEvent evt){
 		

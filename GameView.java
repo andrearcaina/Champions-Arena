@@ -67,6 +67,7 @@ public class GameView implements ActionListener{
 		
 		//HelpPanel
 		helpPanel.Return.addActionListener(this);
+		helpPanel.Tutorial.addActionListener(this);
 	
 		//LobbyPanel
 		lobbyPanel.Return.addActionListener(this);
