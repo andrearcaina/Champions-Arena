@@ -9,9 +9,11 @@ import java.io.*;
 public class GPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
-	
-	GameModel.Character1 c1 = new GameModel().new Character1(); //accessing the Character object in the GameModel class
-	
+	int intX = 0;
+	int intY = 0;
+	int intSizeX = 40;
+	int intSizeY = 40;
+
 	public void actionPerformed(ActionEvent evt){
 		if(evt.getSource() == timer){
 			this.repaint();
@@ -21,15 +23,13 @@ public class GPanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(144, 238, 144)); //light green
 		g.fillRect(0, 0, 1280, 720);
-		
 		g.setColor(Color.GRAY); //Character 
-		g.fillRect(c1.intX, c1.intY, c1.intSizeX, c1.intSizeY);		
+		g.fillRect(intX, intY, intSizeX, intSizeY); 
 	}
 	
 	public GPanel(){		
 		super();
 		this.setLayout(null);
-		
 		timer.start();
 		
 		//buffered images

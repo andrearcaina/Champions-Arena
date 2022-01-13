@@ -15,11 +15,11 @@ public class GameModel{
 	///constructor
 	
 	// Temporary hypothetical properties/methods of characters
-	class Character1{
+	public class Character1{
 		///properties
 		int intID;
-		int intX = 100; //temp
-		int intY = 600; //temp
+		int intX = 0; //temp
+		int intY = 0; //temp
 		int intHP;
 		int intAttack;
 		int intSpeedX = 0;
@@ -32,13 +32,12 @@ public class GameModel{
 		public void spawn(){
 		}
 		
-		public void moveX(int intSpeed){
-			intSpeed = intSpeedX;
+		public void moveX(){
 			this.intX += intSpeedX;
+			System.out.println(intX);
 		}
 		
-		public void moveY(int intSpeed){
-			intSpeed = intSpeedX;
+		public void moveY(){
 			this.intY += intSpeedY;
 		}
 		
@@ -52,7 +51,17 @@ public class GameModel{
 		}
 		
 		///constructor
-		
+		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, String strChar){
+			this.intID = intID;
+			this.intX = intX;
+			this.intY = intY;
+			this.intHP = intHP;
+			this.intAttack = intAttack;
+			this.intSpeedX = intSpeedX;
+			this.intSpeedY = intSpeedY;
+			this.strChar = strChar;
+		}
+	}	
 	// Temporary hypothethical properties of terrain objects
 	class Terrain1{
 		/// properties
@@ -85,5 +94,5 @@ public class GameModel{
 		///constructor
 	}
 	
-	}
 }
+
