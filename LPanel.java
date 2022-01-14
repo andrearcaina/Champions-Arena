@@ -69,12 +69,16 @@ public class LPanel extends JPanel implements ActionListener{
 		g.fillRect(0, 0, 1280, 720);
 		g.drawImage(lobbyTitle, 290, 10, null);
 		g.drawImage(inputUser, 100, 120, null);
-		g.drawImage(hostGame, 40, 285, null);
-		g.drawImage(joinGame, 350, 285, null);
+		g.drawImage(hostGame, 40, 295, null);
+		g.drawImage(joinGame, 350, 295, null);
 		
+		// 150 x 200
 		g.setColor(new Color(34, 72, 109));
-		g.fillRect(620, 280, 150, 200);
-		g.drawImage(championOne, 620, 280, null);
+		// g.fillRect(620, 280, 150, 200);
+		g.drawImage(championOne, 650, 150, null);
+		g.drawImage(championTwo, 850, 150, null);
+		g.drawImage(championThree, 650, 400, null);
+		g.drawImage(championFour, 850, 400, null);
 	}
 	///constructor
 	public LPanel(){
@@ -107,10 +111,10 @@ public class LPanel extends JPanel implements ActionListener{
 		enterUsername.setBackground(new Color(153, 153, 153));
 		enterUsername.setForeground(Color.WHITE);
 		enterUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		createLobby.setBounds(15, 350, 280, 110);
-		joinLobby.setBounds(325, 350, 280, 110);
-		serverInfo.setBounds(15, 470, 280, 70);
-		enterIP.setBounds(325, 470, 280, 70);
+		createLobby.setBounds(15, 370, 280, 110);
+		joinLobby.setBounds(325, 370, 280, 110);
+		serverInfo.setBounds(15, 500, 280, 70);
+		enterIP.setBounds(325, 500, 280, 70);
 		Return.setBounds(1050, 20, 180, 80);
 		
 		serverInfo.setForeground(Color.WHITE);
@@ -144,9 +148,9 @@ public class LPanel extends JPanel implements ActionListener{
 			hostGame = ImageIO.read(new File("hostGame.png"));
 			joinGame = ImageIO.read(new File("joinGame.png"));
 			championOne = ImageIO.read(new File("c1.png"));
-			//championTwo = ImageIO.read(new File("c2.png"));
-			//championThree = ImageIO.read(new File("c3.png"));
-			//championFour = ImageIO.read(new File("c4.png"));
+			championTwo = ImageIO.read(new File("c2.png"));
+			championThree = ImageIO.read(new File("c3.png"));
+			championFour = ImageIO.read(new File("c4.png"));
 		}catch(IOException e){
 			System.out.println("Unable to load image.");
 		}

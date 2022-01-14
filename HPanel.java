@@ -13,9 +13,12 @@ public class HPanel extends JPanel implements ActionListener{
 	//Icon return = new ImageIcon("Return.png");
 	JButton Return = new JButton("Return");
 	JButton Tutorial = new JButton("Tutorial");
+	JLabel readInstruction = new JLabel("I have read the instructions");
+	JCheckBox boxInstruction = new JCheckBox();
 	
 	BufferedImage HelpTitle;
 	BufferedImage Logo;
+	BufferedImage Instructions;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -25,9 +28,10 @@ public class HPanel extends JPanel implements ActionListener{
 	}
 	
 	public void paintComponent(Graphics g){
-		g.setColor(Color.GRAY);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 1280, 720);
-		g.drawImage(HelpTitle, 20, -40, null);  
+		g.drawImage(HelpTitle, 20, -40, null);
+		// g.drawImage(Instructions, #, #, null );
 		//g.drawImage(Logo, (some number), (some number), null);
 	}
 	///constructor
@@ -37,9 +41,13 @@ public class HPanel extends JPanel implements ActionListener{
 		
 		Return.setBounds(1000, 10, 150, 80);
 		Tutorial.setBounds(800, 10, 150, 80);
+		//readInstruction.setBounds();
+		//boxInstruction.setBounds();
 		
 		this.add(Return);
 		this.add(Tutorial);
+		this.add(readInstruction);
+		this.add(boxInstruction);
 		
 		timer.start();
 		
@@ -47,6 +55,7 @@ public class HPanel extends JPanel implements ActionListener{
 		try{
 			HelpTitle = ImageIO.read(new File("HelpTitle.png"));
 			//Logo = ImageIO.read(new File("Logo.png"));
+			//Instructions = ImageIO.read(new File("Instructions.png"));
 		}catch(IOException e){
 			System.out.println("Unable to load image.");
 		}
