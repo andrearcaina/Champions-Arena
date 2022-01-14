@@ -7,6 +7,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	///properties
 	JFrame frame = new JFrame("Champions Arena Test 1"); //one frame only
 	Timer timer = new Timer(1000/60, this);
+	Timer countdownTimer = new Timer(1000, this);
+	int intSecond = 5;
 	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
@@ -45,10 +47,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.createLobby){ //if this happens, who will be able to see the server's IP information? 
-			frame.setContentPane(charPanel);
-			frame.pack();
+		}else if(evt.getSource() == lobbyPanel.createLobby){
+			lobbyPanel.countdownLabel.setVisible(true);
+			countdownTimer.start();
 		}else if(evt.getSource() == lobbyPanel.joinLobby){
+			//figure this out later
 			frame.setContentPane(charPanel);
 			frame.pack();
 		}else if(evt.getSource() == helpPanel.Tutorial){
@@ -58,13 +61,24 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
 		}
-		if(evt.getSource() == timer){
+		
+		else if(evt.getSource() == timer){
 			c1.moveX();
 			c1.moveY();
 			tutorialPanel.intX = c1.intX;
 			tutorialPanel.intY = c1.intY;
 			tutorialPanel.intSizeX = c1.intSizeX;
 			tutorialPanel.intSizeY = c1.intSizeY;
+		}
+		
+		else if(evt.getSource() == countdownTimer){  
+			intSecond--;
+			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
+			if(intSecond == 0){
+				countdownTimer.stop();
+				frame.setContentPane(charPanel);
+				frame.pack();
+			}
 		}
 	}
 	

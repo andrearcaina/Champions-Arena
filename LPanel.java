@@ -21,6 +21,8 @@ public class LPanel extends JPanel implements ActionListener{
 	JTextField enterIP = new JTextField("Enter IP Address");
 	JTextField enterUsername = new JTextField("E.g: DIABLOGAMER1337");
 	
+	JLabel countdownLabel = new JLabel("Loading Lobby... 5");
+	
 	BufferedImage lobbyTitle;
 	BufferedImage inputUser;
 	BufferedImage hostGame;
@@ -86,6 +88,7 @@ public class LPanel extends JPanel implements ActionListener{
 			enterUsername.setFont(customFont1);
 			serverInfo.setFont(customFont1);
 			enterIP.setFont(customFont1);
+			countdownLabel.setFont(customFont1);
 			Return.setFont(customFont2);
 		}catch(FileNotFoundException e){
 			System.out.println(e);
@@ -94,7 +97,12 @@ public class LPanel extends JPanel implements ActionListener{
 		}catch(IOException e){
 			System.out.println(e);
 		}
-
+		
+		countdownLabel.setForeground(Color.WHITE);
+		countdownLabel.setBounds(10, 600, 300, 50);
+		countdownLabel.setVisible(false);
+		this.add(countdownLabel);
+		
 		enterUsername.setBounds(120, 190, 380, 70);
 		enterUsername.setBackground(new Color(153, 153, 153));
 		enterUsername.setForeground(Color.WHITE);
