@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class GameModel{
 	///properties 
-	ArrayList<String> strConnectInfo = new ArrayList<String>();
+	ArrayList<String> projectiles = new ArrayList<String>();
 	String[][] strMUInfo = new String[4][10]; // 10 is flex number we see later
 	int[][] intMap = new int[360][360]; 
 
@@ -27,6 +27,8 @@ public class GameModel{
 		int intSizeX = 40;
 		int intSizeY = 40;
 		String strChar;
+		ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
+		boolean blnShooting = false;
 	
 		///methods
 		public void spawn(){
@@ -34,7 +36,6 @@ public class GameModel{
 		
 		public void moveX(){
 			this.intX += intSpeedX;
-			System.out.println(intX);
 		}
 		
 		public void moveY(){
@@ -55,13 +56,32 @@ public class GameModel{
 			intSpeedX = -intSpeedXIn;
 		}
 		
-		public void basic(){
+		public void shoot(int intSpeedXn, int intSpeedYn, int intSize){
+			projectiles.add(new Projectile1(intID, intX, intY, intX+200, intY+200, intSpeedXn, intSpeedYn, intSize, intAttack));
 		}
 		
 		public void skill(){
 		}
 		
-		public void collision(){
+		public void collision(int intIDn, int intDamagen){
+			if (intIDn != intID){
+				intHP = intHP - intDamagen;
+			}
+		}
+
+		public void shotAt(){
+			
+		}
+		
+		public void update(){
+			for(int intCount = projectiles.size() -1; intCount > 0; intCount--){
+				projectiles.get(intCount).move();
+				if (projectiles.get(intCount).intMaxRangeX < intX){
+					projectiles.remove((intCount));
+				}else if (projectiles.get(intCount).intMaxRangeY < intY){
+					projectiles.remove((intCount));
+				}
+			}
 		}
 		
 		///constructor
@@ -90,6 +110,7 @@ public class GameModel{
 		// Temporary hypothethical properties of projectile objects
 	class Projectile1{
 		/// properties
+		int intID;
 		int intX;
 		int intY;
 		int intMaxRangeX;
@@ -104,8 +125,26 @@ public class GameModel{
 		public void collision(){
 			
 		}
+		public void move(){
+			intX += intSpeedX;
+			intY += intSpeedY;
+			System.out.println(1);
+		}
 		
 		///constructor
+		public Projectile1(int intID, int intX, int intY, int intMaxRangeX, int intMaxRangeY, int intSpeedX, int intSpeedY, int intSize, int intDamage){
+			this.intID = intID;
+			this.intX = intX;
+			this.intY = intY;
+			this.intMaxRangeX = intMaxRangeX;
+			this.intMaxRangeY = intMaxRangeY;
+			this.intSpeedX = intSpeedX;
+			this.intSpeedY = intSpeedY;
+			this.intSize = intSize;
+			this.intDamage = intDamage;
+			
+			
+		}
 	}
 	
 }

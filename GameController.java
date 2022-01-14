@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+import java.util.ArrayList;
+
 
 public class GameController implements ActionListener, KeyListener, MouseListener{
 	///properties
@@ -29,6 +31,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//Accessing the Character object in the GameModel class
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g"); 
+	boolean blnPlaying = false;
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
 	//methods for ActionListener (BUTTON INTERACTIONS)
@@ -56,10 +59,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.pack();
 		}else if(evt.getSource() == helpPanel.Tutorial){
 			frame.addKeyListener(this);
+			frame.addMouseListener(this);
 			frame.requestFocus();
 			timer.start();
+			blnPlaying = true;
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
+			tutorialPanel.projectiles = c1.projectiles;
 		}
 		
 		else if(evt.getSource() == timer){
@@ -69,6 +75,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			tutorialPanel.intY = c1.intY;
 			tutorialPanel.intSizeX = c1.intSizeX;
 			tutorialPanel.intSizeY = c1.intSizeY;
+			tutorialPanel.projectiles = c1.projectiles;
+			c1.update();
+
 		}
 		
 		else if(evt.getSource() == countdownTimer){  
@@ -120,10 +129,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 	}
 	public void mouseClicked(MouseEvent evt){
-		
+		if(blnPlaying){
+			c1.shoot(4,4,10);
+			tutorialPanel.projectiles = c1.projectiles;
+		}
 	}
 	public void mousePressed(MouseEvent evt){
-		
+			
 	}
 	
 	///constructor

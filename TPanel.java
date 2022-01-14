@@ -5,6 +5,7 @@ import javax.swing.event.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 
 public class TPanel extends JPanel implements ActionListener{
 	///properties
@@ -13,6 +14,7 @@ public class TPanel extends JPanel implements ActionListener{
 	int intY = 0;
 	int intSizeX = 40;
 	int intSizeY = 40;
+	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
 
 	public void actionPerformed(ActionEvent evt){
 		if(evt.getSource() == timer){
@@ -25,6 +27,9 @@ public class TPanel extends JPanel implements ActionListener{
 		g.fillRect(0, 0, 1280, 720);
 		g.setColor(Color.GRAY); //Character 
 		g.fillRect(intX, intY, intSizeX, intSizeY); 
+		for(int intCount = projectiles.size() -1; intCount > 0; intCount--){
+			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
+		}
 	}
 	
 	public TPanel(){		
