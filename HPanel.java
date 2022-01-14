@@ -36,7 +36,7 @@ public class HPanel extends JPanel implements ActionListener{
 		this.setLayout(null);
 		
 		Return.setBounds(1000, 10, 150, 80);
-		Tutorial.setBounds(100, 10, 150, 80);
+		Tutorial.setBounds(800, 10, 150, 80);
 		
 		this.add(Return);
 		this.add(Tutorial);

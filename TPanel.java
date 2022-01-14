@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class GPanel extends JPanel implements ActionListener{
+public class TPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
 	int intX = 0;
@@ -27,7 +27,7 @@ public class GPanel extends JPanel implements ActionListener{
 		g.fillRect(intX, intY, intSizeX, intSizeY); 
 	}
 	
-	public GPanel(){		
+	public TPanel(){		
 		super();
 		this.setLayout(null);
 		timer.start();
