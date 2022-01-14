@@ -59,7 +59,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(charPanel);
 			frame.pack();
 		}else if(evt.getSource() == helpPanel.Tutorial){
-			frame.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor"));
 			frame.addKeyListener(this);
 			frame.addMouseListener(this);
 			frame.requestFocus();
