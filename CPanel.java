@@ -12,10 +12,10 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	JLabel charTitle = new JLabel("Choose Your Champion");
 	
-	JLabel c1Name = new JLabel("Character 1");
-	JLabel c2Name = new JLabel("Character 2");
-	JLabel c3Name = new JLabel("Character 3");
-	JLabel c4Name = new JLabel("Character 4"); 
+	JLabel c1Name = new JLabel("Shadow");
+	JLabel c2Name = new JLabel("Bishop");
+	JLabel c3Name = new JLabel("Magnus");
+	JLabel c4Name = new JLabel("Diablo"); 
 	
 	//ImageIcon c1Icon = new ImageIcon("c1.png");
 	//ImageIcon c2Icon = new ImageIcon("c2.png");
@@ -57,19 +57,25 @@ public class CPanel extends JPanel implements ActionListener{
 		try{
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(20f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(40f);
 			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
+			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
 			
 			chatArea.setFont(customFont1);
 			chatMessage.setFont(customFont1);
 			
-			c1Name.setFont(customFont2);
-			c2Name.setFont(customFont2);
-			c3Name.setFont(customFont2);
-			c4Name.setFont(customFont2);
+			c1Name.setFont(customFont1);
+			c2Name.setFont(customFont1);
+			c3Name.setFont(customFont1);
+			c4Name.setFont(customFont1);
+			serverIP.setFont(customFont1);
+			waitHost.setFont(customFont1);
+			
+			startGame.setFont(customFont2);
 			
 			charTitle.setFont(customFont3);
 			
+			readyUp.setFont(customFont4);
 			
 		}catch(FileNotFoundException e){
 			System.out.println(e);
@@ -82,15 +88,22 @@ public class CPanel extends JPanel implements ActionListener{
 		charTitle.setBounds(30, 20, 800, 100);
 		charTitle.setForeground(Color.WHITE);
 		
-		//c1Name.setBounds(0, 0, 0, 0);
-		//c2Name.setBounds(0, 0, 0, 0);
-		//c3Name.setBounds(0, 0, 0, 0);
-		//c4Name.setBounds(0, 0, 0, 0);
-		//c1Button.setBounds(0, 0, 0, 0);
-		//c2Button.setBounds(0, 0, 0, 0);
-		//c3Button.setBounds(0, 0, 0, 0);
-		//c4Button.setBounds(0, 0, 0, 0);
-		//readyUp.setBounds(0, 0, 0, 0);
+		c1Name.setBounds(85, 120, 140, 30);
+		c1Name.setForeground(Color.WHITE);
+		c2Name.setBounds(260, 120, 140, 30);
+		c2Name.setForeground(Color.WHITE);
+		c3Name.setBounds(420, 120, 140, 30);
+		c3Name.setForeground(Color.WHITE);
+		c4Name.setBounds(600, 120, 140, 30);
+		c4Name.setForeground(Color.WHITE);
+		c1Button.setBounds(75, 160, 140, 140);
+		c2Button.setBounds(245, 160, 140, 140);
+		c3Button.setBounds(410, 160, 140, 140);
+		c4Button.setBounds(580, 160, 140, 140);
+		readyUp.setBounds(235, 340, 320, 120);
+		readyUp.setForeground(Color.WHITE);
+		readyUp.setBackground(new Color(102, 102, 102));
+		readyUp.setHorizontalAlignment(SwingConstants.CENTER);
 		//startGame.setBounds(0, 0, 0, 0);
 		//serverIP.setBounds(0, 0, 0, 0);
 		//waitHost.setBounds(0, 0, 0, 0);
@@ -98,15 +111,15 @@ public class CPanel extends JPanel implements ActionListener{
 		//chatPane.setBounds(0, 0, 0, 0);
 		
 		this.add(charTitle);
-		//this.add(c1Name);
-		//this.add(c2Name);
-		//this.add(c3Name);
-		//this.add(c4Name);
-		//this.add(c1Button);
-		//this.add(c2Button);
-		//this.add(c3Button);
-		//this.add(c4Button);
-		//this.add(readyUp);
+		this.add(c1Name);
+		this.add(c2Name);
+		this.add(c3Name);
+		this.add(c4Name);
+		this.add(c1Button);
+		this.add(c2Button);
+		this.add(c3Button);
+		this.add(c4Button);
+		this.add(readyUp);
 		//this.add(startGame);
 		//this.add(serverIP);
 		//this.add(waitHost);
