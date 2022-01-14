@@ -42,6 +42,10 @@ public class MPanel extends JPanel implements ActionListener{
 		Help.setBounds(150, 300, 220, 130);
 		Quit.setBounds(150, 450, 220, 130);
 		
+		Play.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Help.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Quit.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
 		this.add(Play);
 		this.add(Help);
 		this.add(Quit);

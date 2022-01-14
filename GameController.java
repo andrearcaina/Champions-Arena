@@ -51,6 +51,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(mainPanel);
 			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.createLobby){
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			countdownTimer.start();
 		}else if(evt.getSource() == lobbyPanel.joinLobby){
@@ -58,6 +59,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(charPanel);
 			frame.pack();
 		}else if(evt.getSource() == helpPanel.Tutorial){
+			frame.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 			frame.addKeyListener(this);
 			frame.addMouseListener(this);
 			frame.requestFocus();
@@ -85,6 +87,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
 			if(intSecond == 0){
 				countdownTimer.stop();
+				frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
 				frame.setContentPane(charPanel);
 				frame.pack();
 			}
@@ -164,6 +167,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 		//tutorialPanel
 		
+		//cursor
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
 	} 
 	
 	///main method

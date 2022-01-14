@@ -112,10 +112,13 @@ public class LPanel extends JPanel implements ActionListener{
 		enterUsername.setForeground(Color.WHITE);
 		enterUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		createLobby.setBounds(15, 370, 280, 110);
+		createLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		joinLobby.setBounds(325, 370, 280, 110);
+		joinLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		serverInfo.setBounds(15, 500, 280, 70);
 		enterIP.setBounds(325, 500, 280, 70);
 		Return.setBounds(1050, 20, 180, 80);
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		
 		serverInfo.setForeground(Color.WHITE);
 		enterIP.setForeground(Color.WHITE);

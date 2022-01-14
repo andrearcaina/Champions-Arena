@@ -44,6 +44,9 @@ public class HPanel extends JPanel implements ActionListener{
 		//readInstruction.setBounds();
 		//boxInstruction.setBounds();
 		
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Tutorial.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
 		this.add(Return);
 		this.add(Tutorial);
 		this.add(readInstruction);

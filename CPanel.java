@@ -101,9 +101,16 @@ public class CPanel extends JPanel implements ActionListener{
 		c3Button.setBounds(410, 160, 140, 140);
 		c4Button.setBounds(580, 160, 140, 140);
 		readyUp.setBounds(235, 340, 320, 120);
+		
+		c1Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		c2Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		c3Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		c4Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
 		readyUp.setForeground(Color.WHITE);
 		readyUp.setBackground(new Color(102, 102, 102));
 		readyUp.setHorizontalAlignment(SwingConstants.CENTER);
+		readyUp.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		//startGame.setBounds(0, 0, 0, 0);
 		//serverIP.setBounds(0, 0, 0, 0);
 		//waitHost.setBounds(0, 0, 0, 0);
