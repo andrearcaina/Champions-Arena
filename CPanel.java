@@ -12,7 +12,7 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	JLabel charTitle = new JLabel("Choose Your Champion");
 	
-	JLabel c1Name = new JLabel("Shadow");
+	JLabel c1Name = new JLabel("Flamel");
 	JLabel c2Name = new JLabel("Bishop");
 	JLabel c3Name = new JLabel("Magnus");
 	JLabel c4Name = new JLabel("Diablo"); 
@@ -88,7 +88,7 @@ public class CPanel extends JPanel implements ActionListener{
 		charTitle.setBounds(30, 20, 800, 100);
 		charTitle.setForeground(Color.WHITE);
 		
-		c1Name.setBounds(85, 120, 140, 30);
+		c1Name.setBounds(95, 120, 140, 30);
 		c1Name.setForeground(Color.WHITE);
 		c2Name.setBounds(260, 120, 140, 30);
 		c2Name.setForeground(Color.WHITE);
