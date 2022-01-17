@@ -57,7 +57,7 @@ public class GameModel{
 		}
 		
 		public void shoot(int intSpeedXn, int intSpeedYn, int intSize){
-			projectiles.add(new Projectile1(intID, intX, intY, intX+200, intY+200, intSpeedXn, intSpeedYn, intSize, intAttack));
+			projectiles.add(new Projectile1(intID, intX, intY, 300, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intX, intY));
 		}
 		
 		public void skill(){
@@ -73,12 +73,12 @@ public class GameModel{
 			
 		}
 		
-		public void update(){
-			for(int intCount = projectiles.size() -1; intCount > 0; intCount--){
+		public void update(){ // projectile range
+			for(int intCount = projectiles.size()-1; intCount > 0; intCount--){
 				projectiles.get(intCount).move();
-				if (projectiles.get(intCount).intMaxRangeX < intX){
+				if (projectiles.get(intCount).intShotX + projectiles.get(intCount).intMaxRangeX < projectiles.get(intCount).intX || projectiles.get(intCount).intShotX - projectiles.get(intCount).intMaxRangeX > projectiles.get(intCount).intX){
 					projectiles.remove((intCount));
-				}else if (projectiles.get(intCount).intMaxRangeY < intY){
+				}else if (projectiles.get(intCount).intShotY + projectiles.get(intCount).intMaxRangeY < projectiles.get(intCount).intY || projectiles.get(intCount).intShotY - projectiles.get(intCount).intMaxRangeY > projectiles.get(intCount).intY){
 					projectiles.remove((intCount));
 				}
 			}
@@ -119,6 +119,8 @@ public class GameModel{
 		int intSpeedY;
 		int intSize;
 		int intDamage;
+		int intShotX;
+		int intShotY;
 		
 		/// methods
 		
@@ -128,11 +130,11 @@ public class GameModel{
 		public void move(){
 			intX += intSpeedX;
 			intY += intSpeedY;
-			System.out.println(1);
+			//System.out.println(1);
 		}
 		
 		///constructor
-		public Projectile1(int intID, int intX, int intY, int intMaxRangeX, int intMaxRangeY, int intSpeedX, int intSpeedY, int intSize, int intDamage){
+		public Projectile1(int intID, int intX, int intY, int intMaxRangeX, int intMaxRangeY, int intSpeedX, int intSpeedY, int intSize, int intDamage, int intShotX, int intShotY){
 			this.intID = intID;
 			this.intX = intX;
 			this.intY = intY;
@@ -142,8 +144,9 @@ public class GameModel{
 			this.intSpeedY = intSpeedY;
 			this.intSize = intSize;
 			this.intDamage = intDamage;
-			
-			
+			this.intShotX = intShotX;
+			this.intShotY = intShotY;
+		
 		}
 	}
 	

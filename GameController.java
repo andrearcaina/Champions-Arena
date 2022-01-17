@@ -68,18 +68,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
 			tutorialPanel.projectiles = c1.projectiles;
+			frame.requestFocus();
 		}
 		
-		else if(evt.getSource() == timer){
+		if(evt.getSource() == timer){
 			c1.moveX();
 			c1.moveY();
 			tutorialPanel.intX = c1.intX;
 			tutorialPanel.intY = c1.intY;
 			tutorialPanel.intSizeX = c1.intSizeX;
 			tutorialPanel.intSizeY = c1.intSizeY;
-			tutorialPanel.projectiles = c1.projectiles;
 			c1.update();
-
+			tutorialPanel.projectiles = c1.projectiles;
 		}
 		
 		else if(evt.getSource() == countdownTimer){  
@@ -133,8 +133,21 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	public void mouseClicked(MouseEvent evt){
 		if(blnPlaying){
-			c1.shoot(4,4,10);
-			tutorialPanel.projectiles = c1.projectiles;
+			int intX = evt.getX();
+			int intY = evt.getY();
+			if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
+				c1.shoot(-4,-4,10);
+				tutorialPanel.projectiles = c1.projectiles;
+			}else if(intX <= c1.intX && intY >= c1.intY){
+				c1.shoot(-4,4,10);
+				tutorialPanel.projectiles = c1.projectiles;
+			}else if(intX >= c1.intX && intY <= c1.intY){
+				c1.shoot(4,-4,10);
+				tutorialPanel.projectiles = c1.projectiles;
+			}else if(intX >= c1.intX && intY >= c1.intY){
+				c1.shoot(4,4,10);
+				tutorialPanel.projectiles = c1.projectiles;
+			}
 		}
 	}
 	public void mousePressed(MouseEvent evt){
