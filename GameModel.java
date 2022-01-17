@@ -57,24 +57,23 @@ public class GameModel{
 		}
 		
 		public void shoot(int intSpeedXn, int intSpeedYn, int intSize){
-			projectiles.add(new Projectile1(intID, intX, intY, 300, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intX, intY));
+			projectiles.add(new Projectile1(intID, intX, intY, 200, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intX, intY));
 		}
 		
 		public void skill(){
 		}
 		
 		public void collision(int intIDn, int intDamagen){
-			if (intIDn != intID){
+			if (intIDn == 100){
+				intX = intX-intSpeedX;
+				intY = intY-intSpeedY;
+			}if (intIDn != intID){
 				intHP = intHP - intDamagen;
 			}
 		}
 
-		public void shotAt(){
-			
-		}
-		
 		public void update(){ // projectile range
-			for(int intCount = projectiles.size()-1; intCount > 0; intCount--){
+			for(int intCount = projectiles.size()-1; intCount >= 0; intCount--){
 				projectiles.get(intCount).move();
 				if (projectiles.get(intCount).intShotX + projectiles.get(intCount).intMaxRangeX < projectiles.get(intCount).intX || projectiles.get(intCount).intShotX - projectiles.get(intCount).intMaxRangeX > projectiles.get(intCount).intX){
 					projectiles.remove((intCount));
@@ -101,10 +100,19 @@ public class GameModel{
 		/// properties
 		int intX;
 		int intY;
-		int intHP;
+		int intSizeX;
+		int intSizeY;
+		int intID = 100;
+		//int intHP;
 		
 		/// methods
 		///constructor
+		public Terrain1(int intX, int intY, int intSizeX, int intSizeY){
+			this.intX = intX;
+			this.intY = intY;
+			this.intSizeX = intSizeX;
+			this.intSizeY = intSizeY;
+		}
 	}
 	
 		// Temporary hypothethical properties of projectile objects

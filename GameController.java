@@ -30,7 +30,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	///CPanel capPanel = new CPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
 	//Accessing the Character object in the GameModel class
-	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g"); 
+	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
+	GameModel.Character1 cT = new GameModel().new Character1(100, 400, 0, 100, 1, 0, 0, "g"); 
+	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	boolean blnPlaying = false;
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
@@ -68,18 +70,21 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
 			tutorialPanel.projectiles = c1.projectiles;
+			loadMap();
 			frame.requestFocus();
-		}
-		
+		}		
 		if(evt.getSource() == timer){
 			c1.moveX();
 			c1.moveY();
+			collision();
 			tutorialPanel.intX = c1.intX;
 			tutorialPanel.intY = c1.intY;
 			tutorialPanel.intSizeX = c1.intSizeX;
 			tutorialPanel.intSizeY = c1.intSizeY;
 			c1.update();
 			tutorialPanel.projectiles = c1.projectiles;
+			tutorialPanel.intHP = c1.intHP;
+			tutorialPanel.map = map;
 		}
 		
 		else if(evt.getSource() == countdownTimer){  
@@ -120,6 +125,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
+		if(evt.getKeyChar() == 'l'){
+			cT.shoot(0,4,10);
+			cT.update();
+			c1.projectiles.addAll(cT.projectiles);
+			cT.projectiles.remove(0);
+		}
 	}
 	
 	public void mouseExited(MouseEvent evt){
@@ -152,6 +163,26 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	public void mousePressed(MouseEvent evt){
 			
+	}
+	public void loadMap(){ // temporary -- for tutorial
+		map.add(new GameModel().new Terrain1(450, 450, 60, 60));
+	}
+	public void collision(){//Collision detection
+		for(int intCount = c1.projectiles.size() -1; intCount >= 0; intCount--){ // projectiles
+			if(c1.projectiles.get(intCount).intX < c1.intX+c1.intSizeX && c1.projectiles.get(intCount).intY < c1.intY+c1.intSizeY && 
+			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intX) > c1.intX && 
+			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intY) > c1.intY){
+				c1.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
+				c1.projectiles.remove(intCount);
+			}
+		}
+		for(int intCount = map.size() -1; intCount >= 0; intCount--){ // terrain
+			if(map.get(intCount).intX < c1.intX+c1.intSizeX && map.get(intCount).intY < c1.intY+c1.intSizeY && 
+			(map.get(intCount).intSizeX+map.get(intCount).intX) > c1.intX && 
+			(map.get(intCount).intSizeY+map.get(intCount).intY) > c1.intY){
+				c1.collision(map.get(intCount).intID, 0);
+			}		
+		}
 	}
 	
 	///constructor
