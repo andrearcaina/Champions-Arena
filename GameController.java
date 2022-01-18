@@ -33,6 +33,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
 	GameModel.Character1 cT = new GameModel().new Character1(100, 400, 0, 100, 1, 0, 0, "g"); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
+	String[][] mapData = new String[100][5]; 
+	
 	boolean blnPlaying = false;
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
@@ -142,6 +144,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	public void mouseEntered(MouseEvent evt){
 		
 	}
+	
 	public void mouseClicked(MouseEvent evt){
 		if(blnPlaying){
 			int intX = evt.getX();
@@ -165,8 +168,22 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			
 	}
 	public void loadMap(){ // temporary -- for tutorial
-		map.add(new GameModel().new Terrain1(450, 450, 60, 60));
+		//load map here from csv file
+		for(int intCount = 99; intCount >= 0; intCount--){
+			if(mapData[intCount][2] == (null)){
+				break; // change to try catch later
+			}
+			if(mapData[intCount][2].equals("water")){
+				
+			}else if(mapData[intCount][2].equals("dummy")){
+				
+			}else if(mapData[intCount][2].equals("tree")){
+				
+			}//add more later
+		}
+		map.add(new GameModel().new Terrain1(500, 300, 50, 50)); // temp
 	}
+	
 	public void collision(){//Collision detection
 		for(int intCount = c1.projectiles.size() -1; intCount >= 0; intCount--){ // projectiles
 			if(c1.projectiles.get(intCount).intX < c1.intX+c1.intSizeX && c1.projectiles.get(intCount).intY < c1.intY+c1.intSizeY && 
@@ -183,9 +200,17 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			(map.get(intCount).intSizeX+map.get(intCount).intX) > c1.intX && 
 			(map.get(intCount).intSizeY+map.get(intCount).intY) > c1.intY){
 				c1.collision(map.get(intCount).intID, 0);
-			}		
-		}
+			}
+			for(int intCount2 = c1.projectiles.size() -1; intCount2 >= 0; intCount2--){ // projectiles w/ terrain
+				if(c1.projectiles.get(intCount2).intX < map.get(intCount).intX+map.get(intCount).intSizeX && c1.projectiles.get(intCount2).intY < map.get(intCount).intSizeY+map.get(intCount).intY && 
+				(c1.projectiles.get(intCount2).intSize+c1.projectiles.get(intCount2).intX) > map.get(intCount).intX && 
+				(c1.projectiles.get(intCount2).intSize+c1.projectiles.get(intCount2).intY) > map.get(intCount).intY){
+					c1.projectiles.remove(intCount2);
+				}
+			}
+		}		
 	}
+	
 	
 	///constructor
 	public GameController(){

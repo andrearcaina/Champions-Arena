@@ -36,10 +36,18 @@ public class GameModel{
 		
 		public void moveX(){
 			this.intX += intSpeedX;
+			if(intX > 670 || intX < 0){ // character borders
+				intX = intX-intSpeedX;
+				intX = intX-intSpeedX;
+			}
 		}
 		
 		public void moveY(){
-			this.intY += intSpeedY;
+			this.intY += intSpeedY;	
+			if(intY > 670 || intY < 0){
+				intY = intY-intSpeedY;
+				intY = intY-intSpeedY;
+			}
 		}
 		
 		//speed calculations
@@ -67,7 +75,11 @@ public class GameModel{
 			if (intIDn == 100){
 				intX = intX-intSpeedX;
 				intY = intY-intSpeedY;
-			}if (intIDn != intID){
+			}
+			if (intIDn == 50){
+				
+			}
+			if (intIDn != intID){
 				intHP = intHP - intDamagen;
 			}
 		}
@@ -102,10 +114,11 @@ public class GameModel{
 		int intY;
 		int intSizeX;
 		int intSizeY;
-		int intID = 100;
+		int intID = 50;
 		//int intHP;
 		
 		/// methods
+		
 		///constructor
 		public Terrain1(int intX, int intY, int intSizeX, int intSizeY){
 			this.intX = intX;

@@ -29,8 +29,7 @@ public class TPanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(144, 238, 144)); //light green
 		g.fillRect(0, 0, 1280, 720);
-		g.setColor(Color.GRAY); //Character 
-		g.fillRect(intX, intY, intSizeX, intSizeY);
+		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
@@ -38,6 +37,10 @@ public class TPanel extends JPanel implements ActionListener{
 			g.fillRect(map.get(intCount).intX, map.get(intCount).intY, map.get(intCount).intSizeX, map.get(intCount).intSizeY); 
 		}
 		g.drawString("HP: "+intHP, 50, 50);
+		g.setColor(Color.WHITE);
+		g.fillRect(720, 0, 560, 720);
+		g.setColor(Color.GRAY); //Character 
+		g.fillRect(intX, intY, intSizeX, intSizeY);
 	}
 	
 	//constructor
