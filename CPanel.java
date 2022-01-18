@@ -15,7 +15,7 @@ public class CPanel extends JPanel implements ActionListener{
 	JLabel c1Name = new JLabel("Flamel");
 	JLabel c2Name = new JLabel("Bishop");
 	JLabel c3Name = new JLabel("Magnus");
-	JLabel c4Name = new JLabel("Diablo"); 
+	JLabel c4Name = new JLabel("Shadow"); 
 	
 	//ImageIcon c1Icon = new ImageIcon("c1.png");
 	//ImageIcon c2Icon = new ImageIcon("c2.png");
@@ -94,7 +94,7 @@ public class CPanel extends JPanel implements ActionListener{
 		c2Name.setForeground(Color.WHITE);
 		c3Name.setBounds(420, 120, 140, 30);
 		c3Name.setForeground(Color.WHITE);
-		c4Name.setBounds(600, 120, 140, 30);
+		c4Name.setBounds(590, 120, 140, 30);
 		c4Name.setForeground(Color.WHITE);
 		c1Button.setBounds(75, 160, 140, 140);
 		c2Button.setBounds(245, 160, 140, 140);
