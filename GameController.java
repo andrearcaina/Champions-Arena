@@ -172,8 +172,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(c1.projectiles.get(intCount).intX < c1.intX+c1.intSizeX && c1.projectiles.get(intCount).intY < c1.intY+c1.intSizeY && 
 			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intX) > c1.intX && 
 			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intY) > c1.intY){
-				c1.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
-				c1.projectiles.remove(intCount);
+				if(c1.projectiles.get(intCount).intID != c1.intID){
+					c1.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
+					c1.projectiles.remove(intCount);
+				}
 			}
 		}
 		for(int intCount = map.size() -1; intCount >= 0; intCount--){ // terrain
