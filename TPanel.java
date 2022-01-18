@@ -74,12 +74,15 @@ public class TPanel extends JPanel implements ActionListener{
 		for(int intCount = map.size() -1; intCount >= 0; intCount--){
 			g.fillRect(map.get(intCount).intX, map.get(intCount).intY, map.get(intCount).intSizeX, map.get(intCount).intSizeY); 
 		}
-		g.drawString("HP: "+intHP, 50, 50);
+		
 		g.setColor(Color.WHITE);
-		g.fillRect(720, 0, 560, 720);
+		g.fillRect(660, 0, 620, 720);
+		g.fillRect(0, 660, 660, 60);
 		g.setColor(Color.GRAY); //Character 
 		g.fillRect(intX, intY, intSizeX, intSizeY);
-
+		
+		g.setColor(Color.RED);
+		g.drawString("HP: "+intHP, 750, 50);
 	}
 	
 	//constructor
