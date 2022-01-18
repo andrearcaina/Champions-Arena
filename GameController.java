@@ -3,10 +3,12 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import java.util.ArrayList;
-
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class GameController implements ActionListener, KeyListener, MouseListener{
-	///properties
+	///properties	
 	JFrame frame = new JFrame("Champions Arena Test 1"); //one frame only
 	Timer timer = new Timer(1000/60, this);
 	Timer countdownTimer = new Timer(1000, this);
@@ -33,7 +35,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
 	GameModel.Character1 cT = new GameModel().new Character1(100, 400, 0, 100, 1, 0, 0, "g"); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
-	String[][] mapData = new String[100][5]; 
 	
 	boolean blnPlaying = false;
 	
@@ -167,21 +168,29 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	public void mousePressed(MouseEvent evt){
 			
 	}
+	
+	//read CSV
 	public void loadMap(){ // temporary -- for tutorial
-		//load map here from csv file
-		for(int intCount = 99; intCount >= 0; intCount--){
-			if(mapData[intCount][2] == (null)){
-				break; // change to try catch later
+		try{
+			//reading CSV file
+			BufferedReader map1 = new BufferedReader(new FileReader("map1.csv"));
+			int intCol;
+			int intRow;
+			String strRead;
+			String strSplit[];
+			String[][] mapData = new String[286][5];
+			for(intRow = 0; intRow < 286; intRow++){
+				strRead = map1.readLine();
+				strSplit = strRead.split(",");
+				for(intCol = 0; intCol < 5; intCol++){
+					mapData[intRow][intCol] = strSplit[intCol];
+					tutorialPanel.mapData[intRow][intCol] = mapData[intRow][intCol];
+				}
 			}
-			if(mapData[intCount][2].equals("water")){
-				
-			}else if(mapData[intCount][2].equals("dummy")){
-				
-			}else if(mapData[intCount][2].equals("tree")){
-				
-			}//add more later
+			//map.add(new GameModel().new Terrain1(500, 300, 50, 50)); // temp
+		}catch(IOException e){
+			e.toString();
 		}
-		map.add(new GameModel().new Terrain1(500, 300, 50, 50)); // temp
 	}
 	
 	public void collision(){//Collision detection
@@ -244,6 +253,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	///main method
 	public static void main(String[] args){
-		new GameController(); 
+		new GameController();
 	} 
 }
