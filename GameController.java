@@ -178,8 +178,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			int intRow;
 			String strRead;
 			String strSplit[];
-			String[][] mapData = new String[286][5];
-			for(intRow = 0; intRow < 286; intRow++){
+			String[][] mapData = new String[484][5];
+			for(intRow = 0; intRow < 484; intRow++){
 				strRead = map1.readLine();
 				strSplit = strRead.split(",");
 				for(intCol = 0; intCol < 5; intCol++){

@@ -17,7 +17,7 @@ public class TPanel extends JPanel implements ActionListener{
 
 	int intHP = 0;
 	
-	String[][] mapData = new String[286][5];
+	String[][] mapData = new String[484][5];
 	
 	//buffered images
 	BufferedImage s;
@@ -40,9 +40,9 @@ public class TPanel extends JPanel implements ActionListener{
 	
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
-		g.fillRect(0,0,720,780);
+		g.fillRect(0,0,660,660);
 		
-		for(int intCount = 0; intCount < 286; intCount++){
+		for(int intCount = 0; intCount < 484; intCount++){
 			if(mapData[intCount][2] == (null)){
 				break; // change to try catch later
 			}
@@ -53,7 +53,7 @@ public class TPanel extends JPanel implements ActionListener{
 			}else if(mapData[intCount][2].equals("tree")){
 				g.drawImage(t, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("statue")){
-				g.drawImage(s, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+				g.drawImage(s, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), null);
 			}else if(mapData[intCount][2].equals("building")){
 				g.drawImage(bu, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("grass")){
@@ -62,10 +62,12 @@ public class TPanel extends JPanel implements ActionListener{
 				g.drawImage(p, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("bridge")){
 				g.drawImage(br, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+			}else if(mapData[intCount][2].equals("statuex")){
+				//terrain
 			}
 		}
 		
-		
+		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
