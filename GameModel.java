@@ -24,8 +24,9 @@ public class GameModel{
 		int intAttack;
 		int intSpeedX = 0;
 		int intSpeedY = 0;
-		int intSizeX = 40;
-		int intSizeY = 40;
+		int intSizeX = 20;
+		int intSizeY = 20;
+		int intSkillTime = 0;
 		String strChar;
 		ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 		boolean blnShooting = false;
@@ -69,15 +70,26 @@ public class GameModel{
 		}
 		
 		public void skill(){
+			if(strChar.equals("g") && intSkillTime > 99){
+				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, 10, 10, 20, intX, intY));
+				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, -10, -10, 10, 20, intX, intY));
+				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, -10, 10, 20, intX, intY));
+				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, -10, 10, 10, 20, intX, intY));		
+				intSkillTime = 0;
+			}
 		}
 		
 		public void collision(int intIDn, int intDamagen){
-			if (intIDn == 100){
+			if (intIDn == 100){ //default terrain
 				intX = intX-intSpeedX;
 				intY = intY-intSpeedY;
 			}
-			if (intIDn == 50){
-				
+			if (intIDn == 50){ // damaging terrain
+				intHP--;
+			}
+			if (intIDn == 63){ // Dummy
+				intX = intX-intSpeedX;
+				intY = intY-intSpeedY;
 			}
 			if (intIDn != intID){
 				intHP = intHP - intDamagen;
@@ -92,6 +104,10 @@ public class GameModel{
 				}else if (projectiles.get(intCount).intShotY + projectiles.get(intCount).intMaxRangeY < projectiles.get(intCount).intY || projectiles.get(intCount).intShotY - projectiles.get(intCount).intMaxRangeY > projectiles.get(intCount).intY){
 					projectiles.remove((intCount));
 				}
+			}
+			intSkillTime++;
+			if(intSkillTime > 101){
+				intSkillTime = 100;
 			}
 		}
 		
@@ -114,17 +130,18 @@ public class GameModel{
 		int intY;
 		int intSizeX;
 		int intSizeY;
-		int intID = 50;
+		int intID;
 		//int intHP;
 		
 		/// methods
 		
 		///constructor
-		public Terrain1(int intX, int intY, int intSizeX, int intSizeY){
+		public Terrain1(int intX, int intY, int intSizeX, int intSizeY, int intID){
 			this.intX = intX;
 			this.intY = intY;
 			this.intSizeX = intSizeX;
 			this.intSizeY = intSizeY;
+			this.intID = intID;
 		}
 	}
 	
@@ -145,7 +162,7 @@ public class GameModel{
 		
 		/// methods
 		
-		public void collision(){
+		public void collision(int intIDn){
 			
 		}
 		public void move(){
