@@ -37,7 +37,7 @@ public class GameModel{
 		
 		public void moveX(){
 			this.intX += intSpeedX;
-			if(intX > 670 || intX < 0){ // character borders
+			if(intX >= 640 || intX <= 0){ // character borders
 				intX = intX-intSpeedX;
 				intX = intX-intSpeedX;
 			}
@@ -45,7 +45,7 @@ public class GameModel{
 		
 		public void moveY(){
 			this.intY += intSpeedY;	
-			if(intY > 670 || intY < 0){
+			if(intY >= 640 || intY <= 0){
 				intY = intY-intSpeedY;
 				intY = intY-intSpeedY;
 			}
