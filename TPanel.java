@@ -65,7 +65,7 @@ public class TPanel extends JPanel implements ActionListener{
 			}else if(mapData[intCount][2].equals("bridge")){
 				g.drawImage(br, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("statuex")){
-				//terrain
+				//terrain (look at loadMap method)
 			}
 		}
 		

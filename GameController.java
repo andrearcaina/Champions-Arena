@@ -212,7 +212,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}else if(mapData[intCount][2].equals("bridge")){
 					
 				}else if(mapData[intCount][2].equals("statuex")){
-					//terrain
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
 				}
 			}
 			
