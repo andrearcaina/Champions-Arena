@@ -17,27 +17,31 @@ public class CPanel extends JPanel implements ActionListener{
 	JLabel c3Name = new JLabel("Magnus");
 	JLabel c4Name = new JLabel("Shadow"); 
 	
-	//ImageIcon c1Icon = new ImageIcon("c1.png");
-	//ImageIcon c2Icon = new ImageIcon("c2.png");
-	//ImageIcon c3Icon = new ImageIcon("c3.png");
-	//ImageIcon c4Icon = new ImageIcon("c4.png");
+	ImageIcon c1Icon = new ImageIcon("c1but.png");
+	ImageIcon c2Icon = new ImageIcon("c2but.png");
+	ImageIcon c3Icon = new ImageIcon("c3but.png");
+	ImageIcon c4Icon = new ImageIcon("c4but.png");
 	
-	JButton c1Button = new JButton("Character");
-	JButton c2Button = new JButton("Character");
-	JButton c3Button = new JButton("Character");
-	JButton c4Button = new JButton("Character");
+	JButton c1Button = new JButton(c1Icon);
+	JButton c2Button = new JButton(c2Icon);
+	JButton c3Button = new JButton(c3Icon);
+	JButton c4Button = new JButton(c4Icon);
 	
-	//ImageIcon ready = new JButton("readyUp.png");
 	JButton readyUp = new JButton("Ready Up!");
 	JButton startGame = new JButton("START GAME");
 	
-	JLabel serverIP = new JLabel(); //put server IP of server here
+	JLabel serverIP = new JLabel("number"); //put server IP of server here
 	JLabel waitHost = new JLabel("Waiting for host to start game..."); 
 	
 	JTextArea chatArea = new JTextArea();
 	JTextField chatMessage = new JTextField("Message");
 	
 	JScrollPane chatPane = new JScrollPane(chatArea);
+	
+	BufferedImage c1but;
+	BufferedImage c2but;
+	BufferedImage c3but;
+	BufferedImage c4but;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -47,6 +51,12 @@ public class CPanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(102, 102, 102));
 		g.fillRect(0, 0, 1280, 720); 
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(585, 360, 200, 70);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(118, 580, 542, 70);
 	}
 	
 	///constructor
@@ -101,6 +111,11 @@ public class CPanel extends JPanel implements ActionListener{
 		c3Button.setBounds(410, 160, 140, 140);
 		c4Button.setBounds(580, 160, 140, 140);
 		readyUp.setBounds(235, 340, 320, 120);
+		serverIP.setBounds(585, 360, 200, 70);
+		startGame.setBounds(265, 480, 250, 80);
+		waitHost.setBounds(123, 580, 660, 70);
+		//chatMessage.setBounds(0, 0, 0, 0);
+		//chatPane.setBounds(0, 0, 0, 0);
 		
 		c1Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		c2Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
@@ -111,11 +126,15 @@ public class CPanel extends JPanel implements ActionListener{
 		readyUp.setBackground(new Color(102, 102, 102));
 		readyUp.setHorizontalAlignment(SwingConstants.CENTER);
 		readyUp.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
-		//startGame.setBounds(0, 0, 0, 0);
-		//serverIP.setBounds(0, 0, 0, 0);
-		//waitHost.setBounds(0, 0, 0, 0);
-		//chatMessage.setBounds(0, 0, 0, 0);
-		//chatPane.setBounds(0, 0, 0, 0);
+		startGame.setForeground(Color.WHITE);
+		startGame.setBackground(new Color(102, 102, 102));
+		startGame.setHorizontalAlignment(SwingConstants.CENTER);
+		startGame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
+		serverIP.setForeground(Color.BLACK);
+		serverIP.setHorizontalAlignment(SwingConstants.CENTER);
+		waitHost.setForeground(Color.WHITE);
+		
 		
 		this.add(charTitle);
 		this.add(c1Name);
@@ -127,11 +146,11 @@ public class CPanel extends JPanel implements ActionListener{
 		this.add(c3Button);
 		this.add(c4Button);
 		this.add(readyUp);
-		//this.add(startGame);
-		//this.add(serverIP);
-		//this.add(waitHost);
-		//this.add(chatMessage);
-		//this.add(chatPane);
+		this.add(startGame);
+		this.add(serverIP);
+		this.add(waitHost);
+		this.add(chatMessage);
+		this.add(chatPane);
 	}
 	
 }
