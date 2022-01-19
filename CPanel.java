@@ -72,7 +72,7 @@ public class CPanel extends JPanel implements ActionListener{
 			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
 			
 			chatArea.setFont(customFont1);
-			chatMessage.setFont(customFont1);
+			chatMessage.setFont(customFont2);
 			
 			c1Name.setFont(customFont1);
 			c2Name.setFont(customFont1);
@@ -114,8 +114,8 @@ public class CPanel extends JPanel implements ActionListener{
 		serverIP.setBounds(585, 360, 200, 70);
 		startGame.setBounds(265, 480, 250, 80);
 		waitHost.setBounds(123, 580, 660, 70);
-		//chatMessage.setBounds(0, 0, 0, 0);
-		//chatPane.setBounds(0, 0, 0, 0);
+		chatPane.setBounds(860, 20, 380, 550);
+		chatMessage.setBounds(860, 580, 380, 80);
 		
 		c1Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		c2Button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
@@ -135,6 +135,10 @@ public class CPanel extends JPanel implements ActionListener{
 		serverIP.setHorizontalAlignment(SwingConstants.CENTER);
 		waitHost.setForeground(Color.WHITE);
 		
+		chatMessage.setForeground(Color.WHITE);
+		chatMessage.setBackground(new Color(102, 102, 102));
+		chatArea.setForeground(Color.WHITE);
+		chatArea.setBackground(new Color(102, 102, 102));
 		
 		this.add(charTitle);
 		this.add(c1Name);
