@@ -28,6 +28,7 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage p;
 	BufferedImage d;
 	BufferedImage t;
+	BufferedImage tutorialChar;
 		
 	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
@@ -74,12 +75,11 @@ public class TPanel extends JPanel implements ActionListener{
 		for(int intCount = map.size() -1; intCount >= 0; intCount--){
 			g.fillRect(map.get(intCount).intX, map.get(intCount).intY, map.get(intCount).intSizeX, map.get(intCount).intSizeY); 
 		}
+		g.drawImage(tutorialChar, intX, intY, null);
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);
 		g.fillRect(0, 660, 660, 60);
-		g.setColor(Color.GRAY); //Character 
-		g.fillRect(intX, intY, intSizeX, intSizeY);
 		
 		g.setColor(Color.RED);
 		g.drawString("HP: "+intHP, 750, 50);
@@ -101,6 +101,7 @@ public class TPanel extends JPanel implements ActionListener{
 			p = ImageIO.read(new File("path.png"));
 			d = ImageIO.read(new File("dummy.png"));
 			t = ImageIO.read(new File("tree.png"));
+			tutorialChar = ImageIO.read(new File("tc.png"));
 			
 		}catch(IOException e){
 			System.out.println("Unable to load file.");
