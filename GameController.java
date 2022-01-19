@@ -33,7 +33,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//Accessing the Character object in the GameModel class
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
-	GameModel.Character1 cT = new GameModel().new Character1(100, 400, 0, 100, 1, 0, 0, "g"); 
+	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, "g"); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	
 	boolean blnPlaying = false;
@@ -84,6 +84,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			tutorialPanel.intY = c1.intY;
 			tutorialPanel.intSizeX = c1.intSizeX;
 			tutorialPanel.intSizeY = c1.intSizeY;
+			tutorialPanel.intSkillTime = c1.intSkillTime;
 			c1.update();
 			tutorialPanel.projectiles = c1.projectiles;
 			tutorialPanel.intHP = c1.intHP;
@@ -134,6 +135,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			c1.projectiles.addAll(cT.projectiles);
 			cT.projectiles.remove(0);
 		}
+		if(evt.getKeyChar() == 'r'){
+			c1.skill();
+			c1.update();
+	
+		}
 	}
 	
 	public void mouseExited(MouseEvent evt){
@@ -151,16 +157,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			int intX = evt.getX();
 			int intY = evt.getY();
 			if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
-				c1.shoot(-4,-4,10);
+				c1.shoot(-4,-4,5);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX <= c1.intX && intY >= c1.intY){
-				c1.shoot(-4,4,10);
+				c1.shoot(-4,4,5);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX >= c1.intX && intY <= c1.intY){
-				c1.shoot(4,-4,10);
+				c1.shoot(4,-4,5);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX >= c1.intX && intY >= c1.intY){
-				c1.shoot(4,4,10);
+				c1.shoot(4,4,5);
 				tutorialPanel.projectiles = c1.projectiles;
 			}
 		}
@@ -187,7 +193,29 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					tutorialPanel.mapData[intRow][intCol] = mapData[intRow][intCol];
 				}
 			}
-			//map.add(new GameModel().new Terrain1(500, 300, 50, 50)); // temp
+			for(int intCount = 0; intCount < 484; intCount++){
+				//map.add(new GameModel().new Terrain1(500, 300, 50, 50)); <-- Format to add new Terrain. Position, Size, ID number (type of terrain)
+				if(mapData[intCount][2].equals("water")){	
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 50));
+				}else if(mapData[intCount][2].equals("dummy")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 63)); // dummy
+				}else if(mapData[intCount][2].equals("tree")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("statue")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("building")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("grass")){
+					
+				}else if(mapData[intCount][2].equals("path")){
+					
+				}else if(mapData[intCount][2].equals("bridge")){
+					
+				}else if(mapData[intCount][2].equals("statuex")){
+					//terrain
+				}
+			}
+			
 		}catch(IOException e){
 			e.toString();
 		}
@@ -209,12 +237,17 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			(map.get(intCount).intSizeX+map.get(intCount).intX) > c1.intX && 
 			(map.get(intCount).intSizeY+map.get(intCount).intY) > c1.intY){
 				c1.collision(map.get(intCount).intID, 0);
+				System.out.println(1);
 			}
 			for(int intCount2 = c1.projectiles.size() -1; intCount2 >= 0; intCount2--){ // projectiles w/ terrain
 				if(c1.projectiles.get(intCount2).intX < map.get(intCount).intX+map.get(intCount).intSizeX && c1.projectiles.get(intCount2).intY < map.get(intCount).intSizeY+map.get(intCount).intY && 
 				(c1.projectiles.get(intCount2).intSize+c1.projectiles.get(intCount2).intX) > map.get(intCount).intX && 
 				(c1.projectiles.get(intCount2).intSize+c1.projectiles.get(intCount2).intY) > map.get(intCount).intY){
-					c1.projectiles.remove(intCount2);
+					if(map.get(intCount).intID == 100){
+						c1.projectiles.remove(intCount2);
+					}else if(map.get(intCount).intID != 50 && map.get(intCount).intID != c1.projectiles.get(intCount2).intID){
+						c1.projectiles.remove(intCount2);
+					}
 				}
 			}
 		}		

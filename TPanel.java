@@ -14,6 +14,7 @@ public class TPanel extends JPanel implements ActionListener{
 	int intY = 0;
 	int intSizeX = 40;
 	int intSizeY = 40;
+	int intSkillTime = 0;
 
 	int intHP = 0;
 	
@@ -72,9 +73,7 @@ public class TPanel extends JPanel implements ActionListener{
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
-		for(int intCount = map.size() -1; intCount >= 0; intCount--){
-			g.fillRect(map.get(intCount).intX, map.get(intCount).intY, map.get(intCount).intSizeX, map.get(intCount).intSizeY); 
-		}
+		
 		g.drawImage(tutorialChar, intX, intY, null);
 		
 		g.setColor(Color.WHITE);
@@ -83,6 +82,8 @@ public class TPanel extends JPanel implements ActionListener{
 		
 		g.setColor(Color.RED);
 		g.drawString("HP: "+intHP, 750, 50);
+		g.setColor(Color.BLUE);
+		g.drawString("Skill: "+intSkillTime, 750, 200);
 	}
 	
 	//constructor
