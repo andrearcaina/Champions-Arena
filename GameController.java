@@ -13,6 +13,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	Timer timer = new Timer(1000/60, this);
 	Timer countdownTimer = new Timer(1000, this);
 	int intSecond = 5;
+	SuperSocketMaster ssm;
 	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
@@ -23,7 +24,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	//once you press play panels: UX4 - UX8
 	LPanel lobbyPanel = new LPanel(); //lobby creation/entering lobby + usernames
 	CPanel charPanel = new CPanel(); //character selection panel
-	///GPanel gamePanel = new GPanel(); //actual gameplay panel
+	GPanel gamePanel = new GPanel(); //actual gameplay panel
 	
 	//leaderboard/win/lost/end panel: UX9
 	///EPanel endPanel = new EPanel(); //once game ends panel / leaderboards
@@ -59,10 +60,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			countdownTimer.start();
+			ssm = new SuperSocketMaster(6112, this);
+			boolean blnConnect = ssm.connect();
+			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());	
 		}else if(evt.getSource() == lobbyPanel.joinLobby){
 			//figure this out later
 			frame.setContentPane(charPanel);
 			frame.pack();
+			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
+			boolean blnConnect = ssm.connect();
+			String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
+			if(ssm != null){
+				ssm.sendText(strConnect);
+			}
 		}else if(evt.getSource() == helpPanel.Tutorial){
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor"));
 			frame.addKeyListener(this);
@@ -75,7 +85,22 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			tutorialPanel.projectiles = c1.projectiles;
 			loadMap();
 			frame.requestFocus();
-		}		
+		}else if(evt.getSource() == charPanel.readyUp){
+			
+		}else if(evt.getSource() == charPanel.startGame){
+	
+		//2d array created where?
+		//should it be in the Model?	
+		}else if(evt.getSource() == ssm){
+			String strParts[] = ssm.readText().split(",");
+			
+			// Message type: connect
+			if(strParts[0].equals("connect")){
+				
+				// textchat.append(strParts[1]+" has joined. \n");
+			}
+		}
+		
 		if(evt.getSource() == timer){
 			c1.moveX();
 			c1.moveY();
@@ -89,9 +114,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			tutorialPanel.projectiles = c1.projectiles;
 			tutorialPanel.intHP = c1.intHP;
 			tutorialPanel.map = map;
-		}
-		
-		else if(evt.getSource() == countdownTimer){  
+		}else if(evt.getSource() == countdownTimer){  
 			intSecond--;
 			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
 			if(intSecond == 0){

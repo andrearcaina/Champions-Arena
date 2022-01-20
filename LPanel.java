@@ -8,7 +8,6 @@ import java.io.*;
 
 public class LPanel extends JPanel implements ActionListener{
 	///properties
-	SuperSocketMaster ssm;
 	
 	Timer timer = new Timer(1000/60, this);
 	
@@ -36,31 +35,6 @@ public class LPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent evt){
 		if(evt.getSource() == timer){
 			this.repaint();
-		}else if(evt.getSource() == createLobby){ //TEMPORARY, THIS IS NOT FIXED FOR THE FINAL ; this doesn't actually do anything for the game
-			ssm = new SuperSocketMaster(6112, this);
-			boolean blnConnect = ssm.connect();
-			
-			serverInfo.setText("IP: "+ssm.getMyAddress());
-			
-			
-		}else if(evt.getSource() == joinLobby){
-			ssm = new SuperSocketMaster(enterIP.getText(), 6112, this);
-			boolean blnConnect = ssm.connect();
-			String strConnect = "connect,"+enterUsername.getText();
-			if(ssm != null){
-				ssm.sendText(strConnect);
-			}
-			
-		//2d array created where?
-		//should it be in the Model?	
-		}else if(evt.getSource() == ssm){
-			String strParts[] = ssm.readText().split(",");
-			
-			// Message type: connect
-			if(strParts[0].equals("connect")){
-				
-				// textchat.append(strParts[1]+" has joined. \n");
-			}
 		}
 	}
 	
