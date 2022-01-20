@@ -43,9 +43,13 @@ public class CPanel extends JPanel implements ActionListener{
 	BufferedImage c3but;
 	BufferedImage c4but;
 	
+	int intCharType;	
+	
 	///methods
 	public void actionPerformed(ActionEvent evt){
-
+		if(evt.getSource() == timer){
+			this.repaint();
+		}
 	}
 	
 	public void paintComponent(Graphics g){
@@ -54,9 +58,17 @@ public class CPanel extends JPanel implements ActionListener{
 		
 		g.setColor(Color.BLACK);
 		g.drawRect(585, 360, 200, 70);
-		
-		g.setColor(Color.WHITE);
-		g.drawRect(118, 580, 542, 70);
+		g.setColor(Color.YELLOW);
+		if(intCharType == 1){
+			g.drawRect(73, 158, 143, 143);
+		}else if(intCharType == 2){
+			g.drawRect(243, 158, 143, 143);
+		}else if(intCharType == 3){
+			g.drawRect(408, 158, 143, 143);
+		}else if(intCharType == 4){
+			g.drawRect(578, 158, 143, 143);
+		}
+			
 	}
 	
 	///constructor
@@ -70,6 +82,8 @@ public class CPanel extends JPanel implements ActionListener{
 			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(40f);
 			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
 			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
+			Font customFont5 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.TTF")).deriveFont(20f);
+
 			
 			chatArea.setFont(customFont1);
 			chatMessage.setFont(customFont2);
@@ -78,7 +92,7 @@ public class CPanel extends JPanel implements ActionListener{
 			c2Name.setFont(customFont1);
 			c3Name.setFont(customFont1);
 			c4Name.setFont(customFont1);
-			serverIP.setFont(customFont1);
+			serverIP.setFont(customFont5);
 			waitHost.setFont(customFont1);
 			
 			startGame.setFont(customFont2);
@@ -94,6 +108,7 @@ public class CPanel extends JPanel implements ActionListener{
 		}catch(IOException e){
 			System.out.println(e);
 		}
+		timer.start();
 		
 		charTitle.setBounds(30, 20, 800, 100);
 		charTitle.setForeground(Color.WHITE);

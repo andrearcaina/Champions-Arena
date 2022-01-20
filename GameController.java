@@ -16,7 +16,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	SuperSocketMaster ssm;
 	boolean blnServer;
 	int intPlayerCount = 1;
-	int intPlayerTotal = 1;	
+	int intPlayerTotal = 1;
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
 	MPanel mainPanel = new MPanel(); //main panel
@@ -35,8 +35,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	///CPanel capPanel = new CPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
 	//Accessing the Character object in the GameModel class
-	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
-	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, "g"); 
+	// tutorial character
+	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1);
+	// dummy model
+	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
 	
@@ -60,24 +62,35 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(mainPanel);
 			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.createLobby){
+			lobbyPanel.joinLobby.setEnabled(false);
+			lobbyPanel.enterIP.setEnabled(false);
+			lobbyPanel.enterUsername.setEnabled(false);
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
+			charPanel.waitHost.setVisible(false);
 			countdownTimer.start();
 			ssm = new SuperSocketMaster(6112, this);
 			boolean blnConnect = ssm.connect();
-			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());	
+			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());
+			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
 			blnServer = true;
 		}else if(evt.getSource() == lobbyPanel.joinLobby){
-			//figure this out later
-			frame.setContentPane(charPanel);
-			frame.pack();
 			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
 			boolean blnConnect = ssm.connect();
-			String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
-			if(ssm != null){
-				ssm.sendText(strConnect);
+			if(blnConnect == true){
+				blnServer = false;
+				frame.setContentPane(charPanel);
+				frame.pack();
+				charPanel.serverIP.setText("IP: "+lobbyPanel.enterIP.getText());
+				charPanel.startGame.setVisible(false);
+				String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
+				if(ssm != null){
+					ssm.sendText(strConnect);
+				}
+			}else if(blnConnect == false){
+				
 			}
-			blnServer = false;
+			
 		}else if(evt.getSource() == helpPanel.Tutorial){
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor"));
 			frame.addKeyListener(this);
@@ -90,9 +103,17 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			tutorialPanel.projectiles = c1.projectiles;
 			loadMap();
 			frame.requestFocus();
+		}else if(evt.getSource() == charPanel.c1Button){
+			charPanel.intCharType = 1;
+		}else if(evt.getSource() == charPanel.c2Button){
+			charPanel.intCharType = 2;
+		}else if(evt.getSource() == charPanel.c3Button){
+			charPanel.intCharType = 3;
+		}else if(evt.getSource() == charPanel.c4Button){
+			charPanel.intCharType = 4;
 		}else if(evt.getSource() == charPanel.readyUp){
 			charPanel.readyUp.setEnabled(false);
-			String strSelect = "select,"+c1.intID+","+c1.strChar;
+			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
 			System.out.println(3);
 		}else if(evt.getSource() == charPanel.startGame){
@@ -110,9 +131,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				//gamePanel.projectiles = c1.projectiles;
 				loadMap();
 			}
-		//2d array created where?
-		//should it be in the Model?	
+
 		}else if(evt.getSource() == ssm){
+			String testssm = ssm.readText();
+			System.out.println(testssm);
 			String strParts[] = ssm.readText().split(",");
 			
 			// Message type: connect
@@ -330,8 +352,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		//charPanel
 		charPanel.startGame.addActionListener(this);
 		charPanel.readyUp.addActionListener(this);
-		//charPanel.createLobby.addActionListener(this);
-		
+		charPanel.c1Button.addActionListener(this);
+		charPanel.c2Button.addActionListener(this);
+		charPanel.c3Button.addActionListener(this);
+		charPanel.c4Button.addActionListener(this);
+				
 		//tutorialPanel
 		
 		//cursor

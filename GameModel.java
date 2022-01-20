@@ -27,7 +27,7 @@ public class GameModel{
 		int intSizeX = 20;
 		int intSizeY = 20;
 		int intSkillTime = 0;
-		String strChar;
+		int intCharType;
 		ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 		boolean blnShooting = false;
 	
@@ -70,7 +70,7 @@ public class GameModel{
 		}
 		
 		public void skill(){
-			if(strChar.equals("g") && intSkillTime > 99){
+			if(intCharType == 1 && intSkillTime > 99){
 				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, 10, 10, 20, intX, intY));
 				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, -10, -10, 10, 20, intX, intY));
 				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, -10, 10, 20, intX, intY));
@@ -112,7 +112,7 @@ public class GameModel{
 		}
 		
 		///constructor
-		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, String strChar){
+		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, int intCharType){
 			this.intID = intID;
 			this.intX = intX;
 			this.intY = intY;
@@ -120,7 +120,7 @@ public class GameModel{
 			this.intAttack = intAttack;
 			this.intSpeedX = intSpeedX;
 			this.intSpeedY = intSpeedY;
-			this.strChar = strChar;
+			this.intCharType = intCharType;
 		}
 	}	
 	// Temporary hypothethical properties of terrain objects
