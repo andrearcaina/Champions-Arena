@@ -106,7 +106,7 @@ public class GameModel{
 				}
 			}
 			intSkillTime++;
-			if(intSkillTime > 101){
+			if(intSkillTime > 100){
 				intSkillTime = 100;
 			}
 		}

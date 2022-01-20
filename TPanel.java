@@ -10,6 +10,15 @@ import java.util.ArrayList;
 public class TPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
+	JButton Return = new JButton("Main Menu");
+	JButton changeChamp = new JButton("Change Champion");
+	JLabel championStats = new JLabel("Champion Stats");
+	
+	BufferedImage champion1;
+	BufferedImage champion2;
+	BufferedImage champion3;
+	BufferedImage champion4;
+	
 	int intX = 0;
 	int intY = 0;
 	int intSizeX = 40;
@@ -104,8 +113,17 @@ public class TPanel extends JPanel implements ActionListener{
 			t = ImageIO.read(new File("tree.png"));
 			tutorialChar = ImageIO.read(new File("tc.png"));
 			
+			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(40f);
+			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
+			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}catch(FontFormatException e){
+			System.out.println(e);
 		}catch(IOException e){
-			System.out.println("Unable to load file.");
+			System.out.println(e);
 		}
 	}
 		
