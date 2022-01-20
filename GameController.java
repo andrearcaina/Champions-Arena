@@ -14,7 +14,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	Timer countdownTimer = new Timer(1000, this);
 	int intSecond = 5;
 	SuperSocketMaster ssm;
-	
+	boolean blnServer;
+	int intPlayerCount = 1;
+	int intPlayerTotal = 1;	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
 	MPanel mainPanel = new MPanel(); //main panel
@@ -36,6 +38,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, "g");
 	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, "g"); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
+	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
 	
 	boolean blnPlaying = false;
 	
@@ -63,6 +66,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			ssm = new SuperSocketMaster(6112, this);
 			boolean blnConnect = ssm.connect();
 			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());	
+			blnServer = true;
 		}else if(evt.getSource() == lobbyPanel.joinLobby){
 			//figure this out later
 			frame.setContentPane(charPanel);
@@ -73,6 +77,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(ssm != null){
 				ssm.sendText(strConnect);
 			}
+			blnServer = false;
 		}else if(evt.getSource() == helpPanel.Tutorial){
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor"));
 			frame.addKeyListener(this);
@@ -86,9 +91,25 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			loadMap();
 			frame.requestFocus();
 		}else if(evt.getSource() == charPanel.readyUp){
-			
+			charPanel.readyUp.setEnabled(false);
+			String strSelect = "select,"+c1.intID+","+c1.strChar;
+			ssm.sendText(strSelect);
+			System.out.println(3);
 		}else if(evt.getSource() == charPanel.startGame){
-	
+			System.out.println(intPlayerTotal);
+			System.out.println(intPlayerCount);
+			if(intPlayerCount == intPlayerTotal){
+				System.out.println(2);
+				frame.addKeyListener(this);
+				frame.addMouseListener(this);
+				frame.requestFocus();
+				timer.start();
+				blnPlaying = true;
+				frame.setContentPane(gamePanel);
+				frame.pack();
+				//gamePanel.projectiles = c1.projectiles;
+				loadMap();
+			}
 		//2d array created where?
 		//should it be in the Model?	
 		}else if(evt.getSource() == ssm){
@@ -96,8 +117,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			
 			// Message type: connect
 			if(strParts[0].equals("connect")){
-				
+				intPlayerTotal++;
 				// textchat.append(strParts[1]+" has joined. \n");
+			}
+			if(strParts[0].equals("select")){
+				if(blnServer){
+					intPlayerCount++;
+				}
 			}
 		}
 		
@@ -300,6 +326,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		lobbyPanel.Return.addActionListener(this);
 		lobbyPanel.joinLobby.addActionListener(this);
 		lobbyPanel.createLobby.addActionListener(this);
+		
+		//charPanel
+		charPanel.startGame.addActionListener(this);
+		charPanel.readyUp.addActionListener(this);
+		//charPanel.createLobby.addActionListener(this);
 		
 		//tutorialPanel
 		
