@@ -38,6 +38,11 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage p;
 	BufferedImage d;
 	BufferedImage t;
+	BufferedImage v;
+	BufferedImage l;
+	BufferedImage r;
+	BufferedImage gp;
+	BufferedImage bo;
 	BufferedImage tutorialChar;
 		
 	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
@@ -75,6 +80,18 @@ public class TPanel extends JPanel implements ActionListener{
 				g.drawImage(br, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("statuex")){
 				//terrain (look at loadMap method)
+			}else if(mapData[intCount][2].equals("volcano")){
+				g.drawImage(v, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), null);
+			}else if(mapData[intCount][2].equals("volcanot")){
+				//terrain
+			}else if(mapData[intCount][2].equals("lava")){
+				g.drawImage(l, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+			}else if(mapData[intCount][2].equals("bones")){
+				g.drawImage(bo, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+			}else if(mapData[intCount][2].equals("rock")){
+				g.drawImage(r, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+			}else if(mapData[intCount][2].equals("grasspath")){
+				g.drawImage(gp, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}
 		}
 		
@@ -111,6 +128,11 @@ public class TPanel extends JPanel implements ActionListener{
 			p = ImageIO.read(new File("path.png"));
 			d = ImageIO.read(new File("dummy.png"));
 			t = ImageIO.read(new File("tree.png"));
+			l = ImageIO.read(new File("lava.png"));
+			bo = ImageIO.read(new File("bones.png"));
+			v = ImageIO.read(new File("volcano.png"));
+			r = ImageIO.read(new File("rock.png"));
+			gp = ImageIO.read(new File("grasspath.png"));
 			tutorialChar = ImageIO.read(new File("tc.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float

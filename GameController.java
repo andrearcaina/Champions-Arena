@@ -390,7 +390,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	public void loadMap(){ // temporary -- for tutorial
 		try{
 			//reading CSV file
-			BufferedReader map1 = new BufferedReader(new FileReader("map1.csv"));
+			BufferedReader map1 = new BufferedReader(new FileReader("gamemap1.csv"));
 			int intCol;
 			int intRow;
 			String strRead;
@@ -428,6 +428,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					
 				}else if(mapData[intCount][2].equals("statuex")){
 					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("bones")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("lava")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 50));
+				}else if(mapData[intCount][2].equals("rock")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("volcano")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("volcanot")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
+				}else if(mapData[intCount][2].equals("grasspath")){
+				
 				}
 			}
 			
