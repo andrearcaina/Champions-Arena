@@ -109,20 +109,25 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.c1Button){
 			charPanel.intCharType = 1;
 			c1.intCharType = 1;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c2Button){
 			charPanel.intCharType = 2;
 			c1.intCharType = 2;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c3Button){
 			charPanel.intCharType = 3;
 			c1.intCharType = 3;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c4Button){
 			charPanel.intCharType = 4;
 			c1.intCharType = 4;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.readyUp){
 			charPanel.readyUp.setEnabled(false);
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
 			System.out.println(3);
+			charPanel.startGame.setEnabled(true);
 			addChar(c1.intID, c1.intCharType);
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME
 			System.out.println(intPlayerTotal);
@@ -470,11 +475,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		if(intCharType == 1){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
 		}else if(intCharType == 2){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 2));
 		}else if(intCharType == 3){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 3));
 		}else if(intCharType == 4){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 4));
 		}
 			
 	}
