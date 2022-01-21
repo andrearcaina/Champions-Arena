@@ -76,6 +76,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
 			blnServer = true;
 			c1.intID = 5;
+			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" has hosted a lobby "+intPlayerTotal+"/4"+".\n");
 		}else if(evt.getSource() == lobbyPanel.joinLobby){ // JOINING LOBBY
 			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
 			boolean blnConnect = ssm.connect();
@@ -86,10 +87,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.serverIP.setText("IP: "+lobbyPanel.enterIP.getText());
 				charPanel.startGame.setVisible(false);
 				String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
-				if(ssm != null){
-					ssm.sendText(strConnect);
-					//System.out.println(strConnect);
-				}
+				ssm.sendText(strConnect);
 			}else if(blnConnect == false){
 				
 			}
@@ -108,14 +106,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.requestFocus();
 		}else if(evt.getSource() == charPanel.c1Button){
 			charPanel.intCharType = 1;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c2Button){
 			charPanel.intCharType = 2;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c3Button){
 			charPanel.intCharType = 3;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c4Button){
 			charPanel.intCharType = 4;
+			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.readyUp){
 			charPanel.readyUp.setEnabled(false);
+			charPanel.startGame.setEnabled(true);
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
 			System.out.println(3);
@@ -134,7 +137,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles;
 				loadMap();
-				ssm.sendText("starting,"+intPlayerTotal);
+				ssm.sendText("gameStart,"+intPlayerTotal);
 			}
 		}else if(evt.getSource() == ssm){
 			//String testssm = ssm.readText();
@@ -143,12 +146,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			
 			// Message type: connect
 			if(strParts[0].equals("connect")){
-				// textchat.append(strParts[1]+" has joined. \n");
 				if(blnServer){
 					intPlayerTotal++;
 					ssm.sendText("IDAssign,"+(4+intPlayerTotal));
 					System.out.println(c1.intID);
 				}
+				charPanel.chatArea.append(strParts[1]+" has joined "+intPlayerTotal+"/4"+".\n");
 			}
 			// Message type: select
 			if(strParts[0].equals("select")){
@@ -185,8 +188,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(strParts[0].equals("removeProj")){ 
 				c1.projectiles.remove(Integer.parseInt(strParts[1]));
 			}
-			// Messaage type: Starto
-			if(strParts[0].equals("starting")){
+			// Messaage type: Start
+			if(strParts[0].equals("gameStart")){
 				frame.addKeyListener(this);
 				frame.addMouseListener(this);
 				frame.requestFocus();
