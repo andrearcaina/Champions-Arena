@@ -69,14 +69,36 @@ public class GameModel{
 			projectiles.add(new Projectile1(intIDn, intXfrom, intYfrom, 200, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intXfrom, intYfrom));
 		}
 		
-		public void skill(){
-			if(intCharType == 1 && intSkillTime > 99){
-				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, 10, 10, 20, intX, intY));
-				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, -10, -10, 10, 20, intX, intY));
-				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, 10, -10, 10, 20, intX, intY));
-				projectiles.add(new Projectile1(intID, intX, intY, 500, 500, -10, 10, 10, 20, intX, intY));		
-				intSkillTime = 0;
+		public boolean skill(int intIDn, int intCharTypeIn, int intXn, int intYn){
+			if(intSkillTime > 99){
+				if(intCharTypeIn == 1){
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, -10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, -10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 12, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, -12, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, -12, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 12, 10, 20, intXn, intYn));		
+					intSkillTime = 0;
+				}else if(intCharTypeIn == 2){
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, -10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));		
+					intSkillTime = 0;
+				}else if(intCharTypeIn == 4){
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 15, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 0, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -15, 0, 10, 20, intXn, intYn));		
+					intSkillTime = 0;
+				}
+				return true;
 			}
+			return false;
 		}
 		
 		public void collision(int intIDn, int intDamagen){

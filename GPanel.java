@@ -81,11 +81,13 @@ public class GPanel extends JPanel implements ActionListener{
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
+		
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
 			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY); 			
+			
 		}
 		
-		g.drawImage(tutorialChar, intX, intY, null);
+		//g.drawImage(tutorialChar, intX, intY, null);
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);

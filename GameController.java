@@ -108,12 +108,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.requestFocus();
 		}else if(evt.getSource() == charPanel.c1Button){
 			charPanel.intCharType = 1;
+			c1.intCharType = 1;
 		}else if(evt.getSource() == charPanel.c2Button){
 			charPanel.intCharType = 2;
+			c1.intCharType = 2;
 		}else if(evt.getSource() == charPanel.c3Button){
 			charPanel.intCharType = 3;
+			c1.intCharType = 3;
 		}else if(evt.getSource() == charPanel.c4Button){
 			charPanel.intCharType = 4;
+			c1.intCharType = 4;
 		}else if(evt.getSource() == charPanel.readyUp){
 			charPanel.readyUp.setEnabled(false);
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
@@ -196,6 +200,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles;
 				loadMap();
+			}
+			// Messaage type: Skill
+			if(strParts[0].equals("skill")){
+				c1.skill(Integer.parseInt(strParts[2]), Integer.parseInt(strParts[1]),Integer.parseInt(strParts[3]), Integer.parseInt(strParts[4]));
 			}
 			
 		}
@@ -309,7 +317,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			cT.projectiles.remove(0);
 		}
 		if(evt.getKeyChar() == 'r'){
-			c1.skill();
+			if(c1.skill(c1.intID, c1.intCharType, c1.intX, c1.intY)){
+				if(intPlaying == 2){
+					ssm.sendText("skill,"+c1.intCharType+","+c1.intID+","+c1.intX+","+c1.intY);
+				}
+			}
 			c1.update();
 	
 		}
@@ -457,11 +469,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	public void addChar(int intID, int intCharType){ // will modify later.
 		if(intCharType == 1){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
-		}else if(intCharType == 1){
+		}else if(intCharType == 2){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
-		}else if(intCharType == 1){
+		}else if(intCharType == 3){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
-		}else if(intCharType == 1){
+		}else if(intCharType == 4){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
 		}
 			
