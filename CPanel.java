@@ -83,10 +83,11 @@ public class CPanel extends JPanel implements ActionListener{
 			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
 			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
 			Font customFont5 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.TTF")).deriveFont(20f);
+			Font customFont6 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.TTF")).deriveFont(20f);
 
 			
-			chatArea.setFont(customFont1);
-			chatMessage.setFont(customFont2);
+			chatArea.setFont(customFont6);
+			chatMessage.setFont(customFont6);
 			
 			c1Name.setFont(customFont1);
 			c2Name.setFont(customFont1);

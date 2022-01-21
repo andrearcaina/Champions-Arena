@@ -106,8 +106,6 @@ public class LPanel extends JPanel implements ActionListener{
 		enterIP.setHorizontalAlignment(SwingConstants.CENTER);
 		serverInfo.setEditable(false);
 		
-		createLobby.addActionListener(this);
-		joinLobby.addActionListener(this);
 		
 		this.add(createLobby);
 		this.add(joinLobby);

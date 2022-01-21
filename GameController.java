@@ -65,6 +65,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			lobbyPanel.joinLobby.setEnabled(false);
 			lobbyPanel.enterIP.setEnabled(false);
 			lobbyPanel.enterUsername.setEnabled(false);
+			lobbyPanel.Return.setEnabled(false);
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			charPanel.waitHost.setVisible(false);
@@ -76,6 +77,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
 			blnServer = true;
 			c1.intID = 5;
+			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": created the lobby.\n");
+			charPanel.chatArea.append((4-intPlayerTotal)+" spot(s) remaining.\n");
 		}else if(evt.getSource() == lobbyPanel.joinLobby){ // JOINING LOBBY
 			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
 			boolean blnConnect = ssm.connect();
@@ -90,8 +93,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					ssm.sendText(strConnect);
 					//System.out.println(strConnect);
 				}
+			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n");
+			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+"joined the lobby.\n");
+			
 			}else if(blnConnect == false){
-				
 			}
 			
 		}else if(evt.getSource() == helpPanel.Tutorial){
@@ -108,7 +113,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.requestFocus();
 		}else if(evt.getSource() == charPanel.c1Button){
 			charPanel.intCharType = 1;
-			c1.intCharType = 1;
+			c1.intCharType = 1;		
 			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.c2Button){
 			charPanel.intCharType = 2;
@@ -126,7 +131,29 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.readyUp.setEnabled(false);
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
-			System.out.println(3);
+			// After lockin checks selected character and disables selection of any characters
+			// Fades out all other character images that were not selected
+			if(c1.intCharType == 1){
+				charPanel.c1Button.removeActionListener(this);
+				charPanel.c2Button.setEnabled(false);
+				charPanel.c3Button.setEnabled(false);
+				charPanel.c4Button.setEnabled(false);
+			}else if(c1.intCharType == 2){
+				charPanel.c2Button.removeActionListener(this);
+				charPanel.c1Button.setEnabled(false);
+				charPanel.c3Button.setEnabled(false);
+				charPanel.c4Button.setEnabled(false);
+			}else if(c1.intCharType == 3){
+				charPanel.c3Button.removeActionListener(this);
+				charPanel.c2Button.setEnabled(false);
+				charPanel.c1Button.setEnabled(false);
+				charPanel.c4Button.setEnabled(false);
+			}else if(c1.intCharType == 4){
+				charPanel.c4Button.removeActionListener(this);
+				charPanel.c2Button.setEnabled(false);
+				charPanel.c3Button.setEnabled(false);
+				charPanel.c1Button.setEnabled(false);
+			}
 			charPanel.startGame.setEnabled(true);
 			addChar(c1.intID, c1.intCharType);
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME
@@ -145,6 +172,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				loadMap();
 				ssm.sendText("starting,"+intPlayerTotal);
 			}
+		}else if(evt.getSource() == charPanel.chatMessage){
+			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": "+charPanel.chatMessage.getText()+"\n");
+			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+charPanel.chatMessage.getText());
 		}else if(evt.getSource() == ssm){
 			//String testssm = ssm.readText();
 			//System.out.println(testssm);
@@ -157,6 +187,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					intPlayerTotal++;
 					ssm.sendText("IDAssign,"+(4+intPlayerTotal));
 					System.out.println(c1.intID);
+					charPanel.chatArea.append((4-intPlayerTotal)+" spot(s) remaining.\n");
 				}
 			}
 			// Message type: select
@@ -165,6 +196,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					intPlayerCount++;
 				}
 				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]));
+			}
+			// Message type: lobby chat
+			if(strParts[0].equals("chat")){
+				charPanel.chatArea.append(strParts[1]+": "+strParts[2]+"\n");
 			}
 			// Message type: ID assignment
 			if(strParts[0].equals("IDAssign")){
@@ -390,7 +425,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	public void loadMap(){ // temporary -- for tutorial
 		try{
 			//reading CSV file
-			BufferedReader map1 = new BufferedReader(new FileReader("gamemap1.csv"));
+			BufferedReader map1 = new BufferedReader(new FileReader("map1.csv"));
 			int intCol;
 			int intRow;
 			String strRead;
@@ -531,6 +566,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c2Button.addActionListener(this);
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
+		charPanel.chatMessage.addActionListener(this);
 				
 		//tutorialPanel
 		
