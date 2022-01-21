@@ -43,7 +43,7 @@ public class CPanel extends JPanel implements ActionListener{
 	BufferedImage c3but;
 	BufferedImage c4but;
 	
-	int intCharType;	
+	int intCharType;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -110,6 +110,9 @@ public class CPanel extends JPanel implements ActionListener{
 		}
 		timer.start();
 		
+		startGame.setEnabled(false);
+		readyUp.setEnabled(false);
+		
 		charTitle.setBounds(30, 20, 800, 100);
 		charTitle.setForeground(Color.WHITE);
 		
@@ -141,6 +144,7 @@ public class CPanel extends JPanel implements ActionListener{
 		readyUp.setBackground(new Color(102, 102, 102));
 		readyUp.setHorizontalAlignment(SwingConstants.CENTER);
 		readyUp.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
 		startGame.setForeground(Color.WHITE);
 		startGame.setBackground(new Color(102, 102, 102));
 		startGame.setHorizontalAlignment(SwingConstants.CENTER);
