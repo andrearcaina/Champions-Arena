@@ -42,7 +42,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
 	
-	boolean blnPlaying = false;
+	int intPlaying = 0;
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
 	//methods for ActionListener (BUTTON INTERACTIONS)
@@ -61,20 +61,22 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.createLobby){
+		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
 			lobbyPanel.joinLobby.setEnabled(false);
 			lobbyPanel.enterIP.setEnabled(false);
 			lobbyPanel.enterUsername.setEnabled(false);
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			charPanel.waitHost.setVisible(false);
+			//^^^ Lobby buttons
 			countdownTimer.start();
 			ssm = new SuperSocketMaster(6112, this);
 			boolean blnConnect = ssm.connect();
 			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());
 			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
 			blnServer = true;
-		}else if(evt.getSource() == lobbyPanel.joinLobby){
+			c1.intID = 5;
+		}else if(evt.getSource() == lobbyPanel.joinLobby){ // JOINING LOBBY
 			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
 			boolean blnConnect = ssm.connect();
 			if(blnConnect == true){
@@ -86,6 +88,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
 				if(ssm != null){
 					ssm.sendText(strConnect);
+					//System.out.println(strConnect);
 				}
 			}else if(blnConnect == false){
 				
@@ -97,7 +100,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.addMouseListener(this);
 			frame.requestFocus();
 			timer.start();
-			blnPlaying = true;
+			intPlaying = 1;
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
 			tutorialPanel.projectiles = c1.projectiles;
@@ -116,7 +119,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
 			System.out.println(3);
-		}else if(evt.getSource() == charPanel.startGame){
+			addChar(c1.intID, c1.intCharType);
+		}else if(evt.getSource() == charPanel.startGame){ // START GAME
 			System.out.println(intPlayerTotal);
 			System.out.println(intPlayerCount);
 			if(intPlayerCount == intPlayerTotal){
@@ -125,43 +129,115 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.addMouseListener(this);
 				frame.requestFocus();
 				timer.start();
-				blnPlaying = true;
+				intPlaying = 2;
 				frame.setContentPane(gamePanel);
 				frame.pack();
-				//gamePanel.projectiles = c1.projectiles;
+				gamePanel.projectiles = c1.projectiles;
 				loadMap();
+				ssm.sendText("starting,"+intPlayerTotal);
 			}
-
 		}else if(evt.getSource() == ssm){
-			String testssm = ssm.readText();
-			System.out.println(testssm);
+			//String testssm = ssm.readText();
+			//System.out.println(testssm);
 			String strParts[] = ssm.readText().split(",");
 			
 			// Message type: connect
 			if(strParts[0].equals("connect")){
-				intPlayerTotal++;
 				// textchat.append(strParts[1]+" has joined. \n");
+				if(blnServer){
+					intPlayerTotal++;
+					ssm.sendText("IDAssign,"+(4+intPlayerTotal));
+					System.out.println(c1.intID);
+				}
 			}
+			// Message type: select
 			if(strParts[0].equals("select")){
 				if(blnServer){
 					intPlayerCount++;
 				}
+				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]));
 			}
+			// Message type: ID assignment
+			if(strParts[0].equals("IDAssign")){
+				System.out.println(Integer.parseInt(strParts[1]));
+				if(c1.intID > 1){
+					
+				}else{
+					c1.intID = Integer.parseInt(strParts[1]);
+					System.out.println(c1.intID);
+				}
+			}
+			// Message type: New Data
+			if(strParts[0].equals("data")){ // update info
+				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
+					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){
+						characters.get(intCount).intX = Integer.parseInt(strParts[2]);
+						characters.get(intCount).intY = Integer.parseInt(strParts[3]);
+						characters.get(intCount).intHP = Integer.parseInt(strParts[4]);
+					}
+				}
+			}
+			// Message type: Shoot
+			if(strParts[0].equals("shoot")){
+				c1.shoot(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]), Integer.parseInt(strParts[3]), Integer.parseInt(strParts[4]), Integer.parseInt(strParts[5]), Integer.parseInt(strParts[6]));
+			}
+			// Message type: remove proj
+			if(strParts[0].equals("removeProj")){ 
+				c1.projectiles.remove(Integer.parseInt(strParts[1]));
+			}
+			// Messaage type: Starto
+			if(strParts[0].equals("starting")){
+				frame.addKeyListener(this);
+				frame.addMouseListener(this);
+				frame.requestFocus();
+				timer.start();
+				intPlaying = 2;
+				frame.setContentPane(gamePanel);
+				frame.pack();
+				gamePanel.projectiles = c1.projectiles;
+				loadMap();
+			}
+			
 		}
 		
 		if(evt.getSource() == timer){
-			c1.moveX();
-			c1.moveY();
-			collision();
-			tutorialPanel.intX = c1.intX;
-			tutorialPanel.intY = c1.intY;
-			tutorialPanel.intSizeX = c1.intSizeX;
-			tutorialPanel.intSizeY = c1.intSizeY;
-			tutorialPanel.intSkillTime = c1.intSkillTime;
-			c1.update();
-			tutorialPanel.projectiles = c1.projectiles;
-			tutorialPanel.intHP = c1.intHP;
-			tutorialPanel.map = map;
+			if(intPlaying == 1){
+				c1.moveX();
+				c1.moveY();
+				collision();
+				tutorialPanel.intX = c1.intX;
+				tutorialPanel.intY = c1.intY;
+				tutorialPanel.intSizeX = c1.intSizeX;
+				tutorialPanel.intSizeY = c1.intSizeY;
+				tutorialPanel.intSkillTime = c1.intSkillTime;
+				c1.update();
+				tutorialPanel.projectiles = c1.projectiles;
+				tutorialPanel.intHP = c1.intHP;
+				tutorialPanel.map = map;
+			}
+			if(intPlaying == 2){
+				c1.moveX();
+				c1.moveY();
+				collision();
+				gamePanel.intX = c1.intX;
+				gamePanel.intY = c1.intY;
+				gamePanel.intSizeX = c1.intSizeX;
+				gamePanel.intSizeY = c1.intSizeY;
+				gamePanel.intSkillTime = c1.intSkillTime;
+				c1.update();
+				gamePanel.projectiles = c1.projectiles;
+				gamePanel.intHP = c1.intHP;
+				gamePanel.map = map;
+				ssm.sendText("data"+"," + c1.intID+","+c1.intX+"," + c1.intY+","+ c1.intHP);
+				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
+					if(characters.get(intCount).intID == c1.intID){
+						characters.get(intCount).intX = c1.intX;
+						characters.get(intCount).intY = c1.intY;
+						characters.get(intCount).intHP = c1.intHP;
+					}
+				}
+				gamePanel.characters = characters;
+			}	
 		}else if(evt.getSource() == countdownTimer){  
 			intSecond--;
 			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
@@ -176,32 +252,58 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//methods for KeyListener (CHARACTER MOVEMENT COMMANDS)
 	public void keyReleased(KeyEvent evt){
-		if(evt.getKeyChar() == 'w'){
-			c1.up(0); 
-		}else if(evt.getKeyChar() == 'a'){
-			c1.left(0); 
-		}else if(evt.getKeyChar() == 's'){
-			c1.down(0);
-		}else if(evt.getKeyChar() == 'd'){
-			c1.right(0); 
+		if(intPlaying == 1){	
+			if(evt.getKeyChar() == 'w'){
+				c1.up(0); 
+			}else if(evt.getKeyChar() == 'a'){
+				c1.left(0); 
+			}else if(evt.getKeyChar() == 's'){
+				c1.down(0);
+			}else if(evt.getKeyChar() == 'd'){
+				c1.right(0); 
+			}
+		}
+		if(intPlaying == 2){	
+			if(evt.getKeyChar() == 'w'){
+				c1.up(0); 
+			}else if(evt.getKeyChar() == 'a'){
+				c1.left(0); 
+			}else if(evt.getKeyChar() == 's'){
+				c1.down(0);
+			}else if(evt.getKeyChar() == 'd'){
+				c1.right(0); 
+			}
 		}
 	} 
 	public void keyPressed(KeyEvent evt){
-		if(evt.getKeyChar() == 'w'){
-			c1.up(5); 
-		}else if(evt.getKeyChar() == 'a'){
-			c1.left(5); 
-		}else if(evt.getKeyChar() == 's'){
-			c1.down(5);
-		}else if(evt.getKeyChar() == 'd'){
-			c1.right(5);
+		if(intPlaying == 1){	
+			if(evt.getKeyChar() == 'w'){
+				c1.up(5); 
+			}else if(evt.getKeyChar() == 'a'){
+				c1.left(5); 
+			}else if(evt.getKeyChar() == 's'){
+				c1.down(5);
+			}else if(evt.getKeyChar() == 'd'){
+				c1.right(5);
+			}
+		}
+		if(intPlaying == 2){	
+			if(evt.getKeyChar() == 'w'){
+				c1.up(5); 
+			}else if(evt.getKeyChar() == 'a'){
+				c1.left(5); 
+			}else if(evt.getKeyChar() == 's'){
+				c1.down(5);
+			}else if(evt.getKeyChar() == 'd'){
+				c1.right(5);
+			}
 		}
 	}
 	
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
 		if(evt.getKeyChar() == 'l'){
-			cT.shoot(0,4,10);
+			cT.shoot(99,0,4,10,cT.intX,cT.intY);
 			cT.update();
 			c1.projectiles.addAll(cT.projectiles);
 			cT.projectiles.remove(0);
@@ -223,22 +325,43 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 	}
 	
-	public void mouseClicked(MouseEvent evt){
-		if(blnPlaying){
+	public void mouseClicked(MouseEvent evt){ // shooting
+		if(intPlaying == 1){
 			int intX = evt.getX();
 			int intY = evt.getY();
 			if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
-				c1.shoot(-4,-4,5);
+				c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX <= c1.intX && intY >= c1.intY){
-				c1.shoot(-4,4,5);
+				c1.shoot(c1.intID,-4,4,5, c1.intX, c1.intY);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX >= c1.intX && intY <= c1.intY){
-				c1.shoot(4,-4,5);
+				c1.shoot(c1.intID,4,-4,5, c1.intX, c1.intY);
 				tutorialPanel.projectiles = c1.projectiles;
 			}else if(intX >= c1.intX && intY >= c1.intY){
-				c1.shoot(4,4,5);
+				c1.shoot(c1.intID,4,4,5, c1.intX, c1.intY);
 				tutorialPanel.projectiles = c1.projectiles;
+			}
+		}
+		if(intPlaying == 2){ // network
+			int intX = evt.getX();
+			int intY = evt.getY();
+			if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
+				c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
+				ssm.sendText("shoot,"+c1.intID+","+-4+","+-4+","+5+","+c1.intX+","+c1.intY);
+				gamePanel.projectiles = c1.projectiles;
+			}else if(intX <= c1.intX && intY >= c1.intY){
+				c1.shoot(c1.intID,-4,4,5, c1.intX, c1.intY);
+				ssm.sendText("shoot,"+c1.intID+","+-4+","+4+","+5+","+c1.intX+","+c1.intY);
+				gamePanel.projectiles = c1.projectiles;
+			}else if(intX >= c1.intX && intY <= c1.intY){
+				c1.shoot(c1.intID,4,-4,5, c1.intX, c1.intY);
+				ssm.sendText("shoot,"+c1.intID+","+4+","+-4+","+5+","+c1.intX+","+c1.intY);
+				gamePanel.projectiles = c1.projectiles;
+			}else if(intX >= c1.intX && intY >= c1.intY){
+				c1.shoot(c1.intID,4,4,5, c1.intX, c1.intY);
+				ssm.sendText("shoot,"+c1.intID+","+4+","+4+","+5+","+c1.intX+","+c1.intY);
+				gamePanel.projectiles = c1.projectiles;
 			}
 		}
 	}
@@ -262,6 +385,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				for(intCol = 0; intCol < 5; intCol++){
 					mapData[intRow][intCol] = strSplit[intCol];
 					tutorialPanel.mapData[intRow][intCol] = mapData[intRow][intCol];
+				}
+				for(intCol = 0; intCol < 5; intCol++){
+					mapData[intRow][intCol] = strSplit[intCol];
+					gamePanel.mapData[intRow][intCol] = mapData[intRow][intCol];
 				}
 			}
 			for(int intCount = 0; intCount < 484; intCount++){
@@ -293,13 +420,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	
 	public void collision(){//Collision detection
-		for(int intCount = c1.projectiles.size() -1; intCount >= 0; intCount--){ // projectiles
+		for(int intCount = c1.projectiles.size() -1; intCount >= 0; intCount--){ // projectiles w/ player
 			if(c1.projectiles.get(intCount).intX < c1.intX+c1.intSizeX && c1.projectiles.get(intCount).intY < c1.intY+c1.intSizeY && 
 			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intX) > c1.intX && 
 			(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intY) > c1.intY){
 				if(c1.projectiles.get(intCount).intID != c1.intID){
 					c1.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
 					c1.projectiles.remove(intCount);
+					if(intPlaying == 2){
+						ssm.sendText("removeProj,"+intCount);		
+					}
 				}
 			}
 		}
@@ -308,7 +438,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			(map.get(intCount).intSizeX+map.get(intCount).intX) > c1.intX && 
 			(map.get(intCount).intSizeY+map.get(intCount).intY) > c1.intY){
 				c1.collision(map.get(intCount).intID, 0);
-				System.out.println(1);
+				//System.out.println(1);
 			}
 			for(int intCount2 = c1.projectiles.size() -1; intCount2 >= 0; intCount2--){ // projectiles w/ terrain
 				if(c1.projectiles.get(intCount2).intX < map.get(intCount).intX+map.get(intCount).intSizeX && c1.projectiles.get(intCount2).intY < map.get(intCount).intSizeY+map.get(intCount).intY && 
@@ -321,9 +451,25 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}
 				}
 			}
-		}		
+		}
 	}
 	
+	public void addChar(int intID, int intCharType){ // will modify later.
+		if(intCharType == 1){
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+		}else if(intCharType == 1){
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+		}else if(intCharType == 1){
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+		}else if(intCharType == 1){
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+		}
+			
+	}
+	
+	public void updateChars(){
+		
+	}
 	
 	///constructor
 	public GameController(){

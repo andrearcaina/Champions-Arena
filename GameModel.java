@@ -17,7 +17,7 @@ public class GameModel{
 	// Temporary hypothetical properties/methods of characters
 	public class Character1{
 		///properties
-		int intID;
+		int intID = 0;
 		int intX = 0; //temp
 		int intY = 0; //temp
 		int intHP;
@@ -65,8 +65,8 @@ public class GameModel{
 			intSpeedX = -intSpeedXIn;
 		}
 		
-		public void shoot(int intSpeedXn, int intSpeedYn, int intSize){
-			projectiles.add(new Projectile1(intID, intX, intY, 200, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intX, intY));
+		public void shoot(int intIDn, int intSpeedXn, int intSpeedYn, int intSize, int intXfrom, int intYfrom){
+			projectiles.add(new Projectile1(intIDn, intXfrom, intYfrom, 200, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intXfrom, intYfrom));
 		}
 		
 		public void skill(){
