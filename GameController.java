@@ -134,21 +134,33 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			// After lockin checks selected character and disables selection of any characters
 			// Fades out all other character images that were not selected
 			if(c1.intCharType == 1){
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Flamel. \n"); 
+				String strPicked = "picked Flamel.";
+				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
 				charPanel.c1Button.removeActionListener(this);
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 			}else if(c1.intCharType == 2){
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Bishop. \n"); 
+				String strPicked = "picked Bishop.";
+				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
 				charPanel.c2Button.removeActionListener(this);
 				charPanel.c1Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 			}else if(c1.intCharType == 3){
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Magnus. \n"); 
+				String strPicked = "picked Magnus.";
+				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
 				charPanel.c3Button.removeActionListener(this);
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c1Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 			}else if(c1.intCharType == 4){
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Shadow. \n"); 
+				String strPicked = "picked Shadow.";
+				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
 				charPanel.c4Button.removeActionListener(this);
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
