@@ -28,11 +28,15 @@ public class GameModel{
 		int intSizeY = 20;
 		int intSkillTime = 0;
 		int intCharType;
+		int intLives = 3;
+		
 		ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 		boolean blnShooting = false;
 	
 		///methods
 		public void spawn(){
+			intX = 10;
+			intY = 10;
 		}
 		
 		public void moveX(){
@@ -80,13 +84,11 @@ public class GameModel{
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, -12, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, -12, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 12, 10, 20, intXn, intYn));		
-					intSkillTime = 0;
 				}else if(intCharTypeIn == 2){
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, -10, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));		
-					intSkillTime = 0;
 				}else if(intCharTypeIn == 4){
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 0, 10, 20, intXn, intYn));
@@ -94,6 +96,8 @@ public class GameModel{
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -15, 0, 10, 20, intXn, intYn));		
+				}
+				if(intID == intIDn){
 					intSkillTime = 0;
 				}
 				return true;
@@ -131,6 +135,24 @@ public class GameModel{
 			if(intSkillTime > 100){
 				intSkillTime = 100;
 			}
+		}
+		
+		public boolean deathCheck(){
+			if(intHP < 1){
+				intLives--;
+				intX = 10000;
+				intY = 10000;
+				intHP = 100;
+				return true;
+			}
+			return false;
+		}
+		
+		public boolean outCheck(){
+			if(intLives < 1){
+				return true;
+			}
+			return false;
 		}
 		
 		///constructor

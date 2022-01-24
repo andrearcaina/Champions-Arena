@@ -105,7 +105,6 @@ public class GPanel extends JPanel implements ActionListener{
 		
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
 			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY); 			
-			
 			if(characters.get(intCount).intCharType == 1){
 				g.drawImage(flamel, characters.get(intCount).intX, characters.get(intCount).intY, null);
 			}else if(characters.get(intCount).intCharType == 2){
@@ -117,15 +116,24 @@ public class GPanel extends JPanel implements ActionListener{
 			}
 			 
 		}
-			
+				
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);
 		g.fillRect(0, 660, 660, 60);
 		
 		g.setColor(Color.RED);
-		g.drawString("HP: "+intHP, 750, 50);
+		g.drawString("HP: "+intHP, 750, 300);
 		g.setColor(Color.BLUE);
-		g.drawString("Skill: "+intSkillTime, 750, 200);
+		g.drawString("Skill: "+intSkillTime, 750, 350);
+		
+		g.setColor(Color.RED);
+		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
+			int intXDraw = 730 + (intCount*50);
+			g.drawString(characters.get(intCount).intID+": ", intXDraw, 50);
+			g.drawString("HP: "+characters.get(intCount).intHP, intXDraw, 100);	
+			g.drawString("Skill: "+characters.get(intCount).intSkillTime, intXDraw, 150);
+			g.drawString("LIVES: "+characters.get(intCount).intLives, intXDraw, 200);		 
+		}
 	}
 	
 	//constructor

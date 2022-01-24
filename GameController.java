@@ -184,6 +184,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				loadMap();
 				ssm.sendText("starting,"+intPlayerTotal);
 			}
+			c1.intLives = 3;
 		}else if(evt.getSource() == charPanel.chatMessage){
 			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": "+charPanel.chatMessage.getText()+"\n");
 			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+charPanel.chatMessage.getText());
@@ -230,6 +231,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 						characters.get(intCount).intX = Integer.parseInt(strParts[2]);
 						characters.get(intCount).intY = Integer.parseInt(strParts[3]);
 						characters.get(intCount).intHP = Integer.parseInt(strParts[4]);
+						characters.get(intCount).intSkillTime = Integer.parseInt(strParts[5]);
 					}
 				}
 			}
@@ -252,10 +254,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles;
 				loadMap();
+				c1.intLives = 3;
 			}
 			// Messaage type: Skill
 			if(strParts[0].equals("skill")){
 				c1.skill(Integer.parseInt(strParts[2]), Integer.parseInt(strParts[1]),Integer.parseInt(strParts[3]), Integer.parseInt(strParts[4]));
+			}
+			// Message type: die
+			if(strParts[0].equals("die")){
+				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
+					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){
+						characters.get(intCount).intLives = Integer.parseInt(strParts[2]);
+					}
+				}
 			}
 			
 		}
@@ -288,12 +299,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.projectiles = c1.projectiles;
 				gamePanel.intHP = c1.intHP;
 				gamePanel.map = map;
-				ssm.sendText("data"+"," + c1.intID+","+c1.intX+"," + c1.intY+","+ c1.intHP);
+				if(c1.deathCheck()){//=true
+					ssm.sendText("die,"+c1.intID+","+c1.intLives);
+					c1.spawn();
+				}
+				ssm.sendText("data"+"," + c1.intID+","+c1.intX+"," + c1.intY+","+ c1.intHP+","+c1.intSkillTime);
 				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
 					if(characters.get(intCount).intID == c1.intID){
 						characters.get(intCount).intX = c1.intX;
 						characters.get(intCount).intY = c1.intY;
 						characters.get(intCount).intHP = c1.intHP;
+						characters.get(intCount).intSkillTime = c1.intSkillTime;
+						characters.get(intCount).intLives = c1.intLives;
 					}
 				}
 				gamePanel.characters = characters;
@@ -363,10 +380,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
 		if(evt.getKeyChar() == 'l'){
-			cT.shoot(99,0,4,10,cT.intX,cT.intY);
-			cT.update();
-			c1.projectiles.addAll(cT.projectiles);
-			cT.projectiles.remove(0);
+			if(intPlaying == 1){
+				cT.shoot(99,0,4,10,cT.intX,cT.intY);
+				cT.update();
+				c1.projectiles.addAll(cT.projectiles);
+				cT.projectiles.remove(0);
+			}
 		}
 		if(evt.getKeyChar() == 'r'){
 			if(c1.skill(c1.intID, c1.intCharType, c1.intX, c1.intY)){
@@ -374,7 +393,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					ssm.sendText("skill,"+c1.intCharType+","+c1.intID+","+c1.intX+","+c1.intY);
 				}
 			}
-			c1.update();
+			//c1.update();
 	
 		}
 	}
