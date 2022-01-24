@@ -43,7 +43,11 @@ public class GPanel extends JPanel implements ActionListener{
 	BufferedImage r;
 	BufferedImage gp;
 	BufferedImage bo;
-	BufferedImage tutorialChar;
+	
+	BufferedImage flamel;
+	BufferedImage bishop;
+	BufferedImage magnus;
+	BufferedImage shadow;
 		
 	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
@@ -102,10 +106,18 @@ public class GPanel extends JPanel implements ActionListener{
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
 			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY); 			
 			
+			if(characters.get(intCount).intCharType == 1){
+				g.drawImage(flamel, characters.get(intCount).intX, characters.get(intCount).intY, null);
+			}else if(characters.get(intCount).intCharType == 2){
+				g.drawImage(bishop, characters.get(intCount).intX, characters.get(intCount).intY, null);
+			}else if(characters.get(intCount).intCharType == 3){
+				g.drawImage(magnus, characters.get(intCount).intX, characters.get(intCount).intY, null);
+			}else if(characters.get(intCount).intCharType == 4){
+				g.drawImage(shadow, characters.get(intCount).intX, characters.get(intCount).intY, null);
+			}
+			 
 		}
-		
-		//g.drawImage(tutorialChar, intX, intY, null);
-		
+			
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);
 		g.fillRect(0, 660, 660, 60);
@@ -137,7 +149,13 @@ public class GPanel extends JPanel implements ActionListener{
 			v = ImageIO.read(new File("volcano.png"));
 			r = ImageIO.read(new File("rock.png"));
 			gp = ImageIO.read(new File("grasspath.png"));
-			tutorialChar = ImageIO.read(new File("tc.png"));
+			
+			flamel = ImageIO.read(new File("ingame_flamel.png"));
+			bishop = ImageIO.read(new File("ingame_bishop.png"));
+			magnus = ImageIO.read(new File("ingame_magnus.png"));
+			shadow = ImageIO.read(new File("ingame_shadow.png"));
+			
+			//tutorialChar = ImageIO.read(new File("tc.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);

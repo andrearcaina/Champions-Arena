@@ -133,7 +133,7 @@ public class TPanel extends JPanel implements ActionListener{
 			v = ImageIO.read(new File("volcano.png"));
 			r = ImageIO.read(new File("rock.png"));
 			gp = ImageIO.read(new File("grasspath.png"));
-			tutorialChar = ImageIO.read(new File("tc.png"));
+			tutorialChar = ImageIO.read(new File("ingame_magnus.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
