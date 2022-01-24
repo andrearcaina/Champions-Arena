@@ -100,11 +100,33 @@ public class GPanel extends JPanel implements ActionListener{
 		
 		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
+			if(projectiles.get(intCount).intID == 5){
+				g.setColor(Color.RED);
+			}else if(projectiles.get(intCount).intID == 6){
+				g.setColor(Color.BLUE);
+			}else if(projectiles.get(intCount).intID == 7){
+				g.setColor(Color.GREEN);
+			}else if(projectiles.get(intCount).intID == 8){
+				g.setColor(Color.YELLOW);
+			}else if(projectiles.get(intCount).intID == 9){
+				g.setColor(Color.PINK);
+			}
 			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
 		
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
-			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY); 			
+			if(characters.get(intCount).intID == 5){
+				g.setColor(Color.RED);
+			}else if(characters.get(intCount).intID == 6){
+				g.setColor(Color.BLUE);
+			}else if(characters.get(intCount).intID == 7){
+				g.setColor(Color.GREEN);
+			}else if(characters.get(intCount).intID == 8){
+				g.setColor(Color.YELLOW);
+			}else if(characters.get(intCount).intID == 9){
+				g.setColor(Color.PINK);
+			}
+			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY+15, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY-15); 			
 			if(characters.get(intCount).intCharType == 1){
 				g.drawImage(flamel, characters.get(intCount).intX, characters.get(intCount).intY, null);
 			}else if(characters.get(intCount).intCharType == 2){

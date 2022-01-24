@@ -29,6 +29,7 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	JButton readyUp = new JButton("Ready Up!");
 	JButton startGame = new JButton("START GAME");
+	JButton lock = new JButton("Lock Server");
 	
 	JLabel serverIP = new JLabel("number"); //put server IP of server here
 	JLabel waitHost = new JLabel("Waiting for host to start game..."); 
@@ -113,6 +114,10 @@ public class CPanel extends JPanel implements ActionListener{
 		
 		startGame.setEnabled(false);
 		readyUp.setEnabled(false);
+		c1Button.setEnabled(false);
+		c2Button.setEnabled(false);
+		c3Button.setEnabled(false);
+		c4Button.setEnabled(false);
 		
 		charTitle.setBounds(30, 20, 800, 100);
 		charTitle.setForeground(Color.WHITE);
@@ -132,6 +137,7 @@ public class CPanel extends JPanel implements ActionListener{
 		readyUp.setBounds(235, 340, 320, 120);
 		serverIP.setBounds(585, 360, 200, 70);
 		startGame.setBounds(265, 480, 250, 80);
+		lock.setBounds(100, 480, 80, 80);
 		waitHost.setBounds(123, 580, 660, 70);
 		chatPane.setBounds(860, 20, 380, 550);
 		chatMessage.setBounds(860, 580, 380, 80);
@@ -150,6 +156,11 @@ public class CPanel extends JPanel implements ActionListener{
 		startGame.setBackground(new Color(102, 102, 102));
 		startGame.setHorizontalAlignment(SwingConstants.CENTER);
 		startGame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
+		lock.setForeground(Color.WHITE);
+		lock.setBackground(new Color(102, 102, 102));
+		lock.setHorizontalAlignment(SwingConstants.CENTER);
+		lock.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		
 		serverIP.setForeground(Color.BLACK);
 		serverIP.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,6 +182,7 @@ public class CPanel extends JPanel implements ActionListener{
 		this.add(c4Button);
 		this.add(readyUp);
 		this.add(startGame);
+		this.add(lock);
 		this.add(serverIP);
 		this.add(waitHost);
 		this.add(chatMessage);

@@ -35,8 +35,19 @@ public class GameModel{
 	
 		///methods
 		public void spawn(){
-			intX = 10;
-			intY = 10;
+			if(intID == 5){ // spawning players
+				intX = 10;
+				intY = 10;
+			}else if(intID == 6){
+				intX = 620;
+				intY = 10;
+			}else if(intID == 7){
+				intX = 10;
+				intY = 620;
+			}else if(intID == 8){
+				intX = 620;
+				intY = 620;				
+			}
 		}
 		
 		public void moveX(){
@@ -89,6 +100,15 @@ public class GameModel{
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, -10, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));		
+				}else if(intCharTypeIn == 3){
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 8, 8, 20, 30, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -8, -8, 20, 30, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 8, -8, 20, 30, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -8, 8, 20, 30, intXn, intYn));					
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 15, 15, 5, 10, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -15, -15, 5, 10, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 15, -15, 5, 10, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -15, 15, 5, 10, intXn, intYn));		
 				}else if(intCharTypeIn == 4){
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 0, 10, 20, intXn, intYn));
