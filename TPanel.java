@@ -43,6 +43,7 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage r;
 	BufferedImage gp;
 	BufferedImage bo;
+	BufferedImage to;
 	BufferedImage tutorialChar;
 		
 	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
@@ -92,6 +93,8 @@ public class TPanel extends JPanel implements ActionListener{
 				g.drawImage(r, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("grasspath")){
 				g.drawImage(gp, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
+			}else if(mapData[intCount][2].equals("torch")){
+				g.drawImage(to, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}
 		}
 		
@@ -133,6 +136,7 @@ public class TPanel extends JPanel implements ActionListener{
 			v = ImageIO.read(new File("volcano.png"));
 			r = ImageIO.read(new File("rock.png"));
 			gp = ImageIO.read(new File("grasspath.png"));
+			to = ImageIO.read(new File("torch.png"));
 			tutorialChar = ImageIO.read(new File("ingame_magnus.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
