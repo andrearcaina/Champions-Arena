@@ -357,6 +357,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				shoot(); // check if shoot command is issued.
 				blnSkill = false;
 				blnShoot = false;
+				c1.update();
 				c1.moveX();
 				c1.moveY();
 				collision();
@@ -365,7 +366,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.intSizeX = c1.intSizeX;
 				gamePanel.intSizeY = c1.intSizeY;
 				gamePanel.intSkillTime = c1.intSkillTime;
-				c1.update();
 				gamePanel.projectiles = c1.projectiles;
 				gamePanel.intHP = c1.intHP;
 				gamePanel.map = map;
