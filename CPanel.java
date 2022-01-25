@@ -29,7 +29,7 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	JButton readyUp = new JButton("Ready Up!");
 	JButton startGame = new JButton("START GAME");
-	JButton lock = new JButton("Lock Server");
+	JButton lockIn = new JButton("Lock Lobby");
 	
 	JLabel serverIP = new JLabel("number"); //put server IP of server here
 	JLabel waitHost = new JLabel("Waiting for host to start game..."); 
@@ -95,6 +95,7 @@ public class CPanel extends JPanel implements ActionListener{
 			c3Name.setFont(customFont1);
 			c4Name.setFont(customFont1);
 			serverIP.setFont(customFont5);
+			lockIn.setFont(customFont5);
 			waitHost.setFont(customFont1);
 			
 			startGame.setFont(customFont2);
@@ -137,7 +138,7 @@ public class CPanel extends JPanel implements ActionListener{
 		readyUp.setBounds(235, 340, 320, 120);
 		serverIP.setBounds(585, 360, 200, 70);
 		startGame.setBounds(265, 480, 250, 80);
-		lock.setBounds(100, 480, 80, 80);
+		lockIn.setBounds(20, 360, 200, 70);
 		waitHost.setBounds(123, 580, 660, 70);
 		chatPane.setBounds(860, 20, 380, 550);
 		chatMessage.setBounds(860, 580, 380, 80);
@@ -157,10 +158,10 @@ public class CPanel extends JPanel implements ActionListener{
 		startGame.setHorizontalAlignment(SwingConstants.CENTER);
 		startGame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		
-		lock.setForeground(Color.WHITE);
-		lock.setBackground(new Color(102, 102, 102));
-		lock.setHorizontalAlignment(SwingConstants.CENTER);
-		lock.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		lockIn.setForeground(Color.WHITE);
+		lockIn.setBackground(new Color(102, 102, 102));
+		lockIn.setHorizontalAlignment(SwingConstants.CENTER);
+		lockIn.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		
 		serverIP.setForeground(Color.BLACK);
 		serverIP.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,6 +169,7 @@ public class CPanel extends JPanel implements ActionListener{
 		
 		chatMessage.setForeground(Color.WHITE);
 		chatMessage.setBackground(new Color(102, 102, 102));
+		chatArea.setEditable(false);
 		chatArea.setForeground(Color.WHITE);
 		chatArea.setBackground(new Color(102, 102, 102));
 		
@@ -182,7 +184,7 @@ public class CPanel extends JPanel implements ActionListener{
 		this.add(c4Button);
 		this.add(readyUp);
 		this.add(startGame);
-		this.add(lock);
+		this.add(lockIn);
 		this.add(serverIP);
 		this.add(waitHost);
 		this.add(chatMessage);

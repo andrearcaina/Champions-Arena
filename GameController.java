@@ -13,10 +13,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	Timer timer = new Timer(1000/60, this);
 	Timer countdownTimer = new Timer(1000, this);
 	int intSecond = 5;
+	int intRandom;
 	SuperSocketMaster ssm;
 	boolean blnServer;
 	int intPlayerCount = 1;
 	int intPlayerTotal = 1;
+	int intStartCheck = 0;
 	int intX = 0;
 	int intY = 0;
 	boolean blnFull = false;
@@ -34,8 +36,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	//leaderboard/win/lost/end panel: UX9
 	///EPanel endPanel = new EPanel(); //once game ends panel / leaderboards
 	
-	//cap limit panel: UX10
-	///CPanel capPanel = new CPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
+	//sorry/cap limit panel: UX10
+	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
 	//Accessing the Character object in the GameModel class
 	// tutorial character
@@ -65,6 +67,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == lobbyPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
+		}else if(evt.getSource() == capPanel.Return){
+			frame.setContentPane(mainPanel);
+			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
 			lobbyPanel.joinLobby.setEnabled(false);
 			lobbyPanel.enterIP.setEnabled(false);
@@ -92,20 +97,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack();
 				charPanel.serverIP.setText("IP: "+lobbyPanel.enterIP.getText());
 				charPanel.startGame.setVisible(false);
-				charPanel.lock.setVisible(false);
+				charPanel.lockIn.setVisible(false);
 				String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
 				if(ssm != null){
 					ssm.sendText(strConnect);
 					//System.out.println(strConnect);
 				}
-			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n");
-			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+"joined the lobby.\n");
-			
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n");
+				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+"joined the lobby.\n"); 
 			}else if(blnConnect == false){
+				
 			}
 			
 		}else if(evt.getSource() == helpPanel.Tutorial){
-			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor"));
 			frame.addKeyListener(this);
 			frame.addMouseListener(this);
 			frame.requestFocus();
@@ -114,7 +118,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(tutorialPanel);
 			frame.pack();
 			tutorialPanel.projectiles = c1.projectiles;
-			loadMap();
+			loadMap("map1.csv");
 			frame.requestFocus();
 		}else if(evt.getSource() == charPanel.c1Button){
 			charPanel.intCharType = 1;
@@ -136,7 +140,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.readyUp.setEnabled(false);
 			String strSelect = "select,"+c1.intID+","+c1.intCharType;
 			ssm.sendText(strSelect);
-			// After lockin checks selected character and disables selection of any characters
+			// After lockIn checks selected character and disables selection of any characters
 			// Fades out all other character images that were not selected
 			if(c1.intCharType == 1){
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Flamel. \n"); 
@@ -176,7 +180,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME
 			System.out.println(intPlayerTotal);
 			System.out.println(intPlayerCount);
-			if(intPlayerCount == intPlayerTotal){
+			if(intPlayerCount == intStartCheck){
 				System.out.println(2);
 				frame.addKeyListener(this);
 				frame.addMouseListener(this);
@@ -186,14 +190,31 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setContentPane(gamePanel);
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles;
-				loadMap();
-				ssm.sendText("starting,"+intPlayerTotal);
+				intRandom = (int)(Math.random()*3)+1;
+				System.out.println("random numb: "+intRandom);
+				if(intRandom == 1){
+					System.out.println("Loading game map 1");
+					String strMap = "gamemap1.csv";
+					loadMap(strMap);
+					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
+				}else if(intRandom == 2){
+					System.out.println("Loading game map 2");
+					String strMap = "gamemap2.csv";
+					loadMap(strMap);
+					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
+				}else if(intRandom == 3){
+					System.out.println("Loading game map 3");
+					String strMap = "gamemap3.csv";
+					loadMap(strMap);
+					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
+				}
 				c1.spawn();
 				intPlayerTotal = 4;
 			}
 			c1.intLives = 3;
-		}else if(evt.getSource() == charPanel.lock){
-			charPanel.lock.setEnabled(false);
+		}else if(evt.getSource() == charPanel.lockIn){
+			charPanel.lockIn.setEnabled(false);
+			intStartCheck = intPlayerTotal;
 			intPlayerTotal = 4;
 			charPanel.c1Button.setEnabled(true);
 			charPanel.c2Button.setEnabled(true);
@@ -228,7 +249,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(strParts[0].equals("maxCap")){
 				if(c1.intID < 2){
 					ssm.disconnect();
-					System.out.println("ME GONE");					
+					System.out.println("ME GONE");
+					capPanel.labelTwo.setText("four players in a lobby. Better luck next time "+lobbyPanel.enterUsername.getText()+".");
+					lobbyPanel.enterUsername.setText("E.g: DIABLOGAMER1337");
+					lobbyPanel.enterIP.setText("Enter IP Address");
+					frame.setContentPane(capPanel);
+					frame.pack();			
 				}
 				System.out.println("Max Cap");
 			}
@@ -290,7 +316,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setContentPane(gamePanel);
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles;
-				loadMap();
+				loadMap(strParts[2]);
 				c1.intLives = 3;
 				c1.spawn();
 				
@@ -509,29 +535,30 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	
 	//read CSV
-	public void loadMap(){ // temporary -- for tutorial
+	public void loadMap(String strCSV){ // temporary -- for tutorial
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor")); //custom aim cursor
 		try{
 			//reading CSV file
-			BufferedReader map1 = new BufferedReader(new FileReader("map1.csv"));
+			BufferedReader map1 = new BufferedReader(new FileReader(strCSV));
+			
 			int intCol;
 			int intRow;
 			String strRead;
 			String strSplit[];
 			String[][] mapData = new String[484][5];
-			for(intRow = 0; intRow < 484; intRow++){
+			for(intRow = 0; intRow < 484; intRow++){ // reading the map and loading it in
 				strRead = map1.readLine();
 				strSplit = strRead.split(",");
 				for(intCol = 0; intCol < 5; intCol++){
 					mapData[intRow][intCol] = strSplit[intCol];
-					tutorialPanel.mapData[intRow][intCol] = mapData[intRow][intCol];
+					tutorialPanel.mapData[intRow][intCol] = mapData[intRow][intCol]; //loading tutorial map
 				}
 				for(intCol = 0; intCol < 5; intCol++){
 					mapData[intRow][intCol] = strSplit[intCol];
-					gamePanel.mapData[intRow][intCol] = mapData[intRow][intCol];
+					gamePanel.mapData[intRow][intCol] = mapData[intRow][intCol]; //loading game map (randomized)
 				}
 			}
-			for(int intCount = 0; intCount < 484; intCount++){
-				//map.add(new GameModel().new Terrain1(500, 300, 50, 50)); <-- Format to add new Terrain. Position, Size, ID number (type of terrain)
+			for(int intCount = 0; intCount < 484; intCount++){ // detecting terrain
 				if(mapData[intCount][2].equals("water")){	
 					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 50));
 				}else if(mapData[intCount][2].equals("dummy")){
@@ -562,6 +589,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
 				}else if(mapData[intCount][2].equals("grasspath")){
 				
+				}else if(mapData[intCount][2].equals("torch")){
+					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 100));
 				}
 			}
 			
@@ -654,9 +683,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
 		charPanel.chatMessage.addActionListener(this);
-		charPanel.lock.addActionListener(this);
+		charPanel.lockIn.addActionListener(this);
 				
 		//tutorialPanel
+		
+		
+		//capPanel
+		capPanel.Return.addActionListener(this);
 		
 		//cursor
 		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
