@@ -143,7 +143,7 @@ public class GameModel{
 		}
 
 		public void update(){ // projectile range
-			for(int intCount = projectiles.size()-1; intCount >= 0; intCount--){
+			for(int intCount = projectiles.size()-1; intCount > -1; intCount--){
 				projectiles.get(intCount).move();
 				if (projectiles.get(intCount).intShotX + projectiles.get(intCount).intMaxRangeX < projectiles.get(intCount).intX || projectiles.get(intCount).intShotX - projectiles.get(intCount).intMaxRangeX > projectiles.get(intCount).intX){
 					projectiles.remove((intCount));

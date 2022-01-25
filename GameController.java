@@ -303,8 +303,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			// Message type: remove proj
 			if(strParts[0].equals("removeProj")){ 
-				c1.projectiles.remove(Integer.parseInt(strParts[1]));
-				System.out.println("Removed");
+				try{
+					c1.projectiles.remove(Integer.parseInt(strParts[1]));
+					System.out.println("Removed"+Integer.parseInt(strParts[1]));
+				}catch(IndexOutOfBoundsException e){
+					
+				}
+				
 			}
 			// Messaage type: Starto
 			if(strParts[0].equals("starting")){
@@ -357,9 +362,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				shoot(); // check if shoot command is issued.
 				blnSkill = false;
 				blnShoot = false;
-				c1.update();
 				c1.moveX();
 				c1.moveY();
+				c1.update();
 				collision();
 				gamePanel.intX = c1.intX;
 				gamePanel.intY = c1.intY;
