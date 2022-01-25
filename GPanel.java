@@ -148,13 +148,65 @@ public class GPanel extends JPanel implements ActionListener{
 		g.setColor(Color.BLUE);
 		g.drawString("Skill: "+intSkillTime, 750, 350);
 		
-		g.setColor(Color.RED);
+		//g.setColor(Color.RED);
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
-			int intXDraw = 730 + (intCount*50);
-			g.drawString(characters.get(intCount).intID+": ", intXDraw, 50);
-			g.drawString("HP: "+characters.get(intCount).intHP, intXDraw, 100);	
-			g.drawString("Skill: "+characters.get(intCount).intSkillTime, intXDraw, 150);
-			g.drawString("LIVES: "+characters.get(intCount).intLives, intXDraw, 200);		 
+			
+			if(characters.get(intCount).intID == 5){
+				g.setColor(Color.BLACK);
+				g.fillRect(679, 9, 202, 32);
+				g.setColor(Color.RED);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+				g.drawString("HP: "+characters.get(intCount).intHP, 880, 15);
+				g.fillRect(680, 10, characters.get(intCount).intHP*2, 30);
+				
+				g.setColor(new Color(139, 0, 0));
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 880, 65);
+				g.fillRect(680, 50, characters.get(intCount).intSkillTime*2, 30);
+				
+			}else if(characters.get(intCount).intID == 6){
+				g.setColor(Color.BLACK);
+				g.fillRect(679, 89, 202, 32);
+				g.setColor(Color.BLUE);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+				g.drawString("HP: "+characters.get(intCount).intHP, 880, 105);
+				g.fillRect(680, 90, characters.get(intCount).intHP*2, 30);
+				
+				g.setColor(new Color(0, 0, 139));
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 880, 145);
+				g.fillRect(680, 130, characters.get(intCount).intSkillTime*2, 30);
+				
+			}else if(characters.get(intCount).intID == 7){
+				g.setColor(Color.BLACK);
+				g.fillRect(679, 169, 202, 32);
+				g.setColor(Color.GREEN);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+				g.drawString("HP: "+characters.get(intCount).intHP, 880, 185);
+				g.fillRect(680, 170, characters.get(intCount).intHP*2, 30);
+				
+				g.setColor(new Color(0, 139, 0));
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 880, 225);
+				g.fillRect(680, 210, characters.get(intCount).intSkillTime*2, 30);
+			
+			}else if(characters.get(intCount).intID == 8){
+				g.setColor(Color.BLACK);
+				g.fillRect(679, 249, 202, 32);
+				g.setColor(Color.YELLOW);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+				g.drawString("HP: "+characters.get(intCount).intHP, 880, 265);
+				g.fillRect(680, 250, characters.get(intCount).intHP*2, 30);
+				
+				g.setColor(new Color(204, 204, 0));
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 880, 305);
+				g.fillRect(680, 290, characters.get(intCount).intSkillTime*2, 30);
+				
+			}else if(characters.get(intCount).intID == 9){
+				g.setColor(Color.BLACK);
+				g.fillRect(679, 339, 202, 32);
+				g.setColor(Color.PINK);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+				g.drawString("HP: "+characters.get(intCount).intHP, 880, 100);
+				g.fillRect(680, 340, characters.get(intCount).intHP*2, 30);
+			}	 
 		}
 	}
 	
