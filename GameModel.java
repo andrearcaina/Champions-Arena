@@ -48,6 +48,7 @@ public class GameModel{
 				intX = 620;
 				intY = 620;				
 			}
+			intHP = 100;
 		}
 		
 		public void moveX(){

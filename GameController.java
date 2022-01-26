@@ -21,7 +21,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	int intStartCheck = 0;
 	int intX = 0;
 	int intY = 0;
-	boolean blnFull = false;
+	boolean blnIn = false;
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
 	MPanel mainPanel = new MPanel(); //main panel
@@ -213,6 +213,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}
 				c1.spawn();
 				intPlayerTotal = 4;
+				blnIn = true;
 			}
 			c1.intLives = 3;
 		}else if(evt.getSource() == charPanel.lockIn){
@@ -327,6 +328,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				loadMap(strParts[2]);
 				c1.intLives = 3;
 				c1.spawn();
+				blnIn = true;
 				
 			}
 			// Messaage type: Skill
@@ -340,6 +342,46 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 						characters.get(intCount).intLives = Integer.parseInt(strParts[2]);
 					}
 				}
+			}
+			// Message type: out
+			if(strParts[0].equals("out")){
+				if(blnServer){
+					intPlayerCount--;
+					if(intPlayerCount > 1){
+						
+					}else{
+						ssm.sendText("gameDone,1");
+						if(blnIn){
+							ssm.sendText("winner,"+c1.intID);
+							frame.setContentPane(endPanel);
+							frame.pack();
+							System.out.println(c1.intID);
+							resetVals();
+							ssm.disconnect();
+						}
+					}
+				}
+			}
+			
+			// Message type; game done
+			if(strParts[0].equals("gameDone")){
+				if(blnIn){
+					ssm.sendText("winner,"+c1.intID);
+					frame.setContentPane(endPanel);
+					frame.pack();
+					System.out.println(c1.intID);
+					resetVals();
+					ssm.disconnect();
+				}
+			}
+			
+			// Message type; winner!
+			if(strParts[0].equals("winner")){
+				frame.setContentPane(endPanel);
+				frame.pack();
+				System.out.println(strParts[1]);
+				resetVals();
+				ssm.disconnect();
 			}
 			
 		}
@@ -362,6 +404,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				tutorialPanel.map = map;	
 			}
 			if(intPlaying == 2){
+				if(!blnIn){
+					c1.intX = -1000;
+					c1.intY = -1000;
+				}
 				shoot(); // check if shoot command is issued.
 				blnSkill = false;
 				blnShoot = false;
@@ -379,6 +425,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.map = map;
 				if(c1.deathCheck()){//=true
 					ssm.sendText("die,"+c1.intID+","+c1.intLives);
+					if(c1.outCheck()){
+						ssm.sendText("data"+"," + c1.intID+","+c1.intX+"," + c1.intY+","+ c1.intHP+","+c1.intSkillTime);
+						ssm.sendText("out,"+c1.intID);
+						blnIn = false;
+						if(blnServer){
+							intPlayerCount--;
+							if(intPlayerCount > 1){
+								
+							}else{
+								ssm.sendText("gameDone,1");
+							}
+						}
+					}
 					c1.spawn();
 				}
 				ssm.sendText("data"+"," + c1.intID+","+c1.intX+"," + c1.intY+","+ c1.intHP+","+c1.intSkillTime);
@@ -657,6 +716,38 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	public void updateChars(){
 		
+	}
+	
+	public void resetVals(){
+		intPlaying = 0;
+		intSecond = 5;
+		intRandom = 1;
+		blnServer = false;
+		intPlayerCount = 1;
+		intPlayerTotal = 1;
+		intStartCheck = 0;
+		intX = 0;
+		intY = 0;
+		blnIn = false;
+		c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1);
+		map.clear();
+		characters.clear();
+		c1.projectiles.clear();
+		blnShoot = false;
+		blnSkill = false;
+		lobbyPanel.joinLobby.setEnabled(true);
+		lobbyPanel.enterIP.setEnabled(true);
+		lobbyPanel.enterUsername.setEnabled(true);
+		lobbyPanel.Return.setEnabled(true);
+		charPanel.readyUp.setEnabled(true);
+		charPanel.c1Button.setEnabled(false);
+		charPanel.c2Button.setEnabled(false);
+		charPanel.c3Button.setEnabled(false);
+		charPanel.c4Button.setEnabled(false);
+		charPanel.lockIn.setEnabled(true);
+		charPanel.waitHost.setVisible(true);
+		charPanel.startGame.setVisible(true);
+		charPanel.lockIn.setVisible(true);
 	}
 	
 	///constructor
