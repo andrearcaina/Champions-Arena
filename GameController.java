@@ -9,19 +9,19 @@ import java.io.*;
 
 public class GameController implements ActionListener, KeyListener, MouseListener{
 	///properties	
-	JFrame frame = new JFrame("Champions Arena Test 1"); //one frame only
-	Timer timer = new Timer(1000/60, this);
-	Timer countdownTimer = new Timer(1000, this);
+	JFrame frame = new JFrame("Champion's Arena: Fight for Glory"); //one frame only
+	Timer timer = new Timer(1000/60, this); // Gameplay timer.
+	Timer countdownTimer = new Timer(1000, this); // Countdown timer
 	int intSecond = 5;
-	int intRandom;
-	SuperSocketMaster ssm;
-	boolean blnServer;
-	int intPlayerCount = 1;
-	int intPlayerTotal = 1;
-	int intStartCheck = 0;
-	int intX = 0;
-	int intY = 0;
-	boolean blnIn = false;
+	int intRandom; // Maps
+	SuperSocketMaster ssm; // networks
+	boolean blnServer; // is user the server or not
+	int intPlayerCount = 1; // server only: players PLAYING the game
+	int intPlayerTotal = 1; // server only: players IN the game LOBBY. Is then  used for some player cap commands and server lockout commands.
+	int intStartCheck = 0; //Duplicate var of intPlayerTotal. Amount  of players in the lobby, thus amount of plaers needed to start the game.
+	int intX = 0; // player x location
+	int intY = 0; // player y location.
+	boolean blnIn = false; // is the player elimed or not
 	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
@@ -41,38 +41,36 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
 	///Accessing the Character object in the GameModel class
-	//character model
-	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1, "");
-	//dummy model
-	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1, ""); 
-	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
-	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
-	boolean blnShoot = false;
-	boolean blnSkill = false;
-	int intPlaying = 0;
+	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1, ""); // Local character
+	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1, ""); // Dummy character
+	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>(); // map is an arraylist of terrain objects.
+	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>(); // all characters in the game's values
+	boolean blnShoot = false; // is shooting
+	boolean blnSkill = false; // is attempting skil
+	int intPlaying = 0; // what type of game are they playing (not playing = 0, is playing single = 1, is playing multi = 2)
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
 	//methods for ActionListener (BUTTON INTERACTIONS + SSM)
 	public void actionPerformed(ActionEvent evt){
-		if(evt.getSource() == mainPanel.Play){
-			frame.setContentPane(lobbyPanel);
+		if(evt.getSource() == mainPanel.Play){ // play button
+			frame.setContentPane(lobbyPanel); // bring to lobby setting
 			frame.pack();
-		}else if(evt.getSource() == mainPanel.Help){
-			frame.setContentPane(helpPanel);
+		}else if(evt.getSource() == mainPanel.Help){ // Help menu button
+			frame.setContentPane(helpPanel); // bring to help screen
 			frame.pack();			
-		}else if(evt.getSource() == mainPanel.Quit){
+		}else if(evt.getSource() == mainPanel.Quit){ // exit game button
 			System.exit(0); //quits application 
-		}else if(evt.getSource() == helpPanel.Return){ 
-			frame.setContentPane(mainPanel);
+		}else if(evt.getSource() == helpPanel.Return){ // return from help menu button
+			frame.setContentPane(mainPanel); // bring to main menu
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.Return){
-			frame.setContentPane(mainPanel);
+		}else if(evt.getSource() == lobbyPanel.Return){ // lobby return button
+			frame.setContentPane(mainPanel); // to main menu
 			frame.pack();
-		}else if(evt.getSource() == capPanel.Return){
-			frame.setContentPane(mainPanel);
+		}else if(evt.getSource() == capPanel.Return){ // capacity limit message screen return button
+			frame.setContentPane(mainPanel); // to main menu
 			frame.pack();
-		}else if(evt.getSource() == endPanel.Return){
-			frame.setContentPane(mainPanel);
+		}else if(evt.getSource() == endPanel.Return){ // leaderboards screen return button
+			frame.setContentPane(mainPanel); // to main menu
 			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
 			lobbyPanel.joinLobby.setEnabled(false);
@@ -82,73 +80,73 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			charPanel.waitHost.setVisible(false);
-			//^^^ Lobby buttons
-			countdownTimer.start();
-			ssm = new SuperSocketMaster(6112, this);
-			boolean blnConnect = ssm.connect();
-			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress());
+			//^^^ Lobby buttons formatting/lobby look fomratting.
+			countdownTimer.start(); //countdown lobby creation
+			ssm = new SuperSocketMaster(6112, this); // set up network info
+			boolean blnConnect = ssm.connect(); // connect
+			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress()); // visuals
 			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
-			blnServer = true;
-			c1.intID = 5;
-			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": created the lobby.\n");
+			blnServer = true; // is server
+			c1.intID = 5; // default ID for server is 5 -- always first to join lobby.
+			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": created the lobby.\n"); // chat messages related to lobby creation.
 			charPanel.chatArea.append((4-intPlayerTotal)+" spot(s) remaining.\n");
 		}else if(evt.getSource() == lobbyPanel.joinLobby){ // JOINING LOBBY
-			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this);
+			ssm = new SuperSocketMaster(lobbyPanel.enterIP.getText(), 6112, this); // connect to lobby
 			boolean blnConnect = ssm.connect();
-			if(blnConnect == true){
-				blnServer = false;
-				frame.setContentPane(charPanel);
+			if(blnConnect == true){ // if successful
+				blnServer = false; // not server
+				frame.setContentPane(charPanel); // to charPanel
 				frame.pack();
-				charPanel.serverIP.setText("IP: "+lobbyPanel.enterIP.getText());
-				charPanel.startGame.setVisible(false);
+				charPanel.serverIP.setText("IP: "+lobbyPanel.enterIP.getText()); 
+				charPanel.startGame.setVisible(false); // lobby visual formatting, removing pointless buttons
 				charPanel.lockIn.setVisible(false);
-				String strConnect = "connect,"+lobbyPanel.enterUsername.getText();
-				if(ssm != null){
+				String strConnect = "connect,"+lobbyPanel.enterUsername.getText(); // set network message notifying you conneted successfully.
+				if(ssm != null){ // if ssm is not null send network message
 					ssm.sendText(strConnect);
 					//System.out.println(strConnect);
 				}
-				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n");
+				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n"); // chat stuff
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+"joined the lobby.\n"); 
-			}else if(blnConnect == false){
+			}else if(blnConnect == false){ // do noting if not successfl
 				
 			}
 			
-		}else if(evt.getSource() == helpPanel.Tutorial){
-			frame.addKeyListener(this);
+		}else if(evt.getSource() == helpPanel.Tutorial){ // tutorial button
+			frame.addKeyListener(this); // add actionlisteners
 			frame.addMouseListener(this);
 			frame.requestFocus();
-			timer.start();
-			intPlaying = 1;
-			frame.setContentPane(tutorialPanel);
+			timer.start(); // game timer start
+			intPlaying = 1; // single player
+			frame.setContentPane(tutorialPanel); // tutorial game visuals panel
 			frame.pack();
-			tutorialPanel.projectiles = c1.projectiles;
-			loadMap("map1.csv");
+			tutorialPanel.projectiles = c1.projectiles; // data setting
+			loadMap("map1.csv"); // map info loading
 			frame.requestFocus();
-		}else if(evt.getSource() == charPanel.c1Button){
-			charPanel.intCharType = 1;
+		}else if(evt.getSource() == charPanel.c1Button){ // character 1 select button
+			charPanel.intCharType = 1; // setting values
 			c1.intCharType = 1;		
-			charPanel.readyUp.setEnabled(true);
-		}else if(evt.getSource() == charPanel.c2Button){
-			charPanel.intCharType = 2;
+			charPanel.readyUp.setEnabled(true); // able to ready up now
+		}else if(evt.getSource() == charPanel.c2Button){ // character 2 select button
+			charPanel.intCharType = 2; // setting vals
 			c1.intCharType = 2;
-			charPanel.readyUp.setEnabled(true);
-		}else if(evt.getSource() == charPanel.c3Button){
-			charPanel.intCharType = 3;
+			charPanel.readyUp.setEnabled(true); // able to ready up now
+		}else if(evt.getSource() == charPanel.c3Button){ // character 3 select button
+			charPanel.intCharType = 3; // setting vals
 			c1.intCharType = 3;
-			charPanel.readyUp.setEnabled(true);
-		}else if(evt.getSource() == charPanel.c4Button){
-			charPanel.intCharType = 4;
+			charPanel.readyUp.setEnabled(true); // able to ready up now
+		}else if(evt.getSource() == charPanel.c4Button){ // character 4 select button
+			charPanel.intCharType = 4; // setting vals
 			c1.intCharType = 4;
-			charPanel.readyUp.setEnabled(true);
-		}else if(evt.getSource() == charPanel.readyUp){
-			charPanel.readyUp.setEnabled(false);
+			charPanel.readyUp.setEnabled(true); // able to ready up now
+		}else if(evt.getSource() == charPanel.readyUp){ // ready up button
+			charPanel.readyUp.setEnabled(false); 
 			
-			c1.strUser = lobbyPanel.enterUsername.getText();
+			c1.strUser = lobbyPanel.enterUsername.getText(); // setting your username
 
-			String strSelect = "select,"+c1.intID+","+c1.intCharType+","+c1.strUser;
+			String strSelect = "select,"+c1.intID+","+c1.intCharType+","+c1.strUser; // setting network message up
 			
-			ssm.sendText(strSelect);
-			// After lockIn checks selected character and disables selection of any characters
+			ssm.sendText(strSelect); // send network message
+			// After lockIn checks selected character and disables selection of any other characters locally
 			// Fades out all other character images that were not selected
 			if(c1.intCharType == 1){
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Flamel. \n"); 
@@ -187,23 +185,22 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c1Button.setEnabled(false);
 				endPanel.strDraw = "Shadow";
 			}
-			charPanel.startGame.setEnabled(true);
-			addChar(c1.intID, c1.intCharType, c1.strUser);
-		}else if(evt.getSource() == charPanel.startGame){ // START GAME
-			System.out.println(intPlayerTotal);
-			System.out.println(intPlayerCount);
-			if(intPlayerCount == intStartCheck){
-				System.out.println(2);
-				frame.addKeyListener(this);
+			charPanel.startGame.setEnabled(true); // only server sees
+			addChar(c1.intID, c1.intCharType, c1.strUser); // adds character to char tracking array
+		}else if(evt.getSource() == charPanel.startGame){ // START GAME func
+			if(intPlayerCount == intStartCheck){ // if players locked in and playing the game is equal to toal players in the lobby
+				//System.out.println(2);
+				frame.addKeyListener(this); // game formatting stuff
 				frame.addMouseListener(this);
 				frame.requestFocus();
-				timer.start();
-				intPlaying = 2;
+				timer.start(); // start gameplay timer
+				intPlaying = 2; // multi player game type
 				frame.setContentPane(gamePanel);
 				frame.pack();
-				gamePanel.projectiles = c1.projectiles;
-				intRandom = (int)(Math.random()*3)+1;
-				System.out.println("random numb: "+intRandom);
+				gamePanel.projectiles = c1.projectiles; // data setting
+				intRandom = (int)(Math.random()*3)+1; // RANDOM MAP
+				System.out.println("random numb: "+intRandom); // system check
+				//based on the number generated, will load corresponding map in the map arraylisst
 				if(intRandom == 1){
 					System.out.println("Loading game map 1");
 					String strMap = "gamemap1.csv";
@@ -220,12 +217,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					loadMap(strMap);
 					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
 				}
-				c1.spawn();
-				intPlayerTotal = 4;
-				blnIn = true;
+				c1.spawn(); //spawns own player into map
+				intPlayerTotal = 4; // locks the lobby
+				blnIn = true; // local player is indeed not eliminated
 			}
-			c1.intLives = 3;
-		}else if(evt.getSource() == charPanel.lockIn){
+			c1.intLives = 3; // local player has 3 lives.
+		}else if(evt.getSource() == charPanel.lockIn){ // lock in button
 			charPanel.lockIn.setEnabled(false);
 			intStartCheck = intPlayerTotal;
 			intPlayerTotal = 4;
@@ -772,6 +769,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c2Button.addActionListener(this);
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
+		timer.stop();
 		
 	}
 	

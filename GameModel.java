@@ -97,7 +97,11 @@ public class GameModel{
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));		
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, -10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, -10, 10, 20, intXn, intYn));
+					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 10, 10, 20, intXn, intYn));		
 				}else if(intCharTypeIn == 3){ // Character three's skill
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 8, 8, 20, 30, intXn, intYn));
 					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -8, -8, 20, 30, intXn, intYn));
@@ -137,8 +141,8 @@ public class GameModel{
 				intX = intX-intSpeedX; // no move
 				intY = intY-intSpeedY;
 			}
-			if (intIDn != intID){ // collides with something else aka projectiles
-				intHP = intHP - intDamagen; // take damage based on damagen field aka projectile's damage value.
+			if (intIDn != intID){ // collides with something else 
+				intHP = intHP - intDamagen; // take damage based on damagen field 
 			}
 		}
 
