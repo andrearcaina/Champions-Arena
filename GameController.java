@@ -42,9 +42,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	///Accessing the Character object in the GameModel class
 	//character model
-	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1);
+	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1, "");
 	//dummy model
-	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1); 
+	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1, ""); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
 	boolean blnShoot = false;
@@ -142,7 +142,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.readyUp.setEnabled(true);
 		}else if(evt.getSource() == charPanel.readyUp){
 			charPanel.readyUp.setEnabled(false);
-			String strSelect = "select,"+c1.intID+","+c1.intCharType;
+			
+			c1.strUser = lobbyPanel.enterUsername.getText();
+
+			String strSelect = "select,"+c1.intID+","+c1.intCharType+","+c1.strUser;
+			
 			ssm.sendText(strSelect);
 			// After lockIn checks selected character and disables selection of any characters
 			// Fades out all other character images that were not selected
@@ -184,7 +188,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				endPanel.strDraw = "Shadow";
 			}
 			charPanel.startGame.setEnabled(true);
-			addChar(c1.intID, c1.intCharType);
+			addChar(c1.intID, c1.intCharType, c1.strUser);
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME
 			System.out.println(intPlayerTotal);
 			System.out.println(intPlayerCount);
@@ -237,13 +241,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 		//SSM STATEMENTS
 		else if(evt.getSource() == ssm){
-			//String testssm = ssm.readText();
-			//System.out.println(testssm);
 			String strParts[] = ssm.readText().split(",");
 			
 			// Message type: connect
 			if(strParts[0].equals("connect")){
-				// textchat.append(strParts[1]+" has joined. \n");
 				if(blnServer){
 					intPlayerTotal++;
 					if(intPlayerTotal > 4){
@@ -282,7 +283,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				if(blnServer){
 					intPlayerCount++;
 				}
-				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]));
+				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]), strParts[3]);
 			}
 			// Message type: lobby chat
 			if(strParts[0].equals("chat")){
@@ -709,15 +710,15 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 	}
 	
-	public void addChar(int intID, int intCharType){ // will modify later.
+	public void addChar(int intID, int intCharType, String strUser){ // will modify later.
 		if(intCharType == 1){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1, strUser));
 		}else if(intCharType == 2){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 2));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 2, strUser));
 		}else if(intCharType == 3){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 3));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 3, strUser));
 		}else if(intCharType == 4){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 4));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 4, strUser));
 		}
 			
 	}
@@ -739,7 +740,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		intX = 0;
 		intY = 0;
 		blnIn = false;
-		c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1);
+		c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1, "");
 		map.clear();
 		characters.clear();
 		c1.projectiles.clear();

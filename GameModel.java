@@ -29,6 +29,7 @@ public class GameModel{
 		int intSkillTime = 0;
 		int intCharType;
 		int intLives = 3;
+		String strUser;
 		
 		ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 		boolean blnShooting = false;
@@ -177,7 +178,7 @@ public class GameModel{
 		}
 		
 		///constructor
-		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, int intCharType){
+		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, int intCharType, String strUser){
 			this.intID = intID;
 			this.intX = intX;
 			this.intY = intY;
@@ -186,6 +187,7 @@ public class GameModel{
 			this.intSpeedX = intSpeedX;
 			this.intSpeedY = intSpeedY;
 			this.intCharType = intCharType;
+			this.strUser = strUser;
 		}
 	}	
 	// Temporary hypothethical properties of terrain objects

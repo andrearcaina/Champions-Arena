@@ -10,12 +10,16 @@ import java.util.ArrayList;
 public class GPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
-	JButton Return = new JButton("Main Menu");
 	
 	BufferedImage champion1;
 	BufferedImage champion2;
 	BufferedImage champion3;
 	BufferedImage champion4;
+	
+	JLabel user1 = new JLabel();
+	JLabel user2 = new JLabel();
+	JLabel user3 = new JLabel();
+	JLabel user4 = new JLabel();
 	
 	int intX = 0;
 	int intY = 0;
@@ -151,33 +155,23 @@ public class GPanel extends JPanel implements ActionListener{
 		
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
 			if(characters.get(intCount).intID == 5){
-				
-				/*
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-				g.setColor(Color.BLACK);
-				g.drawString(strUsername, 770, 5);
-				
-				user1.setBounds(770, 5, 220, 30);
-				user2.setBounds(770, 195, 220, 30);
-				user3.setBounds(770, 390, 220, 30);
-				user4.setBounds(770, 580, 220, 30);
-				*/
+				user1.setText(characters.get(intCount).strUser);
 				
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 49, 202, 32);
+				g.fillRect(789, 49, 202, 32);
 				g.setColor(Color.RED);
 				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-				g.drawString("HP: "+characters.get(intCount).intHP, 680, 75);
-				g.fillRect(780, 50, characters.get(intCount).intHP*2, 30);
+				g.drawString("HP: "+characters.get(intCount).intHP, 670, 75);
+				g.fillRect(790, 50, characters.get(intCount).intHP*2, 30);
 				
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 89, 202, 32);
+				g.fillRect(789, 89, 202, 32);
 				g.setColor(new Color(139, 0, 0));
-				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 680, 105);
-				g.fillRect(780, 90, characters.get(intCount).intSkillTime*2, 30);
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 670, 105);
+				g.fillRect(790, 90, characters.get(intCount).intSkillTime*2, 30);
 				
 				g.setColor(new Color(255, 204, 203));
-				g.drawString("Lives: "+characters.get(intCount).intLives, 680, 145); 
+				g.drawString("Lives: "+characters.get(intCount).intLives, 670, 145); 
 				
 				if(characters.get(intCount).intLives == 3){
 					g.drawImage(lives1, 780, 130, null);
@@ -191,21 +185,23 @@ public class GPanel extends JPanel implements ActionListener{
 				}
 				
 			}else if(characters.get(intCount).intID == 6){
+				user2.setText(characters.get(intCount).strUser);
+
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 229, 202, 32);
+				g.fillRect(789, 229, 202, 32);
 				g.setColor(Color.BLUE);
 				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-				g.drawString("HP: "+characters.get(intCount).intHP, 680, 245);
-				g.fillRect(780, 230, characters.get(intCount).intHP*2, 30);
+				g.drawString("HP: "+characters.get(intCount).intHP, 670, 245);
+				g.fillRect(790, 230, characters.get(intCount).intHP*2, 30);
 				
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 269, 202, 32);		
+				g.fillRect(789, 269, 202, 32);		
 				g.setColor(new Color(0, 0, 139));
-				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 680, 285);
-				g.fillRect(780, 270, characters.get(intCount).intSkillTime*2, 30);
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 670, 285);
+				g.fillRect(790, 270, characters.get(intCount).intSkillTime*2, 30);
 
 				g.setColor(new Color(173, 216, 230));
-				g.drawString("Lives: "+characters.get(intCount).intLives, 680, 325);
+				g.drawString("Lives: "+characters.get(intCount).intLives, 670, 325);
 				
 				if(characters.get(intCount).intLives == 3){
 					g.drawImage(lives2, 780, 310, null);
@@ -219,21 +215,23 @@ public class GPanel extends JPanel implements ActionListener{
 				}			
 				
 			}else if(characters.get(intCount).intID == 7){
+				user3.setText(characters.get(intCount).strUser);
+					
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 399, 202, 32);
+				g.fillRect(789, 399, 202, 32);
 				g.setColor(Color.GREEN);
 				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-				g.drawString("HP: "+characters.get(intCount).intHP, 680, 415);
-				g.fillRect(780, 400, characters.get(intCount).intHP*2, 30);
+				g.drawString("HP: "+characters.get(intCount).intHP, 670, 415);
+				g.fillRect(790, 400, characters.get(intCount).intHP*2, 30);
 				
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 439, 202, 32);	
+				g.fillRect(789, 439, 202, 32);	
 				g.setColor(new Color(0, 139, 0));
-				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 680, 455);
-				g.fillRect(780, 440, characters.get(intCount).intSkillTime*2, 30);
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 670, 455);
+				g.fillRect(790, 440, characters.get(intCount).intSkillTime*2, 30);
 
 				g.setColor(new Color(144, 238, 144));
-				g.drawString("Lives: "+characters.get(intCount).intLives, 680, 495);
+				g.drawString("Lives: "+characters.get(intCount).intLives, 670, 495);
 				
 				if(characters.get(intCount).intLives == 3){
 					g.drawImage(lives3, 780, 480, null);
@@ -247,21 +245,23 @@ public class GPanel extends JPanel implements ActionListener{
 				}	
 										
 			}else if(characters.get(intCount).intID == 8){
-				g.setColor(Color.BLACK);
-				g.fillRect(779, 569, 202, 32);
-				g.setColor(Color.YELLOW);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-				g.drawString("HP: "+characters.get(intCount).intHP, 680, 585);
-				g.fillRect(780, 570, characters.get(intCount).intHP*2, 30);
+				user4.setText(characters.get(intCount).strUser);
 				
 				g.setColor(Color.BLACK);
-				g.fillRect(779, 609, 202, 32);
+				g.fillRect(789, 569, 202, 32);
+				g.setColor(Color.YELLOW);
+				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
+				g.drawString("HP: "+characters.get(intCount).intHP, 670, 585);
+				g.fillRect(790, 570, characters.get(intCount).intHP*2, 30);
+				
+				g.setColor(Color.BLACK);
+				g.fillRect(789, 609, 202, 32);
 				g.setColor(new Color(204, 204, 0));
-				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 680, 625);
-				g.fillRect(780, 610, characters.get(intCount).intSkillTime*2, 30);
+				g.drawString("Skill: "+characters.get(intCount).intSkillTime, 670, 625);
+				g.fillRect(790, 610, characters.get(intCount).intSkillTime*2, 30);
 
 				g.setColor(new Color(255, 255, 102));
-				g.drawString("Lives: "+characters.get(intCount).intLives, 680, 665);
+				g.drawString("Lives: "+characters.get(intCount).intLives, 670, 665);
 
 				if(characters.get(intCount).intLives == 3){
 					g.drawImage(lives4, 780, 650, null);
@@ -321,11 +321,13 @@ public class GPanel extends JPanel implements ActionListener{
 			lives4 = ImageIO.read(new File("lives4.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
-			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(40f);
-			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
-			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
-		
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(22f);
+			
+			user1.setFont(customFont1);
+			user2.setFont(customFont1);
+			user3.setFont(customFont1);
+			user4.setFont(customFont1);
+			
 		}catch(FileNotFoundException e){
 			System.out.println(e);
 		}catch(FontFormatException e){
@@ -333,6 +335,21 @@ public class GPanel extends JPanel implements ActionListener{
 		}catch(IOException e){
 			System.out.println(e);
 		}
+		
+		
+		
+		user1.setBounds(770, 20, 220, 30);
+		user2.setBounds(770, 195, 220, 30);
+		user3.setBounds(770, 365, 220, 30);
+		user4.setBounds(770, 535, 220, 30);
+		
+		
+		
+		
+		this.add(user1);
+		this.add(user2);
+		this.add(user3);
+		this.add(user4);
 	}
 		
 }
