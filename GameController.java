@@ -22,6 +22,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	int intX = 0;
 	int intY = 0;
 	boolean blnIn = false;
+	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
 	MPanel mainPanel = new MPanel(); //main panel
@@ -39,10 +40,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	//sorry/cap limit panel: UX10
 	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
-	//Accessing the Character object in the GameModel class
-	// tutorial character
+	///Accessing the Character object in the GameModel class
+	//character model
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1);
-	// dummy model
+	//dummy model
 	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1); 
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
@@ -51,7 +52,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	int intPlaying = 0;
 	
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
-	//methods for ActionListener (BUTTON INTERACTIONS)
+	//methods for ActionListener (BUTTON INTERACTIONS + SSM)
 	public void actionPerformed(ActionEvent evt){
 		if(evt.getSource() == mainPanel.Play){
 			frame.setContentPane(lobbyPanel);
@@ -228,7 +229,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.chatMessage){
 			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": "+charPanel.chatMessage.getText()+"\n");
 			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+charPanel.chatMessage.getText());
-		}else if(evt.getSource() == ssm){
+		}
+		
+		//SSM STATEMENTS
+		else if(evt.getSource() == ssm){
 			//String testssm = ssm.readText();
 			//System.out.println(testssm);
 			String strParts[] = ssm.readText().split(",");
@@ -718,7 +722,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 	}
 	
+	//resetting all values that were changed upon interacting/playing once everybody disconnects in end panel screen
 	public void resetVals(){
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
 		intPlaying = 0;
 		intSecond = 5;
 		intRandom = 1;
@@ -735,11 +741,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		c1.projectiles.clear();
 		blnShoot = false;
 		blnSkill = false;
+		
+		lobbyPanel.countdownLabel.setText("Loading Lobby... 5");
+		lobbyPanel.enterUsername.setText("E.g: DIABLOGAMER1337");
+		lobbyPanel.enterIP.setText("Enter IP Address");
 		lobbyPanel.joinLobby.setEnabled(true);
 		lobbyPanel.enterIP.setEnabled(true);
 		lobbyPanel.enterUsername.setEnabled(true);
 		lobbyPanel.Return.setEnabled(true);
-		charPanel.readyUp.setEnabled(true);
+		lobbyPanel.countdownLabel.setVisible(false);
+		
+		charPanel.intCharType = 0; //reset yellow champion "hover"
+		charPanel.readyUp.setEnabled(false);
 		charPanel.c1Button.setEnabled(false);
 		charPanel.c2Button.setEnabled(false);
 		charPanel.c3Button.setEnabled(false);
@@ -748,6 +761,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.waitHost.setVisible(true);
 		charPanel.startGame.setVisible(true);
 		charPanel.lockIn.setVisible(true);
+		charPanel.c1Button.addActionListener(this);
+		charPanel.c2Button.addActionListener(this);
+		charPanel.c3Button.addActionListener(this);
+		charPanel.c4Button.addActionListener(this);
+		
 	}
 	
 	///constructor

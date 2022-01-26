@@ -68,6 +68,8 @@ public class CPanel extends JPanel implements ActionListener{
 			g.drawRect(408, 158, 143, 143);
 		}else if(intCharType == 4){
 			g.drawRect(578, 158, 143, 143);
+		}else if(intCharType == 0){
+			g.drawRect(0, 0, 0, 0); //for reset
 		}
 			
 	}

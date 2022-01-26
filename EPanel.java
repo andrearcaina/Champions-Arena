@@ -5,6 +5,7 @@ import javax.swing.event.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 
 public class EPanel extends JPanel implements ActionListener{
 	///properties	
@@ -18,10 +19,7 @@ public class EPanel extends JPanel implements ActionListener{
 	BufferedImage c3;
 	BufferedImage c4;
 	
-	/*ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
-	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
-	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>();
-	*/ 
+	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>(); 
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
