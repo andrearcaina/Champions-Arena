@@ -34,7 +34,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	GPanel gamePanel = new GPanel(); //actual gameplay panel
 	
 	//leaderboard/win/lost/end panel: UX9
-	///EPanel endPanel = new EPanel(); //once game ends panel / leaderboards
+	EPanel endPanel = new EPanel(); //once game ends panel / leaderboards
 	
 	//sorry/cap limit panel: UX10
 	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
@@ -68,6 +68,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(mainPanel);
 			frame.pack();
 		}else if(evt.getSource() == capPanel.Return){
+			frame.setContentPane(mainPanel);
+			frame.pack();
+		}else if(evt.getSource() == endPanel.Return){
 			frame.setContentPane(mainPanel);
 			frame.pack();
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
@@ -695,6 +698,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 		//capPanel
 		capPanel.Return.addActionListener(this);
+		
+		//endPanel
+		endPanel.Return.addActionListener(this);
 		
 		//cursor
 		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
