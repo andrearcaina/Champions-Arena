@@ -56,6 +56,8 @@ public class GPanel extends JPanel implements ActionListener{
 	BufferedImage lives2;
 	BufferedImage lives3;
 	BufferedImage lives4;
+	
+	Font customFont;
 		
 	ArrayList<GameModel.Projectile1> projectiles = new ArrayList<GameModel.Projectile1>();
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>();
@@ -160,7 +162,7 @@ public class GPanel extends JPanel implements ActionListener{
 				g.setColor(Color.BLACK);
 				g.fillRect(789, 49, 202, 32);
 				g.setColor(Color.RED);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
+				g.setFont(customFont);
 				g.drawString("HP: "+characters.get(intCount).intHP, 670, 75);
 				g.fillRect(790, 50, characters.get(intCount).intHP*2, 30);
 				
@@ -190,7 +192,7 @@ public class GPanel extends JPanel implements ActionListener{
 				g.setColor(Color.BLACK);
 				g.fillRect(789, 229, 202, 32);
 				g.setColor(Color.BLUE);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
+				g.setFont(customFont);
 				g.drawString("HP: "+characters.get(intCount).intHP, 670, 245);
 				g.fillRect(790, 230, characters.get(intCount).intHP*2, 30);
 				
@@ -220,7 +222,7 @@ public class GPanel extends JPanel implements ActionListener{
 				g.setColor(Color.BLACK);
 				g.fillRect(789, 399, 202, 32);
 				g.setColor(Color.GREEN);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
+				g.setFont(customFont);
 				g.drawString("HP: "+characters.get(intCount).intHP, 670, 415);
 				g.fillRect(790, 400, characters.get(intCount).intHP*2, 30);
 				
@@ -250,7 +252,7 @@ public class GPanel extends JPanel implements ActionListener{
 				g.setColor(Color.BLACK);
 				g.fillRect(789, 569, 202, 32);
 				g.setColor(Color.YELLOW);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 18));
+				g.setFont(customFont);
 				g.drawString("HP: "+characters.get(intCount).intHP, 670, 585);
 				g.fillRect(790, 570, characters.get(intCount).intHP*2, 30);
 				
@@ -321,6 +323,7 @@ public class GPanel extends JPanel implements ActionListener{
 			lives4 = ImageIO.read(new File("lives4.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
+			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(20f);
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(22f);
 			
 			user1.setFont(customFont1);
@@ -335,16 +338,11 @@ public class GPanel extends JPanel implements ActionListener{
 		}catch(IOException e){
 			System.out.println(e);
 		}
-		
-		
-		
+
 		user1.setBounds(770, 20, 220, 30);
 		user2.setBounds(770, 195, 220, 30);
 		user3.setBounds(770, 365, 220, 30);
 		user4.setBounds(770, 535, 220, 30);
-		
-		
-		
 		
 		this.add(user1);
 		this.add(user2);

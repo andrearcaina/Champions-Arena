@@ -11,7 +11,7 @@ public class HPanel extends JPanel implements ActionListener{
 	Timer timer = new Timer(1000/60, this);
 	
 	//Icon return = new ImageIcon("Return.png");
-	JButton Return = new JButton("Return");
+	JButton Return = new JButton("Main Menu");
 	JButton Tutorial = new JButton("Tutorial");
 	JLabel readInstruction = new JLabel("I have read the instructions");
 	JCheckBox boxInstruction = new JCheckBox();

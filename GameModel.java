@@ -138,8 +138,7 @@ public class GameModel{
 				intHP--; // take damage
 			}
 			if (intIDn == 63){ // collides with Dummy (tutorial)
-				intX = intX-intSpeedX; // no move
-				intY = intY-intSpeedY;
+				
 			}
 			if (intIDn != intID){ // collides with something else 
 				intHP = intHP - intDamagen; // take damage based on damagen field 

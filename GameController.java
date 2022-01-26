@@ -22,6 +22,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	int intX = 0; // player x location
 	int intY = 0; // player y location.
 	boolean blnIn = false; // is the player elimed or not
+	boolean blnShootPrompt = true; //tutorial prompt
+	boolean blnSkillPrompt = true; //tutorial prompt
+	boolean blnDonePrompt = true; //tutorial prompt
 	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
@@ -41,7 +44,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
 	
 	///Accessing the Character object in the GameModel class
-	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 1, ""); // Local character
+	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 3, ""); // Local character
 	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1, ""); // Dummy character
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>(); // map is an arraylist of terrain objects.
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>(); // all characters in the game's values
@@ -59,28 +62,24 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(helpPanel); // bring to help screen
 			frame.pack();			
 		}else if(evt.getSource() == mainPanel.Quit){ // exit game button
-			System.exit(0); //quits application 
-		}else if(evt.getSource() == helpPanel.Return){ // return from help menu button
+			System.exit(0); //quits application 	
+		}
+		//returns to main menu screen
+		else if(evt.getSource() == helpPanel.Return || evt.getSource() == lobbyPanel.Return || evt.getSource() == capPanel.Return || evt.getSource() == endPanel.Return){ 
 			frame.setContentPane(mainPanel); // bring to main menu
 			frame.pack();
-		}else if(evt.getSource() == lobbyPanel.Return){ // lobby return button
-			frame.setContentPane(mainPanel); // to main menu
-			frame.pack();
-		}else if(evt.getSource() == capPanel.Return){ // capacity limit message screen return button
-			frame.setContentPane(mainPanel); // to main menu
-			frame.pack();
-		}else if(evt.getSource() == endPanel.Return){ // leaderboards screen return button
-			frame.setContentPane(mainPanel); // to main menu
-			frame.pack();
+		}else if(evt.getSource() == tutorialPanel.Return){
+			mainPanel.Help.doClick();
+			map.clear();
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
+			//setting GUI elements for LobbyPanel + frame cursor 
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.joinLobby.setEnabled(false);
 			lobbyPanel.enterIP.setEnabled(false);
 			lobbyPanel.enterUsername.setEnabled(false);
 			lobbyPanel.Return.setEnabled(false);
-			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.countdownLabel.setVisible(true);
 			charPanel.waitHost.setVisible(false);
-			//^^^ Lobby buttons formatting/lobby look fomratting.
 			countdownTimer.start(); //countdown lobby creation
 			ssm = new SuperSocketMaster(6112, this); // set up network info
 			boolean blnConnect = ssm.connect(); // connect
@@ -108,9 +107,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": joined the lobby.\n"); // chat stuff
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+"joined the lobby.\n"); 
 			}else if(blnConnect == false){ // do noting if not successfl
-				
+				System.out.println("UNSUCCESSFUL CONNECTION."); 
 			}
-			
 		}else if(evt.getSource() == helpPanel.Tutorial){ // tutorial button
 			frame.addKeyListener(this); // add actionlisteners
 			frame.addMouseListener(this);
@@ -120,8 +118,25 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			frame.setContentPane(tutorialPanel); // tutorial game visuals panel
 			frame.pack();
 			tutorialPanel.projectiles = c1.projectiles; // data setting
+			//resetting values of character
+			c1.intX = 200;
+			c1.intY = 200;
+			c1.intHP = 100;
+			c1.intLives = 3;
+			tutorialPanel.intCharType = 3;
 			loadMap("map1.csv"); // map info loading
 			frame.requestFocus();
+		}else if(evt.getSource() == tutorialPanel.changeChamp){
+			frame.requestFocus();
+			c1.intCharType = tutorialPanel.intCharType + 1;
+			c1.intX = 200;
+			c1.intY = 200;
+			c1.intLives = 3;
+			c1.intHP = 100;
+			//cycles champions
+			if(c1.intCharType > 4){
+				c1.intCharType = 1;
+			} 
 		}else if(evt.getSource() == charPanel.c1Button){ // character 1 select button
 			charPanel.intCharType = 1; // setting values
 			c1.intCharType = 1;		
@@ -393,21 +408,43 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 		
 		if(evt.getSource() == timer){
-			if(intPlaying == 1){
+			if(intPlaying == 1){ //singleplayer
 				shoot();
 				blnSkill = false;
 				c1.moveX();
 				c1.moveY();
 				collision();
+				//character
 				tutorialPanel.intX = c1.intX;
 				tutorialPanel.intY = c1.intY;
 				tutorialPanel.intSizeX = c1.intSizeX;
 				tutorialPanel.intSizeY = c1.intSizeY;
 				tutorialPanel.intSkillTime = c1.intSkillTime;
+				tutorialPanel.intLives = c1.intLives;
+				tutorialPanel.intCharType = c1.intCharType;
+				//dummy
+				tutorialPanel.intDummyHP = cT.intHP;
+				
 				c1.update();
 				tutorialPanel.projectiles = c1.projectiles;
 				tutorialPanel.intHP = c1.intHP;
-				tutorialPanel.map = map;	
+				tutorialPanel.map = map;
+				
+				if(blnShootPrompt){
+					if(tutorialPanel.intX != 200 || tutorialPanel.intY != 200){ 
+						tutorialPanel.promptUser.setText("Press left click to shoot.");
+						blnShootPrompt = false;
+					}
+				}
+				
+				//tutorial spawn + checking death
+				if(c1.deathCheck()){
+					c1.intX = 200;
+					c1.intY = 200;
+					if(c1.outCheck()){
+						c1.intLives = 3;
+					}
+				}
 			}
 			if(intPlaying == 2){
 				if(!blnIn){
@@ -532,8 +569,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 		if(evt.getKeyChar() == 'r'){
 			blnSkill = true;
-			//c1.update();
-	
+			if(blnDonePrompt == true && blnSkillPrompt != true && c1.intSkillTime == 100){
+				tutorialPanel.promptUser.setText("Try killing the dummy!");
+				blnDonePrompt = false;
+			}
 		}
 	}
 	
@@ -551,28 +590,37 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		if(intPlaying == 1){
 			intX = evt.getX();
 			intY = evt.getY();
-			if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
-				c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
-				tutorialPanel.projectiles = c1.projectiles;
-			}else if(intX <= c1.intX && intY >= c1.intY){
-				c1.shoot(c1.intID,-4,4,5, c1.intX, c1.intY);
-				tutorialPanel.projectiles = c1.projectiles;
-			}else if(intX >= c1.intX && intY <= c1.intY){
-				c1.shoot(c1.intID,4,-4,5, c1.intX, c1.intY);
-				tutorialPanel.projectiles = c1.projectiles;
-			}else if(intX >= c1.intX && intY >= c1.intY){
-				c1.shoot(c1.intID,4,4,5, c1.intX, c1.intY);
-				tutorialPanel.projectiles = c1.projectiles;
+			if(SwingUtilities.isLeftMouseButton(evt)){
+				if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
+					c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
+					tutorialPanel.projectiles = c1.projectiles;
+				}else if(intX <= c1.intX && intY >= c1.intY){
+					c1.shoot(c1.intID,-4,4,5, c1.intX, c1.intY);
+					tutorialPanel.projectiles = c1.projectiles;
+				}else if(intX >= c1.intX && intY <= c1.intY){
+					c1.shoot(c1.intID,4,-4,5, c1.intX, c1.intY);
+					tutorialPanel.projectiles = c1.projectiles;
+				}else if(intX >= c1.intX && intY >= c1.intY){
+					c1.shoot(c1.intID,4,4,5, c1.intX, c1.intY);
+					tutorialPanel.projectiles = c1.projectiles;
+				}
 			}
 		}
 		if(intPlaying == 2){ // network
-			intX = evt.getX();
-			intY = evt.getY();
-			blnShoot = true;
+			if(SwingUtilities.isLeftMouseButton(evt)){
+				intX = evt.getX();
+				intY = evt.getY();
+				blnShoot = true;
+			}
 		}
 	}
 	public void mousePressed(MouseEvent evt){
-			
+		if(SwingUtilities.isLeftMouseButton(evt)){
+			if(blnSkillPrompt == true && blnShootPrompt != true){
+				tutorialPanel.promptUser.setText("Press R to use skill.");
+				blnSkillPrompt = false;
+			}
+		}
 	}
 	
 	//shoot check
@@ -808,7 +856,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.lockIn.addActionListener(this);
 				
 		//tutorialPanel
-		
+		tutorialPanel.changeChamp.addActionListener(this);
+		tutorialPanel.Return.addActionListener(this);
 		
 		//capPanel
 		capPanel.Return.addActionListener(this);
