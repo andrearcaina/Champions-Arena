@@ -154,6 +154,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
+				endPanel.strDraw = "Flamel";
 			}else if(c1.intCharType == 2){
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Bishop. \n"); 
 				String strPicked = "picked Bishop.";
@@ -162,6 +163,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c1Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
+				endPanel.strDraw = "Bishop";
 			}else if(c1.intCharType == 3){
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Magnus. \n"); 
 				String strPicked = "picked Magnus.";
@@ -170,6 +172,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c1Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
+				endPanel.strDraw = "Magnus";
 			}else if(c1.intCharType == 4){
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Shadow. \n"); 
 				String strPicked = "picked Shadow.";
@@ -178,6 +181,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c2Button.setEnabled(false);
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c1Button.setEnabled(false);
+				endPanel.strDraw = "Shadow";
 			}
 			charPanel.startGame.setEnabled(true);
 			addChar(c1.intID, c1.intCharType);
@@ -751,6 +755,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		lobbyPanel.Return.setEnabled(true);
 		lobbyPanel.countdownLabel.setVisible(false);
 		
+		charPanel.chatArea.setText("");
+		charPanel.chatMessage.setText("Message");
 		charPanel.intCharType = 0; //reset yellow champion "hover"
 		charPanel.readyUp.setEnabled(false);
 		charPanel.c1Button.setEnabled(false);

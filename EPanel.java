@@ -5,7 +5,6 @@ import javax.swing.event.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 
 public class EPanel extends JPanel implements ActionListener{
 	///properties	
@@ -19,7 +18,7 @@ public class EPanel extends JPanel implements ActionListener{
 	BufferedImage c3;
 	BufferedImage c4;
 	
-	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>(); 
+	String strDraw;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -32,65 +31,19 @@ public class EPanel extends JPanel implements ActionListener{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);
 		
-		///This comment is to add the image of the character they picked
+		if(strDraw.equals("Flamel")){
+			g.drawImage(c1, 1000, 200, null);
 		
-		/*
-		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
-			if(characters.get(intCount).intID == 5){
-				if(characters.get(intCount).intCharType == 1){
-					g.drawImage(c1, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 2){
-					g.drawImage(c2, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 3){
-					g.drawImage(c3, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 4){
-					g.drawImage(c4, 1000, 200, null);
-				}
-			}else if(characters.get(intCount).intID == 6){
-				if(characters.get(intCount).intCharType == 1){
-					g.drawImage(c1, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 2){
-					g.drawImage(c2, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 3){
-					g.drawImage(c3, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 4){
-					g.drawImage(c4, 1000, 200, null);
-				}
-			}else if(characters.get(intCount).intID == 7){
-				if(characters.get(intCount).intCharType == 1){
-					g.drawImage(c1, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 2){
-					g.drawImage(c2, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 3){
-					g.drawImage(c3, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 4){
-					g.drawImage(c4, 1000, 200, null);
-				}
-			}else if(characters.get(intCount).intID == 8){
-				if(characters.get(intCount).intCharType == 1){
-					g.drawImage(c1, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 2){
-					g.drawImage(c2, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 3){
-					g.drawImage(c3, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 4){
-					g.drawImage(c4, 1000, 200, null);
-				}
-			}else if(characters.get(intCount).intID == 9){
-				if(characters.get(intCount).intCharType == 1){
-					g.drawImage(c1, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 2){
-					g.drawImage(c2, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 3){
-					g.drawImage(c3, 1000, 200, null);
-				}else if(characters.get(intCount).intCharType == 4){
-					g.drawImage(c4, 1000, 200, null);
-				}
-			}
+		}else if(strDraw.equals("Bishop")){
+			g.drawImage(c2, 1000, 200, null);
+		
+		}else if(strDraw.equals("Magnus")){
+			g.drawImage(c3, 1000, 200, null);
+		
+		}else if(strDraw.equals("Shadow")){
+			g.drawImage(c4, 1000, 200, null);
+		
 		}
-		*/
-		
-		
 	}
 	///constructor
 	public EPanel(){
