@@ -1,3 +1,9 @@
+/// GameModel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2022-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
