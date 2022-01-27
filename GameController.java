@@ -13,6 +13,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	Timer timer = new Timer(1000/60, this); // Gameplay timer.
 	Timer countdownTimer = new Timer(1000, this); // Countdown timer
 	Timer gameTimer = new Timer(1000, this); //in game timer (countdown)
+	Timer deathTimer = new Timer(1000, this); //in game timer (death countdown)
+	int intDeathSecond = 3;
 	int intGameSecond = 5; // timer vals
 	int intSecond = 5;
 	int intRandom; // Maps
@@ -560,6 +562,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				if(cT.deathCheck()){
 					if(cT.outCheck()){
 						tutorialPanel.promptUser.setText("Good luck in the arena!");
+						cT.intHP = 0;
 					}
 				}
 				//tutorial spawn + checking death
@@ -594,6 +597,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.map = map;
 				if(c1.deathCheck()){//=true
 					ssm.sendText("die,"+c1.intID+","+c1.intLives);
+					deathTimer.start();
+					frame.removeKeyListener(this);
+					frame.removeMouseListener(this);
+					gamePanel.deathLabel.setVisible(true);
+					gamePanel.deathSecond.setVisible(true);
+					gamePanel.intBoxX = 0;				
 					if(c1.outCheck()){
 						ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime);
 						ssm.sendText("out,"+c1.intID);
@@ -644,6 +653,23 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.addKeyListener(this); 
 				frame.addMouseListener(this);
 				frame.requestFocus();
+			}
+		}else if(evt.getSource() == deathTimer){
+			c1.dblX = 10000000;
+			intDeathSecond--;
+			gamePanel.deathSecond.setText(intDeathSecond+"...");
+			if(intDeathSecond == 0){
+				deathTimer.stop();
+				c1.spawn();
+				gamePanel.deathLabel.setVisible(false);
+				gamePanel.deathSecond.setVisible(false);
+				gamePanel.intBoxX = 1000000;
+				frame.addKeyListener(this);
+				frame.addMouseListener(this);
+				frame.requestFocus();
+				
+				intDeathSecond = 3;
+				gamePanel.deathSecond.setText("3...");
 			}
 		}
 	}
@@ -933,10 +959,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 4, strUser));
 		}
 			
-	}
-	
-	public void updateChars(){
-		
 	}
 	
 	//resetting all values that were changed upon interacting/playing once everybody disconnects in end panel screen

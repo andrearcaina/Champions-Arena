@@ -24,6 +24,9 @@ public class GPanel extends JPanel implements ActionListener{
 	JLabel countdownLabel = new JLabel("GAME BEGINS IN");
 	JLabel countdownSecond = new JLabel("5");
 	
+	JLabel deathLabel = new JLabel("RESPAWNING IN: ");
+	JLabel deathSecond = new JLabel("3...");
+	
 	JTextArea gameChat = new JTextArea();
 	JScrollPane gamePane = new JScrollPane(gameChat);	
 	JTextField enterMessage = new JTextField("Press Enter to Message");
@@ -336,6 +339,9 @@ public class GPanel extends JPanel implements ActionListener{
 		
 			countdownLabel.setFont(customFont3);
 			countdownSecond.setFont(customFont3);
+			
+			deathLabel.setFont(customFont3);
+			deathSecond.setFont(customFont3);
 		}catch(FileNotFoundException e){
 			System.out.println(e.toString());
 		}catch(FontFormatException e){
@@ -357,6 +363,15 @@ public class GPanel extends JPanel implements ActionListener{
 		countdownLabel.setForeground(Color.WHITE);
 		countdownSecond.setForeground(Color.WHITE);
 		
+		deathLabel.setBounds(200, 240, 300, 30);
+		deathSecond.setBounds(300, 290, 100, 30);
+		
+		deathLabel.setForeground(Color.WHITE);
+		deathSecond.setForeground(Color.WHITE);
+		
+		deathLabel.setVisible(false);
+		deathSecond.setVisible(false);
+		
 		enterMessage.setEditable(false);
 		enterMessage.setEnabled(false);
 		gameChat.setEditable(false);
@@ -377,6 +392,9 @@ public class GPanel extends JPanel implements ActionListener{
 		
 		this.add(countdownLabel);
 		this.add(countdownSecond);
+		
+		this.add(deathLabel);
+		this.add(deathSecond);
 	}
 		
 }
