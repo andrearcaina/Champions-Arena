@@ -439,9 +439,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}else{
 						ssm.sendText("gameDone,1"); // if there is less than one player in, the game is finished and triggers win calcs
 						if(blnIn){
-							ssm.sendText("winner,"+c1.intID); // win functions, change to end game panel and dc
+							ssm.sendText("winner,"+c1.intID+","+c1.strUser); // win functions, change to end game panel and dc
 							frame.setContentPane(endPanel);
 							frame.pack();
+							endPanel.winner.setText(c1.strUser+"!");
 							System.out.println("SOMETHING: "+c1.intID);
 							resetVals();
 							ssm.disconnect();
@@ -606,6 +607,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.map = map;
 				if(c1.deathCheck()){//=true (check if die)
 					ssm.sendText("die,"+c1.intID+","+c1.intLives); // sned netowrk messages + death functions and calcs
+					ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime); 
 					deathTimer.start();
 					frame.removeKeyListener(this); // gameplay related
 					frame.removeMouseListener(this);
@@ -625,7 +627,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 							}
 						}
 					}
-					c1.spawn(); // upon death, respawn.
+					//c1.spawn(); // upon death, respawn.
 				}
 				ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime); // update other users on your data
 				for(int intCount = characters.size()-1; intCount >= 0; intCount--){ // update yourself in char track array
@@ -1028,8 +1030,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		gamePanel.countdownLabel.setVisible(true);
 		
 		//end
-		
-		endPanel.winner.setText("");
 		
 		//game timer stop
 		timer.stop();
