@@ -461,17 +461,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					System.out.println("ACTUAL WINNER: "+c1.intID);
 					endPanel.winner.setText(c1.strUser+"!");
 					ssm.sendText("winner,"+c1.intID+","+c1.strUser); // notify all other players they are the winner.
-					int intRandom = (int)(Math.random()*3)+1;
-					// randomized message for winner
-					if(intRandom == 1){
-						endPanel.funmessage.setText("Keep taking those Ws");
-					}else if(intRandom == 2){
-						endPanel.funmessage.setText("You're just better.");
-					}else if(intRandom == 3){
-						endPanel.funmessage.setText("Free wins!");
-					}else if(intRandom == 4){
-						endPanel.funmessage.setText("Nice dub!");
-					}
 					resetVals();
 					ssm.disconnect(); // dc
 				}
@@ -483,17 +472,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack(); // if you lose, run lose functions.
 				System.out.println("YO, YOU LOST BUT THE WINNER IS: "+strParts[1]);
 				endPanel.winner.setText(strParts[2]+"!");
-				int intRandom = (int)(Math.random()*3)+1;
-				// randomized message for losing players
-				if(intRandom == 1){
-					endPanel.funmessage.setText("You gotta be fuming...");
-				}else if(intRandom == 2){
-					endPanel.funmessage.setText("Better luck next time...");
-				}else if(intRandom == 3){
-					endPanel.funmessage.setText("You could do better...");
-				}else if(intRandom == 4){
-					endPanel.funmessage.setText("That's an L.");
-				}
 				resetVals();
 				ssm.disconnect(); // dc
 			}
