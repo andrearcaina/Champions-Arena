@@ -518,7 +518,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				//detects if character is nearby to prompt dummy shooting
 				if(tutorialPanel.dblX > 150 && tutorialPanel.dblX < 450 && tutorialPanel.dblY < 200){
 					if(intDummyCounter % 7 == 0){
-						cT.shoot(63,0,4,10,cT.dblX+10,cT.dblY+20);
+						
+						double dblA = cT.dblX - c1.dblX;
+						double dblB = cT.dblY - c1.dblY;
+						double dblC = Math.sqrt(dblA*dblA + dblB*dblB);
+						double dblVelocityX = 1;
+						double dblVelocityY = 0;
+						if (dblC != 0) {
+							dblVelocityX = -5*dblA / dblC;
+							dblVelocityY = -5*dblB / dblC;
+						}
+						cT.shoot(63, dblVelocityX, dblVelocityY, 10, cT.dblX+10, cT.dblY+20);
+						
 						cT.update();
 						c1.projectiles.addAll(cT.projectiles);
 						cT.projectiles.remove(0);
