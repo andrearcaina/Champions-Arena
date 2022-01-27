@@ -111,9 +111,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				System.out.println("UNSUCCESSFUL CONNECTION."); 
 			}
 		}else if(evt.getSource() == helpPanel.Tutorial){ // tutorial button
+			//resetVals();
 			blnShootPrompt = true;
 			blnSkillPrompt = true; 
-			blnDonePrompt = true; 
+			blnDonePrompt = true;
+			frame.removeKeyListener(this);
+			frame.removeMouseListener(this);
 			frame.addKeyListener(this); // add actionlisteners
 			frame.addMouseListener(this);
 			frame.requestFocus();
@@ -216,7 +219,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME func
 			if(intPlayerCount == intStartCheck){ // if players locked in and playing the game is equal to toal players in the lobby
 				//System.out.println(2);
-				frame.addKeyListener(this); // game formatting stuff
+				frame.removeKeyListener(this); // game formatting stuff
+				frame.removeMouseListener(this);
+				frame.addKeyListener(this); 
 				frame.addMouseListener(this);
 				frame.requestFocus();
 				timer.start(); // start gameplay timer
@@ -354,6 +359,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			// Messaage type: Starto
 			if(strParts[0].equals("starting")){
+				frame.removeKeyListener(this); // game formatting stuff
+				frame.removeMouseListener(this);
 				frame.addKeyListener(this);
 				frame.addMouseListener(this);
 				frame.requestFocus();
