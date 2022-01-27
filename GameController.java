@@ -666,6 +666,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.addKeyListener(this); 
 				frame.addMouseListener(this);
 				frame.requestFocus();
+				gamePanel.intID = c1.intID;
 			}
 		}else if(evt.getSource() == deathTimer){ // death timer
 			c1.dblX = 10000000; // fixs char offscreen so cannot play

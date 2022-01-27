@@ -26,6 +26,7 @@ public class GPanel extends JPanel implements ActionListener{
 	JLabel user2 = new JLabel();
 	JLabel user3 = new JLabel();
 	JLabel user4 = new JLabel();
+	JLabel youAre = new JLabel("YOU");
 	
 	JLabel countdownLabel = new JLabel("GAME BEGINS IN");
 	JLabel countdownSecond = new JLabel("5");
@@ -46,6 +47,7 @@ public class GPanel extends JPanel implements ActionListener{
 	
 	int intBoxX = 0;
 	int intBoxY = 0;
+	int intID = 0;
 	
 	String[][] mapData = new String[484][5];
 	
@@ -293,6 +295,20 @@ public class GPanel extends JPanel implements ActionListener{
 			
 		g.setColor(new Color(102, 102, 102, 127));
 		g.fillRect(intBoxX, intBoxY, 660, 660);
+		
+		if(intID == 5){
+			g.setColor(Color.RED);
+			g.fillRect(670, 10, 20, 20);
+		}else if(intID == 6){
+			g.setColor(Color.BLUE);
+			g.fillRect(670, 10, 20, 20);
+		}else if(intID == 7){
+			g.setColor(Color.GREEN);
+			g.fillRect(670, 10, 20, 20);
+		}else if(intID == 8){
+			g.setColor(Color.YELLOW);
+			g.fillRect(670, 10, 20, 20);
+		}
 		
 		}
 	}
