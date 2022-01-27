@@ -30,17 +30,16 @@ public class MPanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);
-		g.drawImage(Title, 208, 20, null);
-		//g.drawImage(Logo, (some number), (some number), null);
+		g.drawImage(Title, 240, 20, null);
 	}
 	///constructor
 	public MPanel(){
 		super();
 		this.setLayout(null);
 		
-		Play.setBounds(150, 150, 220, 130);
-		Help.setBounds(150, 300, 220, 130);
-		Quit.setBounds(150, 450, 220, 130);
+		Play.setBounds(225, 410, 220, 130);
+		Help.setBounds(475, 410, 220, 130);
+		Quit.setBounds(725, 410, 220, 130);
 		
 		Play.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		Help.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
@@ -55,7 +54,6 @@ public class MPanel extends JPanel implements ActionListener{
 		//buffered images
 		try{
 			Title = ImageIO.read(MPanel.class.getClassLoader().getResourceAsStream("Title.png"));
-			//Logo = ImageIO.read(MPanel.class.getClassLoader().getResourceAsStream("Logo.png"));
 		}catch(IOException e){
 			System.out.println("Unable to load image.");
 		}
