@@ -1,3 +1,9 @@
+/// MPanel - Main Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,6 +16,7 @@ public class MPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
 	
+	// JComponents
 	Icon playIcon = new ImageIcon("play.png");
 	Icon helpIcon = new ImageIcon("help.png");
 	Icon quitIcon = new ImageIcon("quit.png");
@@ -17,6 +24,7 @@ public class MPanel extends JPanel implements ActionListener{
 	JButton Help = new JButton(new ImageIcon(this.getClass().getResource("help.png")));
 	JButton Quit = new JButton(new ImageIcon(this.getClass().getResource("quit.png")));
 	
+	// BufferedImage
 	BufferedImage Title;
 	
 	///methods

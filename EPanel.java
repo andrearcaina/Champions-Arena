@@ -17,13 +17,14 @@ public class EPanel extends JPanel implements ActionListener{
 	///properties	
 	Timer timer = new Timer(1000/60, this);
 	
+	// JComponents
 	JButton Return = new JButton("Main Menu");
 	JLabel endTitle = new JLabel("THE WINNER IS:");
 	
 	JLabel winner = new JLabel();
 	JLabel funmessage = new JLabel();
 	
-	// Buffered Images
+	// BufferedImages
 	BufferedImage c1;
 	BufferedImage c2;
 	BufferedImage c3;

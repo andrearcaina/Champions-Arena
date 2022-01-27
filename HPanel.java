@@ -16,10 +16,11 @@ public class HPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
 	
+	// JComponents
 	JButton Return = new JButton("Main Menu");
 	JButton Next = new JButton("Next");
 	
-	// Buffered Images
+	// BufferedImages
 	BufferedImage HelpTitle;
 	BufferedImage help1;
 	BufferedImage help2;

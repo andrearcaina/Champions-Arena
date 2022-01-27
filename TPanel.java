@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class TPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
+	
+	// JComponents
 	JButton Return = new JButton("Main Menu");
 	JButton changeChamp = new JButton("Change Champion");
 	JLabel promptUser = new JLabel("Press W, A, S, D to move.");
@@ -37,7 +39,7 @@ public class TPanel extends JPanel implements ActionListener{
 	
 	String[][] mapData = new String[484][5];
 	
-	// Buffered Images
+	// BufferedImages
 	BufferedImage champion1;
 	BufferedImage champion2;
 	BufferedImage champion3;

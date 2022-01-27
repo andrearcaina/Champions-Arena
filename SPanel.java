@@ -16,11 +16,13 @@ public class SPanel extends JPanel implements ActionListener{
 	///properties	
 	Timer timer = new Timer(1000/60, this);
 	
+	// JComponents
 	JLabel sorryTitle = new JLabel("Sorry...");
 	JLabel labelOne = new JLabel("But it looks like you were too late to join a game or there is already");
 	JLabel labelTwo = new JLabel(); 
 	JButton Return = new JButton("Main Menu");
 	
+	// BufferedImage
 	BufferedImage sad;
 	
 	

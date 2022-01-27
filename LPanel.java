@@ -1,3 +1,9 @@
+/// LPanel - Lobby Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,7 +16,8 @@ public class LPanel extends JPanel implements ActionListener{
 	///properties
 	
 	Timer timer = new Timer(1000/60, this);
-
+	
+	// JComponents
 	JButton createLobby = new JButton(new ImageIcon(this.getClass().getResource("createLobby.png")));
 	JButton joinLobby = new JButton(new ImageIcon(this.getClass().getResource("joinLobby.png")));
 	JButton Return = new JButton("Main Menu");
@@ -20,6 +27,7 @@ public class LPanel extends JPanel implements ActionListener{
 	
 	JLabel countdownLabel = new JLabel("Loading Lobby... 5");
 	
+	// BufferedImages
 	BufferedImage lobbyTitle;
 	BufferedImage inputUser;
 	BufferedImage hostGame;

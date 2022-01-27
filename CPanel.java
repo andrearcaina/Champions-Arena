@@ -16,6 +16,7 @@ public class CPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
 	
+	// JComponents
 	JLabel charTitle = new JLabel("Choose Your Champion");
 	
 	JLabel c1Name = new JLabel("Flamel");
@@ -40,6 +41,7 @@ public class CPanel extends JPanel implements ActionListener{
 	
 	JScrollPane chatPane = new JScrollPane(chatArea);
 	
+	// BufferedImages
 	BufferedImage c1but;
 	BufferedImage c2but;
 	BufferedImage c3but;
