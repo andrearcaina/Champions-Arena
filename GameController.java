@@ -942,13 +942,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	public void addChar(int intID, int intCharType, String strUser){ // character array, adding other players for char detection
 		if(intCharType == 1){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1, strUser));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 1, 0, 0, 1, strUser));
 		}else if(intCharType == 2){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 2, strUser));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 1, 0, 0, 2, strUser));
 		}else if(intCharType == 3){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 3, strUser));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 1, 0, 0, 3, strUser));
 		}else if(intCharType == 4){
-			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 4, strUser));
+			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 1, 0, 0, 4, strUser));
 		}
 			
 	}
