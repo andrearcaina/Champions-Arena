@@ -20,8 +20,8 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage champion4;
 	
 	//character
-	double intX = 0;
-	double intY = 0;
+	double dblX = 0;
+	double dblY = 0;
 	int intSizeX = 20;
 	int intSizeY = 20;
 	int intSkillTime = 0;
@@ -115,7 +115,7 @@ public class TPanel extends JPanel implements ActionListener{
 		
 		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
-			g.fillRect((int)projectiles.get(intCount).intX, (int)projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
+			g.fillRect((int)projectiles.get(intCount).dblX, (int)projectiles.get(intCount).dblY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);
@@ -156,13 +156,13 @@ public class TPanel extends JPanel implements ActionListener{
 		}
 		
 		if(intCharType == 1){
-			g.drawImage(flamel, (int)intX, (int)intY, null);
+			g.drawImage(flamel, (int)dblX, (int)dblY, null);
 		}else if(intCharType == 2){
-			g.drawImage(bishop, (int)intX, (int)intY, null);
+			g.drawImage(bishop, (int)dblX, (int)dblY, null);
 		}else if(intCharType == 3){
-			g.drawImage(magnus, (int)intX, (int)intY, null);
+			g.drawImage(magnus, (int)dblX, (int)dblY, null);
 		}else if(intCharType == 4){
-			g.drawImage(shadow, (int)intX, (int)intY, null);
+			g.drawImage(shadow, (int)dblX, (int)dblY, null);
 		}
 		
 		g.setColor(Color.BLACK);

@@ -12,12 +12,12 @@ public class GameModel{
 	public class Character1{
 		///properties
 		int intID = 0; //Default Value -- logic reasons, ID number of player
-		double intX = 0; //Default Value -- Char pos x
-		double intY = 0; //Default Value -- Char pos y
+		double dblX = 0; //Default Value -- Char pos x
+		double dblY = 0; //Default Value -- Char pos y
 		int intHP; // Below are gameplay realted values
 		int intAttack;
-		double intSpeedX = 0;
-		double intSpeedY = 0;
+		double dblSpeedX = 0;
+		double dblSpeedY = 0;
 		int intSizeX = 20;
 		int intSizeY = 20;
 		int intSkillTime = 0; // Skill CD time
@@ -31,93 +31,93 @@ public class GameModel{
 		///methods
 		public void spawn(){ // spawning players -- ID is based on entry to game, so spawning is also based on that
 			if(intID == 5){ 
-				intX = 10;
-				intY = 10;
+				dblX = 10;
+				dblY = 10;
 			}else if(intID == 6){
-				intX = 620;
-				intY = 10;
+				dblX = 620;
+				dblY = 10;
 			}else if(intID == 7){
-				intX = 10;
-				intY = 620;
+				dblX = 10;
+				dblY = 620;
 			}else if(intID == 8){
-				intX = 620;
-				intY = 620;				
+				dblX = 620;
+				dblY = 620;				
 			}
 			intHP = 100; // double check reseting hp vals.
 		}
 		
 		public void moveX(){ // movement -- x
-			this.intX += intSpeedX;
-			if(intX >= 640 || intX <= 0){ // character borders
-				intX = intX-intSpeedX;
-				intX = intX-intSpeedX;
+			this.dblX += dblSpeedX;
+			if(dblX >= 640 || dblX <= 0){ // character borders
+				dblX = dblX-dblSpeedX;
+				dblX = dblX-dblSpeedX;
 			}
 		}
 		
 		public void moveY(){ // movement -- y
-			this.intY += intSpeedY;	
-			if(intY >= 640 || intY <= 0){ // character borders
-				intY = intY-intSpeedY;
-				intY = intY-intSpeedY;
+			this.dblY += dblSpeedY;	
+			if(dblY >= 640 || dblY <= 0){ // character borders
+				dblY = dblY-dblSpeedY;
+				dblY = dblY-dblSpeedY;
 			}
 		}
 		
 		//speed calculations -- modifications based on gameController aka user input
-		public void up(int intSpeedYIn){ 
-			intSpeedY = -intSpeedYIn;
+		public void up(int dblSpeedYIn){ 
+			dblSpeedY = -dblSpeedYIn;
 		}
-		public void down(int intSpeedYIn){
-			intSpeedY = intSpeedYIn;
+		public void down(int dblSpeedYIn){
+			dblSpeedY = dblSpeedYIn;
 		}
-		public void right(int intSpeedXIn){
-			intSpeedX = intSpeedXIn;
+		public void right(int dblSpeedXIn){
+			dblSpeedX = dblSpeedXIn;
 		}
-		public void left(int intSpeedXIn){
-			intSpeedX = -intSpeedXIn;
+		public void left(int dblSpeedXIn){
+			dblSpeedX = -dblSpeedXIn;
 		}
 		
-		public void shoot(int intIDn, double dblSpeedXn, double dblSpeedYn, int intSize, double intXfrom, double intYfrom){ // projectile adding function, can be from local user can be from other users.
-			projectiles.add(new Projectile1(intIDn, intXfrom, intYfrom, 200, 200, dblSpeedXn, dblSpeedYn, intSize, intAttack, intXfrom, intYfrom));
+		public void shoot(int intIDn, double dblSpeedXn, double dblSpeedYn, int intSize, double dblXFrom, double dblYFrom){ // projectile adding function, can be from local user can be from other users.
+			projectiles.add(new Projectile1(intIDn, dblXFrom, dblYFrom, 200, 200, dblSpeedXn, dblSpeedYn, intSize, intAttack, dblXFrom, dblYFrom));
 			//Creates new projectile in projectile tracker array, based on input values representing ID (who's bullet it is), speed in x and y, the general size, and where the projectile was shot from (to calculate for the maximum ranges)
 		}
 		
-		public boolean skill(int intIDn, int intCharTypeIn, double intXn, double intYn){ // skills
+		public boolean skill(int intIDn, int intCharTypeIn, double dblSpeedY, double dblYn){ // skills
 			if(intSkillTime > 99){ // if the skill bar is full, time based charge, will unleash skill upon command.
 				//Projectiles use the same logic as the shoot above, using the projectile class's constructor.
 				if(intCharTypeIn == 1){ //Character one's skill
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 12, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, -12, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, -12, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 12, 10, 20, intXn, intYn));		
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, 10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, -10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, -10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, 10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 12, 12, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -12, -12, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 12, -12, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -12, 12, 10, 20, dblSpeedY, dblYn));		
 				}else if(intCharTypeIn == 2){ //Character two's skill
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 0, 10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, -10, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 10, 10, 20, intXn, intYn));		
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 0, -10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 0, 10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, 10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, -10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, -10, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, 10, 10, 20, dblSpeedY, dblYn));		
 				}else if(intCharTypeIn == 3){ // Character three's skill
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 8, 8, 20, 30, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -8, -8, 20, 30, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 8, -8, 20, 30, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -8, 8, 20, 30, intXn, intYn));					
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 15, 15, 5, 10, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -15, -15, 5, 10, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, 15, -15, 5, 10, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 400, 400, -15, 15, 5, 10, intXn, intYn));		
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, 8, 8, 20, 30, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, -8, -8, 20, 30, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, 8, -8, 20, 30, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, -8, 8, 20, 30, dblSpeedY, dblYn));					
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, 15, 15, 5, 10, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, -15, -15, 5, 10, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, 15, -15, 5, 10, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 400, 400, -15, 15, 5, 10, dblSpeedY, dblYn));		
 				}else if(intCharTypeIn == 4){ // Character four's skill
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 10, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 12, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, 15, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -10, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -12, 0, 10, 20, intXn, intYn));
-					projectiles.add(new Projectile1(intIDn, intXn, intYn, 500, 500, -15, 0, 10, 20, intXn, intYn));		
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 10, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 12, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, 15, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -10, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -12, 0, 10, 20, dblSpeedY, dblYn));
+					projectiles.add(new Projectile1(intIDn, dblSpeedY, dblYn, 500, 500, -15, 0, 10, 20, dblSpeedY, dblYn));		
 				}
 				// all shoot rounds of special bullets.
 				if(intID == intIDn){ // if it is the local user who shot the bullet , reset skill bar. (IDn -- inputted Id = local ID).
@@ -131,8 +131,8 @@ public class GameModel{
 		
 		public void collision(int intIDn, int intDamagen){ // collision detection for player.
 			if (intIDn == 100){ // collides with default terrain
-				intX = intX-intSpeedX; // no move
-				intY = intY-intSpeedY;
+				dblX = dblX-dblSpeedX; // no move
+				dblY = dblY-dblSpeedY;
 			}
 			if (intIDn == 50){ // collides with damaging terrain
 				intHP--; // take damage
@@ -148,9 +148,9 @@ public class GameModel{
 			for(int intCount = projectiles.size()-1; intCount > -1; intCount--){
 				projectiles.get(intCount).move();
 				//below 
-				if (projectiles.get(intCount).intShotX + projectiles.get(intCount).intMaxRangeX < projectiles.get(intCount).intX || projectiles.get(intCount).intShotX - projectiles.get(intCount).intMaxRangeX > projectiles.get(intCount).intX){
+				if (projectiles.get(intCount).dblShotX + projectiles.get(intCount).dblMaxRangeX < projectiles.get(intCount).dblX || projectiles.get(intCount).dblShotX - projectiles.get(intCount).dblMaxRangeX > projectiles.get(intCount).dblX){
 					projectiles.remove((intCount));
-				}else if (projectiles.get(intCount).intShotY + projectiles.get(intCount).intMaxRangeY < projectiles.get(intCount).intY || projectiles.get(intCount).intShotY - projectiles.get(intCount).intMaxRangeY > projectiles.get(intCount).intY){
+				}else if (projectiles.get(intCount).dblShotY + projectiles.get(intCount).dblMaxRangeY < projectiles.get(intCount).dblY || projectiles.get(intCount).dblShotY - projectiles.get(intCount).dblMaxRangeY > projectiles.get(intCount).dblY){
 					projectiles.remove((intCount));
 				}
 			}
@@ -163,8 +163,8 @@ public class GameModel{
 		public boolean deathCheck(){ //checks if a player dies
 			if(intHP < 1){ // if player has no more health, put them off the screen, reset their health, and reduce live.
 				intLives--;
-				intX = 10000;
-				intY = 10000;
+				dblX = 10000;
+				dblY = 10000;
 				intHP = 100;
 				return true; // return that they did indeed die
 			}
@@ -179,14 +179,14 @@ public class GameModel{
 		}
 		
 		///constructor
-		public Character1(int intID, double intX, double intY, int intHP, int intAttack, double intSpeedX, double intSpeedY, int intCharType, String strUser){
+		public Character1(int intID, double dblX, double dblY, int intHP, int intAttack, double dblSpeedX, double dblSpeedY, int intCharType, String strUser){
 			this.intID = intID;
-			this.intX = intX;
-			this.intY = intY;
+			this.dblX = dblX;
+			this.dblY = dblY;
 			this.intHP = intHP;
 			this.intAttack = intAttack;
-			this.intSpeedX = intSpeedX;
-			this.intSpeedY = intSpeedY;
+			this.dblSpeedX = dblSpeedX;
+			this.dblSpeedY = dblSpeedY;
 			this.intCharType = intCharType;
 			this.strUser = strUser;
 		}
@@ -194,8 +194,8 @@ public class GameModel{
 	// TERRAIN OBJECT
 	class Terrain1{
 		/// properties
-		double intX; // location
-		double intY;
+		double dblX; // location
+		double dblY;
 		int intSizeX; // size
 		int intSizeY;
 		int intID; // type of terrain, uses same ID logic as characters
@@ -203,9 +203,9 @@ public class GameModel{
 		/// methods
 		
 		///constructor
-		public Terrain1(double intX, double intY, int intSizeX, int intSizeY, int intID){
-			this.intX = intX;
-			this.intY = intY;
+		public Terrain1(double dblX, double dblY, int intSizeX, int intSizeY, int intID){
+			this.dblX = dblX;
+			this.dblY = dblY;
 			this.intSizeX = intSizeX;
 			this.intSizeY = intSizeY;
 			this.intID = intID;
@@ -216,37 +216,37 @@ public class GameModel{
 	class Projectile1{
 		/// properties
 		int intID; // who's projectile it is. Uses same Id logic as characters and terrain.
-		double intX; // location
-		double intY;
-		double intMaxRangeX; //maximum range
-		double intMaxRangeY;
+		double dblX; // location
+		double dblY;
+		double dblMaxRangeX; //maximum range
+		double dblMaxRangeY;
 		double dblSpeedX; // speed
 		double dblSpeedY;
 		int intSize; // general size (always square/circle)
 		int intDamage; // how much damage each projectile does
-		double intShotX; // where it was originally shot (for max range calcs)
-		double intShotY;
+		double dblShotX; // where it was originally shot (for max range calcs)
+		double dblShotY;
 		
 		/// methods
 		
 		public void move(){ // move projectile location
-			intX += dblSpeedX;
-			intY += dblSpeedY;
+			dblX += dblSpeedX;
+			dblY += dblSpeedY;
 		}
 		
 		///constructor
-		public Projectile1(int intID, double intX, double intY, double intMaxRangeX, double intMaxRangeY, double dblSpeedX, double dblSpeedY, int intSize, int intDamage, double intShotX, double intShotY){
+		public Projectile1(int intID, double dblX, double dblY, double dblMaxRangeX, double dblMaxRangeY, double dblSpeedX, double dblSpeedY, int intSize, int intDamage, double dblShotX, double dblShotY){
 			this.intID = intID;
-			this.intX = intX;
-			this.intY = intY;
-			this.intMaxRangeX = intMaxRangeX;
-			this.intMaxRangeY = intMaxRangeY;
+			this.dblX = dblX;
+			this.dblY = dblY;
+			this.dblMaxRangeX = dblMaxRangeX;
+			this.dblMaxRangeY = dblMaxRangeY;
 			this.dblSpeedX = dblSpeedX;
 			this.dblSpeedY = dblSpeedY;
 			this.intSize = intSize;
 			this.intDamage = intDamage;
-			this.intShotX = intShotX;
-			this.intShotY = intShotY;
+			this.dblShotX = dblShotX;
+			this.dblShotY = dblShotY;
 		
 		}
 	}
