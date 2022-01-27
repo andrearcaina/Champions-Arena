@@ -71,8 +71,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		else if(evt.getSource() == helpPanel.Return || evt.getSource() == lobbyPanel.Return || evt.getSource() == capPanel.Return || evt.getSource() == endPanel.Return){ 
 			frame.setContentPane(mainPanel); // bring to main menu
 			frame.pack();
+			helpPanel.intPageCount = 0;
 		}else if(evt.getSource() == tutorialPanel.Return){
-			mainPanel.Help.doClick();
+			frame.setContentPane(mainPanel);
+			helpPanel.intPageCount = 0;
 			map.clear();
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
@@ -113,36 +115,39 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}else if(blnConnect == false){ // do noting if not successfl
 				System.out.println("UNSUCCESSFUL CONNECTION."); 
 			}
-		}else if(evt.getSource() == helpPanel.Tutorial){ // tutorial button
+		}else if(evt.getSource() == helpPanel.Next){ // tutorial button
 			//resetVals();
-			blnShootPrompt = true;
-			blnSkillPrompt = true; 
-			blnDonePrompt = true;
-			frame.removeKeyListener(this);
-			frame.removeMouseListener(this);
-			frame.addKeyListener(this); // add actionlisteners
-			frame.addMouseListener(this);
-			frame.requestFocus();
-			timer.start(); // game timer start
-			intPlaying = 1; // single player
-			frame.setContentPane(tutorialPanel); // tutorial game visuals panel
-			frame.pack();
-			tutorialPanel.projectiles = c1.projectiles; // data setting
-			//resetting values of character
-			c1.dblX = 200;
-			c1.dblY = 200;
-			c1.intHP = 100;
-			c1.intAttack = 1;
-			c1.intLives = 3;
-			tutorialPanel.intCharType = 3;
-			cT.intLives = 1;
-			cT.intHP = 100;
-			cT.dblX = 330;
-			cT.dblY = 0;
-			c1.projectiles.clear();
-			loadMap("map1.csv"); // map info loading
-			tutorialPanel.promptUser.setText("Press W, A, S, D to move.");
-			frame.requestFocus();
+			helpPanel.intPageCount++;
+			if(helpPanel.intPageCount == 3){
+				blnShootPrompt = true;
+				blnSkillPrompt = true; 
+				blnDonePrompt = true;
+				frame.removeKeyListener(this);
+				frame.removeMouseListener(this);
+				frame.addKeyListener(this); // add actionlisteners
+				frame.addMouseListener(this);
+				frame.requestFocus();
+				timer.start(); // game timer start
+				intPlaying = 1; // single player
+				frame.setContentPane(tutorialPanel); // tutorial game visuals panel
+				frame.pack();
+				tutorialPanel.projectiles = c1.projectiles; // data setting
+				//resetting values of character
+				c1.dblX = 200;
+				c1.dblY = 200;
+				c1.intHP = 100;
+				c1.intAttack = 1;
+				c1.intLives = 3;
+				tutorialPanel.intCharType = 3;
+				cT.intLives = 1;
+				cT.intHP = 100;
+				cT.dblX = 330;
+				cT.dblY = 0;
+				c1.projectiles.clear();
+				loadMap("map1.csv"); // map info loading
+				tutorialPanel.promptUser.setText("Press W, A, S, D to move.");
+				frame.requestFocus();
+			}
 		}else if(evt.getSource() == tutorialPanel.changeChamp){
 			frame.requestFocus();
 			c1.intCharType = tutorialPanel.intCharType + 1;
@@ -554,7 +559,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				//checking death dummy
 				if(cT.deathCheck()){
 					if(cT.outCheck()){
-						tutorialPanel.promptUser.setText("You are ready for the arena!");
+						tutorialPanel.promptUser.setText("Good luck in the arena!");
 					}
 				}
 				//tutorial spawn + checking death
@@ -562,6 +567,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					c1.dblX = 200;
 					c1.dblY = 200;
 					if(c1.outCheck()){
+						tutorialPanel.promptUser.setText("Imagine losing to AI...");
 						c1.intLives = 3;
 					}
 				}
@@ -1007,7 +1013,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		
 		//HelpPanel
 		helpPanel.Return.addActionListener(this);
-		helpPanel.Tutorial.addActionListener(this);
+		helpPanel.Next.addActionListener(this);
 
 		//tutorialPanel
 		tutorialPanel.changeChamp.addActionListener(this);

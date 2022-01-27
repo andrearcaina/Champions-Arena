@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
-	JButton Return = new JButton("Return to Help");
+	JButton Return = new JButton("Main Menu");
 	JButton changeChamp = new JButton("Change Champion");
 	JLabel promptUser = new JLabel("Press W, A, S, D to move.");
 
@@ -58,6 +58,7 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage dummy;
 	
 	BufferedImage lives1;
+	BufferedImage controls;
 	
 	Font customFont1;
 	
@@ -165,8 +166,11 @@ public class TPanel extends JPanel implements ActionListener{
 			g.drawImage(shadow, (int)dblX, (int)dblY, null);
 		}
 		
+		
 		g.setColor(Color.BLACK);
 		g.drawRect(670, 210, 580, 60);
+		
+		g.drawImage(controls, 670, 280, null);
 	}
 	
 	//constructor
@@ -198,6 +202,7 @@ public class TPanel extends JPanel implements ActionListener{
 			dummy = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("dummy.png"));
 			
 			lives1 = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("lives1.png"));
+			controls = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("controls.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			customFont1 = Font.createFont(Font.TRUETYPE_FONT, TPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(18f);

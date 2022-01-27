@@ -11,13 +11,13 @@ public class HPanel extends JPanel implements ActionListener{
 	Timer timer = new Timer(1000/60, this);
 	
 	JButton Return = new JButton("Main Menu");
-	JButton Tutorial = new JButton("Tutorial");
-	JLabel readInstruction = new JLabel("I have read the instructions");
-	JCheckBox boxInstruction = new JCheckBox();
+	JButton Next = new JButton("Next");
 	
 	BufferedImage HelpTitle;
-	BufferedImage Logo;
-	BufferedImage Instructions;
+	BufferedImage help1;
+	BufferedImage help2;
+	BufferedImage help3;
+	int intPageCount;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -27,38 +27,60 @@ public class HPanel extends JPanel implements ActionListener{
 	}
 	
 	public void paintComponent(Graphics g){
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 1280, 720);
-		g.drawImage(HelpTitle, 20, -40, null);
-		// g.drawImage(Instructions, #, #, null );
-		//g.drawImage(Logo, (some number), (some number), null);
+		if(intPageCount == 0){
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, 1280, 720);
+			Next.setText("Next");
+			g.drawImage(help1, 0, 0, null );
+		}else if(intPageCount == 1){
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, 1280, 720);
+			g.drawImage(help2, 0, 0, null );
+		}else if(intPageCount == 2){
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, 1280, 720);
+			g.drawImage(help3, 0, 0, null );
+			Next.setText("Tutorial");
+		}
 	}
 	///constructor
 	public HPanel(){		
 		super();
 		this.setLayout(null);
 		
-		Return.setBounds(1000, 10, 150, 80);
-		Tutorial.setBounds(800, 10, 150, 80);
-		//readInstruction.setBounds();
-		//boxInstruction.setBounds();
+		//buffered images and font
+		try{
+			
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, HPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(20f);
+			HelpTitle = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("HelpTitle.png"));
+			help1 = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("help1.png"));
+			help2 = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("help2.png"));
+			help3 = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("help3.png"));
 		
-		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
-		Tutorial.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+			Return.setFont(customFont2);
+			Next.setFont(customFont2);
 		
-		this.add(Return);
-		this.add(Tutorial);
-		this.add(readInstruction);
-		this.add(boxInstruction);
+		}catch(IOException e){
+			e.toString();
+		}catch(FontFormatException e){
+			e.toString();
+		}
+		
+		Return.setBounds(1100, 10, 150, 40);
+		Next.setBounds(900, 10, 150, 40);
+			
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Next.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		
+		Return.setBackground(Color.BLACK);
+		Return.setForeground(Color.WHITE);
+		
+		Next.setBackground(Color.BLACK);
+		Next.setForeground(Color.WHITE);
 		
 		timer.start();
 		
-		//buffered images
-		try{
-			HelpTitle = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("HelpTitle.png"));
-			//Instructions = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("Instructions.png"));
-		}catch(IOException e){
-			System.out.println(e.toString());
-		}
+		this.add(Return);
+		this.add(Next);
 	}
 }
