@@ -437,6 +437,17 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					System.out.println("ACTUAL WINNER: "+c1.intID);
 					endPanel.winner.setText(c1.strUser+"!");
 					ssm.sendText("winner,"+c1.intID+","+c1.strUser);
+					int intRandom = (int)(Math.random()*3)+1;
+					// randomized message for winner
+					if(intRandom == 1){
+						endPanel.funmessage.setText("Keep taking those Ws");
+					}else if(intRandom == 2){
+						endPanel.funmessage.setText("You're just better.");
+					}else if(intRandom == 3){
+						endPanel.funmessage.setText("Free wins!");
+					}else if(intRandom == 4){
+						endPanel.funmessage.setText("Nice dub!");
+					}
 					resetVals();
 					ssm.disconnect();
 				}
@@ -448,6 +459,17 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.pack();
 				System.out.println("YO, YOU LOST BUT THE WINNER IS: "+strParts[1]);
 				endPanel.winner.setText(strParts[2]+"!");
+				int intRandom = (int)(Math.random()*3)+1;
+				// randomized message for losing players
+				if(intRandom == 1){
+					endPanel.funmessage.setText("You gotta be fuming...");
+				}else if(intRandom == 2){
+					endPanel.funmessage.setText("Better luck next time...");
+				}else if(intRandom == 3){
+					endPanel.funmessage.setText("You could do better...");
+				}else if(intRandom == 4){
+					endPanel.funmessage.setText("That's an L.");
+				}
 				resetVals();
 				ssm.disconnect();
 			}
@@ -911,6 +933,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		c1.projectiles.clear();
 		blnShoot = false;
 		blnSkill = false;
+		intGameSecond = 5;
+		
 		
 		lobbyPanel.countdownLabel.setText("Loading Lobby... 5");
 		lobbyPanel.enterUsername.setText("E.g: DIABLOGAMER1337");
@@ -938,7 +962,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
 		
-		gamePanel.intBoxX = 0; 
+		gamePanel.intBoxX = 0;
 		gamePanel.countdownSecond.setText("5");
 		gamePanel.countdownSecond.setVisible(true);
 		gamePanel.countdownLabel.setVisible(true);
@@ -965,7 +989,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		//HelpPanel
 		helpPanel.Return.addActionListener(this);
 		helpPanel.Tutorial.addActionListener(this);
-	
+
 		//tutorialPanel
 		tutorialPanel.changeChamp.addActionListener(this);
 		tutorialPanel.Return.addActionListener(this);

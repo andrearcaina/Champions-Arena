@@ -12,9 +12,10 @@ public class EPanel extends JPanel implements ActionListener{
 	Timer timer = new Timer(1000/60, this);
 	
 	JButton Return = new JButton("Main Menu");
-	JLabel endTitle = new JLabel("YOUUUUUUUUUUUUUUUUUUUUUU WONNNNN");
+	JLabel endTitle = new JLabel("THE WINNER IS:");
 	
 	JLabel winner = new JLabel();
+	JLabel funmessage = new JLabel();
 	
 	BufferedImage c1;
 	BufferedImage c2;
@@ -60,7 +61,7 @@ public class EPanel extends JPanel implements ActionListener{
 			
 			
 			winner.setFont(customFont1);
-			
+			funmessage.setFont(customFont2);
 			Return.setFont(customFont2);
 			endTitle.setFont(customFont3);		
 			
@@ -77,12 +78,14 @@ public class EPanel extends JPanel implements ActionListener{
 			System.out.println(e);
 		}
 		
-		winner.setBounds(50, 220, 1000, 150);		
+		winner.setBounds(50, 220, 1000, 150);	
+		funmessage.setBounds(50, 500, 1000, 150);
 		
 		endTitle.setBounds(50, 10, 1000, 200);
 		Return.setBounds(1000, 100, 150, 80);
 		
 		winner.setForeground(Color.WHITE);
+		funmessage.setForeground(Color.WHITE);
 		
 		endTitle.setForeground(Color.WHITE);
 		Return.setForeground(Color.WHITE);
@@ -92,7 +95,7 @@ public class EPanel extends JPanel implements ActionListener{
 		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
 		
 		this.add(winner);
-		
+		this.add(funmessage);
 		this.add(endTitle);
 		this.add(Return);
 		
