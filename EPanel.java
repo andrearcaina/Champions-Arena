@@ -1,3 +1,9 @@
+/// EPanel - End Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -17,6 +23,7 @@ public class EPanel extends JPanel implements ActionListener{
 	JLabel winner = new JLabel();
 	JLabel funmessage = new JLabel();
 	
+	// Buffered Images
 	BufferedImage c1;
 	BufferedImage c2;
 	BufferedImage c3;
@@ -30,6 +37,7 @@ public class EPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	// Draws portrait of their selected character
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);

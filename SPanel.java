@@ -1,3 +1,9 @@
+/// SPanel - Sorry (Max Player Capacity) Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -25,6 +31,7 @@ public class SPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	// Draws sad image
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);

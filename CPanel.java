@@ -1,3 +1,9 @@
+/// CPanel - Character Selection Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -54,6 +60,7 @@ public class CPanel extends JPanel implements ActionListener{
 		
 		g.setColor(Color.BLACK);
 		g.drawRect(585, 360, 200, 70);
+		// Draw border around "hovered" character
 		g.setColor(Color.YELLOW);
 		if(intCharType == 1){
 			g.drawRect(73, 158, 143, 143);
