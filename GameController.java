@@ -694,9 +694,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				blnDonePrompt = false;
 			}
 		}else if(evt.getKeyChar() == KeyEvent.VK_ENTER){
-			gamePanel.enterMessage.setText("Press enter to type");
+			gamePanel.enterMessage.setText("");
 			gamePanel.enterMessage.setEnabled(true);
 			gamePanel.enterMessage.setEditable(true);
+			gamePanel.enterMessage.requestFocus();
 		}
 	}
 	
