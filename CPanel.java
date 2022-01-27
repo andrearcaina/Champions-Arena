@@ -17,15 +17,10 @@ public class CPanel extends JPanel implements ActionListener{
 	JLabel c3Name = new JLabel("Magnus");
 	JLabel c4Name = new JLabel("Shadow"); 
 	
-	ImageIcon c1Icon = new ImageIcon("c1but.png");
-	ImageIcon c2Icon = new ImageIcon("c2but.png");
-	ImageIcon c3Icon = new ImageIcon("c3but.png");
-	ImageIcon c4Icon = new ImageIcon("c4but.png");
-	
-	JButton c1Button = new JButton(c1Icon);
-	JButton c2Button = new JButton(c2Icon);
-	JButton c3Button = new JButton(c3Icon);
-	JButton c4Button = new JButton(c4Icon);
+	JButton c1Button = new JButton(new ImageIcon(this.getClass().getResource("c1but.png")));
+	JButton c2Button = new JButton(new ImageIcon(this.getClass().getResource("c2but.png")));
+	JButton c3Button = new JButton(new ImageIcon(this.getClass().getResource("c3but.png")));
+	JButton c4Button = new JButton(new ImageIcon(this.getClass().getResource("c4but.png")));
 	
 	JButton readyUp = new JButton("Ready Up!");
 	JButton startGame = new JButton("START GAME");

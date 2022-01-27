@@ -10,11 +10,9 @@ public class LPanel extends JPanel implements ActionListener{
 	///properties
 	
 	Timer timer = new Timer(1000/60, this);
-	
-	Icon create = new ImageIcon("createLobby.png");
-	Icon join = new ImageIcon("joinLobby.png");
-	JButton createLobby = new JButton(create);
-	JButton joinLobby = new JButton(join);
+
+	JButton createLobby = new JButton(new ImageIcon(this.getClass().getResource("createLobby.png")));
+	JButton joinLobby = new JButton(new ImageIcon(this.getClass().getResource("joinLobby.png")));
 	JButton Return = new JButton("Main Menu");
 	JTextField serverInfo = new JTextField("IP Information");
 	JTextField enterIP = new JTextField("Enter IP Address");

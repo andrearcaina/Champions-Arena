@@ -74,6 +74,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == tutorialPanel.Return){
 			mainPanel.Help.doClick();
 			map.clear();
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
 			//setting GUI elements for LobbyPanel + frame cursor 
 			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("timeCursor.png")).getImage(), new Point(0,0),"time cursor"));
