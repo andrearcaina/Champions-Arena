@@ -318,7 +318,7 @@ public class GameModel{
 		}
 		
 		/**
-		* This is the constrcturo with parameters, respectively, of the projectiles ID for collision detection, the location in the X and Y, the max range in the X and Y, the speed in the X and Y, the size of the projectile, the damage, and where the projectile was shot from.
+		* This is the constructor with parameters, respectively, of the projectiles ID for collision detection, the location in the X and Y, the max range in the X and Y, the speed in the X and Y, the size of the projectile, the damage, and where the projectile was shot from.
 		*/
 		///constructor
 		public Projectile1(int intID, double dblX, double dblY, double dblMaxRangeX, double dblMaxRangeY, double dblSpeedX, double dblSpeedY, int intSize, int intDamage, double dblShotX, double dblShotY){
