@@ -126,13 +126,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			c1.intX = 200;
 			c1.intY = 200;
 			c1.intHP = 100;
+			c1.intAttack = 1;
 			c1.intLives = 3;
 			tutorialPanel.intCharType = 3;
 			cT.intLives = 1;
 			cT.intHP = 100;
 			cT.intX = 330;
 			cT.intY = 0;
+			c1.projectiles.clear();
 			loadMap("map1.csv"); // map info loading
+			tutorialPanel.promptUser.setText("Press W, A, S, D to move.");
 			frame.requestFocus();
 		}else if(evt.getSource() == tutorialPanel.changeChamp){
 			frame.requestFocus();
@@ -453,10 +456,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 							cT.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
 							System.out.println("count: "+c1.projectiles.get(intCount).intDamage);
 							c1.projectiles.remove(intCount);
+							System.out.println(intCount);
 						}
 					}
 				}
 				
+				/*
 				//detects if character is nearby to prompt dummy shooting
 				if(tutorialPanel.intX > 150 && tutorialPanel.intX < 450 && tutorialPanel.intY < 200){
 					if(intDummyCounter % 7 == 0){
@@ -467,6 +472,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}
 					intDummyCounter++;	
 				}
+				*/
 				
 				if(blnShootPrompt){
 					if(tutorialPanel.intX != 200 || tutorialPanel.intY != 200){ 
