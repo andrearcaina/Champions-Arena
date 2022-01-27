@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"GameModel.Character1"},{"p":"<Unnamed>","l":"GameModel"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"GameModel.Character1"},{"p":"<Unnamed>","l":"GameModel"},{"p":"<Unnamed>","l":"GameModel.Projectile1"},{"p":"<Unnamed>","l":"GameModel.Terrain1"}];updateSearchResults();
