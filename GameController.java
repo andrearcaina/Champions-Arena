@@ -1,3 +1,9 @@
+/// TPanel - Tutorial Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2022-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -424,15 +430,15 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}
 			}
 			// Message type: out
-			if(strParts[0].equals("out")){
+			if(strParts[0].equals("out")){ // player is eliminated
 				if(blnServer){
 					intPlayerCount--;
 					if(intPlayerCount > 1){
-						
+						//if there are still more than 1 player in, nothing happens
 					}else{
-						ssm.sendText("gameDone,1");
+						ssm.sendText("gameDone,1"); // if there is less than one player in, the game is finished and triggers win calcs
 						if(blnIn){
-							ssm.sendText("winner,"+c1.intID);
+							ssm.sendText("winner,"+c1.intID); // win functions, change to end game panel and dc
 							frame.setContentPane(endPanel);
 							frame.pack();
 							System.out.println("SOMETHING: "+c1.intID);
@@ -445,12 +451,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			
 			// Message type; game done
 			if(strParts[0].equals("gameDone")){
-				if(blnIn){
-					frame.setContentPane(endPanel);
+				if(blnIn){ // if they are still in the game (not eliminated) the they win
+					frame.setContentPane(endPanel); // win functions, go to end panel
 					frame.pack();
 					System.out.println("ACTUAL WINNER: "+c1.intID);
 					endPanel.winner.setText(c1.strUser+"!");
-					ssm.sendText("winner,"+c1.intID+","+c1.strUser);
+					ssm.sendText("winner,"+c1.intID+","+c1.strUser); // notify all other players they are the winner.
 					int intRandom = (int)(Math.random()*3)+1;
 					// randomized message for winner
 					if(intRandom == 1){
@@ -463,14 +469,14 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 						endPanel.funmessage.setText("Nice dub!");
 					}
 					resetVals();
-					ssm.disconnect();
+					ssm.disconnect(); // dc
 				}
 			}
 			
 			// Message type; winner!
 			if(strParts[0].equals("winner")){
-				frame.setContentPane(endPanel);
-				frame.pack();
+				frame.setContentPane(endPanel); // if you recieve a message that someone won, you have lost
+				frame.pack(); // if you lose, run lose functions.
 				System.out.println("YO, YOU LOST BUT THE WINNER IS: "+strParts[1]);
 				endPanel.winner.setText(strParts[2]+"!");
 				int intRandom = (int)(Math.random()*3)+1;
@@ -485,19 +491,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					endPanel.funmessage.setText("That's an L.");
 				}
 				resetVals();
-				ssm.disconnect();
+				ssm.disconnect(); // dc
 			}
 			
 		}
 		
-		if(evt.getSource() == timer){
+		if(evt.getSource() == timer){ // game timer
 			if(intPlaying == 1){ //singleplayer
-				shoot();
-				blnSkill = false;
-				c1.moveX();
+				shoot(); // calculate shooting
+				blnSkill = false; // set skill to false, already calculated for this run
+				c1.moveX(); // move
 				c1.moveY();
-				collision();
-				//character
+				collision(); // check collisions
+				//character transfer data to visual
 				tutorialPanel.dblX = c1.dblX;
 				tutorialPanel.dblY = c1.dblY;
 				tutorialPanel.intSizeX = c1.intSizeX;
@@ -505,17 +511,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				tutorialPanel.intSkillTime = c1.intSkillTime;
 				tutorialPanel.intLives = c1.intLives;
 				tutorialPanel.intCharType = c1.intCharType;
-				//dummy
+				//dummy transfer data to visuals
 				tutorialPanel.intDummyHP = cT.intHP;
 				tutorialPanel.intDummyX = cT.dblX;
 				tutorialPanel.intDummyY = cT.dblY;
 				
+				//update projectile positions, transfer data to visuals
 				c1.update();
 				tutorialPanel.projectiles = c1.projectiles;
 				tutorialPanel.intHP = c1.intHP;
 				tutorialPanel.map = map;
 				
-				for(int intCount = c1.projectiles.size() -1; intCount > -1; intCount--){ // projectiles w/ dummy
+				for(int intCount = c1.projectiles.size() -1; intCount > -1; intCount--){ // projectiles w/ dummy collision check (tutorial specific)
 					if(c1.projectiles.get(intCount).dblX < cT.dblX+cT.intSizeX && c1.projectiles.get(intCount).dblY < cT.dblY+cT.intSizeY && 
 						(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).dblX) > cT.dblX && 
 						(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).dblY) > cT.dblY){
@@ -551,7 +558,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					intDummyCounter++;	
 				}
 				
-				
+				//prompths -- tutorial instructions
 				if(blnShootPrompt){
 					if(tutorialPanel.dblX != 200 || tutorialPanel.dblY != 200){ 
 						tutorialPanel.promptUser.setText("Press left click to shoot.");
@@ -575,19 +582,20 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}
 				}
 			}
-			if(intPlaying == 2){
-				if(!blnIn){
+			if(intPlaying == 2){ // multiplayer
+				if(!blnIn){ // if they are eliminated, their char is drawn off screen. They are thus unable to move their char, however they can still "watch the game," other characters are still updated.
 					c1.dblX = -1000;
 					c1.dblY = -1000;
 				}
 				shoot(); // check if shoot command is issued.
-				blnSkill = false;
+				blnSkill = false; // shoots have been calced for this timer run
 				blnShoot = false;
-				c1.moveX();
+				c1.moveX(); // move
 				c1.moveY();
-				c1.update();
-				collision();
-				gamePanel.dblX = c1.dblX;
+				c1.update(); // update prjectiles
+				collision(); // check collisions 
+				//transfer data over to gpanel
+				gamePanel.dblX = c1.dblX; 
 				gamePanel.dblY = c1.dblY;
 				gamePanel.intSizeX = c1.intSizeX;
 				gamePanel.intSizeY = c1.intSizeY;
@@ -595,19 +603,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				gamePanel.projectiles = c1.projectiles;
 				gamePanel.intHP = c1.intHP;
 				gamePanel.map = map;
-				if(c1.deathCheck()){//=true
-					ssm.sendText("die,"+c1.intID+","+c1.intLives);
+				if(c1.deathCheck()){//=true (check if die)
+					ssm.sendText("die,"+c1.intID+","+c1.intLives); // sned netowrk messages + death functions and calcs
 					deathTimer.start();
-					frame.removeKeyListener(this);
+					frame.removeKeyListener(this); // gameplay related
 					frame.removeMouseListener(this);
 					gamePanel.deathLabel.setVisible(true);
 					gamePanel.deathSecond.setVisible(true);
 					gamePanel.intBoxX = 0;				
-					if(c1.outCheck()){
-						ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime);
-						ssm.sendText("out,"+c1.intID);
-						blnIn = false;
-						if(blnServer){
+					if(c1.outCheck()){ // out check (can only be out if dead)
+						ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime); // update network message
+						ssm.sendText("out,"+c1.intID); // death network message
+						blnIn = false; // is out
+						if(blnServer){ // if server, just do calculatiosn in here
 							intPlayerCount--;
 							if(intPlayerCount > 1){
 								
@@ -616,10 +624,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 							}
 						}
 					}
-					c1.spawn();
+					c1.spawn(); // upon death, respawn.
 				}
-				ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime);
-				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
+				ssm.sendText("data"+"," + c1.intID+","+c1.dblX+"," + c1.dblY+","+ c1.intHP+","+c1.intSkillTime); // update other users on your data
+				for(int intCount = characters.size()-1; intCount >= 0; intCount--){ // update yourself in char track array
 					if(characters.get(intCount).intID == c1.intID){
 						characters.get(intCount).dblX = c1.dblX;
 						characters.get(intCount).dblY = c1.dblY;
@@ -628,10 +636,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 						characters.get(intCount).intLives = c1.intLives;
 					}
 				}
-				gamePanel.characters = characters;
+				gamePanel.characters = characters; // gamepanel data trasnfer
 			}	
-		}else if(evt.getSource() == countdownTimer){  
-			intSecond--;
+		}else if(evt.getSource() == countdownTimer){  //countdown timer for lobby
+			intSecond--; // countdown functions for lobby make
 			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
 			if(intSecond == 0){
 				countdownTimer.stop();
@@ -639,10 +647,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setContentPane(charPanel);
 				frame.pack();
 			}
-		}else if(evt.getSource() == gameTimer){ //countdown timer in game
+		}else if(evt.getSource() == gameTimer){ //countdown timer for the game starting
 			intGameSecond--;
 			gamePanel.countdownSecond.setText(""+intGameSecond);
-			if(intGameSecond == 0){
+			if(intGameSecond == 0){ // game start related functions
 				gameTimer.stop();
 				gamePanel.intBoxX = 1000000000; //makes the transparent image go away
 				gamePanel.countdownSecond.setText("5");
@@ -654,11 +662,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.addMouseListener(this);
 				frame.requestFocus();
 			}
-		}else if(evt.getSource() == deathTimer){
-			c1.dblX = 10000000;
+		}else if(evt.getSource() == deathTimer){ // death timer
+			c1.dblX = 10000000; // fixs char offscreen so cannot play
 			intDeathSecond--;
 			gamePanel.deathSecond.setText(intDeathSecond+"...");
-			if(intDeathSecond == 0){
+			if(intDeathSecond == 0){ // upon respawning, lets player play again, gives them back playing "rights"
 				deathTimer.stop();
 				c1.spawn();
 				gamePanel.deathLabel.setVisible(false);
@@ -675,7 +683,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	
 	//methods for KeyListener (CHARACTER MOVEMENT COMMANDS)
-	public void keyReleased(KeyEvent evt){
+	public void keyReleased(KeyEvent evt){ // stop move
 		if(intPlaying == 1){	
 			if(evt.getKeyChar() == 'w'){
 				c1.up(0); 
@@ -687,7 +695,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				c1.right(0); 
 			}
 		}
-		if(intPlaying == 2){	
+		if(intPlaying == 2){ // no difference with top, used to have different and keep just in case changes are needed	
 			if(evt.getKeyChar() == 'w'){
 				c1.up(0); 
 			}else if(evt.getKeyChar() == 'a'){
@@ -699,7 +707,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 		}
 	} 
-	public void keyPressed(KeyEvent evt){
+	public void keyPressed(KeyEvent evt){ // in moving
 		if(intPlaying == 1){	
 			if(evt.getKeyChar() == 'w'){
 				c1.up(5); 
@@ -711,7 +719,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				c1.right(5);
 			}
 		}
-		if(intPlaying == 2){	
+		if(intPlaying == 2){	// no difference with top, used to have different and keep just in case changes are needed	
 			if(evt.getKeyChar() == 'w'){
 				c1.up(5); 
 			}else if(evt.getKeyChar() == 'a'){
@@ -726,13 +734,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
-		if(evt.getKeyChar() == 'r'){
+		if(evt.getKeyChar() == 'r'){ // skill confirm
 			blnSkill = true;
 			if(blnDonePrompt == true && blnSkillPrompt != true && c1.intSkillTime == 100){
 				tutorialPanel.promptUser.setText("Try killing the dummy!");
 				blnDonePrompt = false;
 			}
-		}else if(evt.getKeyChar() == KeyEvent.VK_ENTER){
+		}else if(evt.getKeyChar() == KeyEvent.VK_ENTER){ // chat confirm
 			gamePanel.enterMessage.setText("");
 			gamePanel.enterMessage.setEnabled(true);
 			gamePanel.enterMessage.setEditable(true);
@@ -752,13 +760,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	public void mouseClicked(MouseEvent evt){ // shooting
 		if(intPlaying == 1){
-			dblX = evt.getX();
+			dblX = evt.getX(); // check wher player is
 			dblY = evt.getY();
-			if(SwingUtilities.isLeftMouseButton(evt)){
+			if(SwingUtilities.isLeftMouseButton(evt)){ // if mouse is clicked, shoot and do shooting calculations.
 			//	double dblAngle = Math.atan2(c1.dblX - dblX, c1.dblY - dblY);
 			//	c1.shoot(c1.intID, 2*Math.cos(dblAngle), 2*Math.sin(dblAngle), 5, c1.dblX, c1.dblY);
 			//	c1.shoot(c1.intID, dblX - c1.dblX, dblY - c1.dblY, 2*Math.sin(dblAngle), 5, c1.dblX, c1.dblY);
-				double dblA = c1.dblX - dblX;
+				double dblA = c1.dblX - dblX; // use pyt theory to calc proj motion
 				double dblB = c1.dblY - dblY;
 				double dblC = Math.sqrt(dblA*dblA + dblB*dblB);
 				double dblVelocityX = 1;
@@ -786,7 +794,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				*/
 			}
 		}
-		if(intPlaying == 2){ // network
+		if(intPlaying == 2){ // network related projectiles confirmation of shoot
 			if(SwingUtilities.isLeftMouseButton(evt)){
 				dblX = evt.getX();
 				dblY = evt.getY();
@@ -794,7 +802,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 		}
 	}
-	public void mousePressed(MouseEvent evt){
+	public void mousePressed(MouseEvent evt){ //prompt for tutorial
 		if(SwingUtilities.isLeftMouseButton(evt)){
 			if(blnSkillPrompt == true && blnShootPrompt != true){
 				tutorialPanel.promptUser.setText("Press R to use skill.");
@@ -803,7 +811,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 	}
 	
-	//shoot check
+	//shoot check (check if player is shooting or using skill)
 	public void shoot(){
 		if(blnSkill){
 			if(c1.skill(c1.intID, c1.intCharType, c1.dblX, c1.dblY)){
@@ -812,7 +820,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}
 			}
 		}
-		if(intPlaying == 2){
+		if(intPlaying == 2){ //multiplayer projectile calcs
 			if(blnShoot){
 				double dblA = c1.dblX - dblX;
 				double dblB = c1.dblY - dblY;
@@ -849,7 +857,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	}
 	
 	//read CSV
-	public void loadMap(String strCSV){ // temporary -- for tutorial
+	public void loadMap(String strCSV){ // temporary -- for tutorial 
 		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("aimCursor.png")).getImage(), new Point(0,0),"aim cursor")); //custom aim cursor
 		try{
 			//reading CSV file
@@ -872,7 +880,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					gamePanel.mapData[intRow][intCol] = mapData[intRow][intCol]; //loading game map (randomized)
 				}
 			}
-			for(int intCount = 0; intCount < 484; intCount++){ // detecting terrain
+			for(int intCount = 0; intCount < 484; intCount++){ // detecting terrain types, adding them to map array
 				if(mapData[intCount][2].equals("water")){	
 					map.add(new GameModel().new Terrain1(Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), 50));
 				}else if(mapData[intCount][2].equals("dummy")){
@@ -948,7 +956,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 	}
 	
-	public void addChar(int intID, int intCharType, String strUser){ // will modify later.
+	public void addChar(int intID, int intCharType, String strUser){ // character array, adding other players for char detection
 		if(intCharType == 1){
 			characters.add(new GameModel().new Character1(intID, 200, 200, 100, 2, 0, 0, 1, strUser));
 		}else if(intCharType == 2){
@@ -963,6 +971,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//resetting all values that were changed upon interacting/playing once everybody disconnects in end panel screen
 	public void resetVals(){
+		//general+game values and data
 		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 		intPlaying = 0;
 		intSecond = 5;
@@ -982,7 +991,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		blnSkill = false;
 		intGameSecond = 5;
 		
-		
+		// lobby
 		lobbyPanel.countdownLabel.setText("Loading Lobby... 5");
 		lobbyPanel.enterUsername.setText("E.g: DIABLOGAMER1337");
 		lobbyPanel.enterIP.setText("Enter IP Address");
@@ -992,6 +1001,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		lobbyPanel.Return.setEnabled(true);
 		lobbyPanel.countdownLabel.setVisible(false);
 		
+		//char
 		charPanel.chatArea.setText("");
 		charPanel.chatMessage.setText("Message");
 		charPanel.intCharType = 0; //reset yellow champion "hover"
@@ -1009,11 +1019,13 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
 		
+		//game
 		gamePanel.intBoxX = 0;
 		gamePanel.countdownSecond.setText("5");
 		gamePanel.countdownSecond.setVisible(true);
 		gamePanel.countdownLabel.setVisible(true);
 
+		//game timer stop
 		timer.stop();
 		
 	}
