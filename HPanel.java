@@ -1,3 +1,9 @@
+/// HPanel - Help Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -13,6 +19,7 @@ public class HPanel extends JPanel implements ActionListener{
 	JButton Return = new JButton("Main Menu");
 	JButton Next = new JButton("Next");
 	
+	// Buffered Images
 	BufferedImage HelpTitle;
 	BufferedImage help1;
 	BufferedImage help2;
@@ -26,6 +33,7 @@ public class HPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	// Detects what help page they are on, and draws that page (and/or changes the button text accordingly)
 	public void paintComponent(Graphics g){
 		if(intPageCount == 0){
 			g.setColor(Color.WHITE);

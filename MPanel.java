@@ -18,7 +18,6 @@ public class MPanel extends JPanel implements ActionListener{
 	JButton Quit = new JButton(new ImageIcon(this.getClass().getResource("quit.png")));
 	
 	BufferedImage Title;
-	BufferedImage Logo;
 	
 	///methods
 	public void actionPerformed(ActionEvent evt){
@@ -27,6 +26,7 @@ public class MPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	// Draws title screen 
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);

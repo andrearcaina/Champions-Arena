@@ -1,3 +1,9 @@
+/// TPanel - Tutorial Menu Panel
+/// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
+/// ICS 4U1
+/// Version 1.0
+/// 2021-01-27
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -13,13 +19,8 @@ public class TPanel extends JPanel implements ActionListener{
 	JButton Return = new JButton("Main Menu");
 	JButton changeChamp = new JButton("Change Champion");
 	JLabel promptUser = new JLabel("Press W, A, S, D to move.");
-
-	BufferedImage champion1;
-	BufferedImage champion2;
-	BufferedImage champion3;
-	BufferedImage champion4;
 	
-	//character
+	// Character
 	double dblX = 0;
 	double dblY = 0;
 	int intSizeX = 20;
@@ -29,14 +30,19 @@ public class TPanel extends JPanel implements ActionListener{
 	int intCharType = 3; //tutorial character is defaulted to: MAGNUS
 	int intHP = 0;
 	
-	//dummy 
+	// Dummy 
 	int intDummyHP = 0;
 	double intDummyX;
 	double intDummyY;
 	
 	String[][] mapData = new String[484][5];
 	
-	//buffered images
+	// Buffered Images
+	BufferedImage champion1;
+	BufferedImage champion2;
+	BufferedImage champion3;
+	BufferedImage champion4;
+	
 	BufferedImage s;
 	BufferedImage gr;
 	BufferedImage w;
@@ -77,7 +83,7 @@ public class TPanel extends JPanel implements ActionListener{
 		
 		for(int intCount = 0; intCount < 484; intCount++){
 			if(mapData[intCount][2] == (null)){
-				break; // change to try catch later
+				break;
 			}
 			if(mapData[intCount][2].equals("water")){	
 				g.drawImage(w, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
@@ -113,8 +119,8 @@ public class TPanel extends JPanel implements ActionListener{
 		}
 		
 		g.drawImage(dummy, (int)intDummyX, (int)intDummyY, null);
-		
 		g.setColor(Color.RED);
+		// Draw projectiles
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			g.fillRect((int)projectiles.get(intCount).dblX, (int)projectiles.get(intCount).dblY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
@@ -145,6 +151,7 @@ public class TPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(255, 204, 203));
 		g.drawString("Lives: "+intLives, 670, 105); 
 		
+		// Draw number of hearts correspodning to number of lives
 		if(intLives == 3){
 			g.drawImage(lives1, 780, 95, null);
 			g.drawImage(lives1, 800, 95, null);
@@ -156,6 +163,7 @@ public class TPanel extends JPanel implements ActionListener{
 			g.drawImage(lives1, 780, 95, null);
 		}
 		
+		// Draw charcters corresponding to their charType (changes if they press button)
 		if(intCharType == 1){
 			g.drawImage(flamel, (int)dblX, (int)dblY, null);
 		}else if(intCharType == 2){
@@ -212,7 +220,6 @@ public class TPanel extends JPanel implements ActionListener{
 			
 			Return.setFont(customFont2);
 			changeChamp.setFont(customFont2);
-			
 			promptUser.setFont(customFont3);
 			
 		}catch(FileNotFoundException e){

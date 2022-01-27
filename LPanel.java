@@ -36,6 +36,7 @@ public class LPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	// Draws layout: titles/subtitles, champion portraits
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1280, 720);
@@ -44,9 +45,6 @@ public class LPanel extends JPanel implements ActionListener{
 		g.drawImage(hostGame, 40, 295, null);
 		g.drawImage(joinGame, 350, 295, null);
 		
-		// 150 x 200
-		g.setColor(new Color(34, 72, 109));
-		// g.fillRect(620, 280, 150, 200);
 		g.drawImage(championOne, 650, 150, null);
 		g.drawImage(championTwo, 850, 150, null);
 		g.drawImage(championThree, 650, 400, null);
@@ -57,8 +55,7 @@ public class LPanel extends JPanel implements ActionListener{
 		super();
 		this.setLayout(null);
 
-		try{ //Game Model maybe?
-			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
+		try{
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, LPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(30f);
 			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, LPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(20f);
 			enterUsername.setFont(customFont1);
