@@ -77,6 +77,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 		//returns to main menu screen
 		else if(evt.getSource() == helpPanel.Return || evt.getSource() == lobbyPanel.Return || evt.getSource() == capPanel.Return || evt.getSource() == endPanel.Return){ 
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 			frame.setContentPane(mainPanel); // bring to main menu
 			frame.pack();
 			helpPanel.intPageCount = 0;
@@ -990,6 +991,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		blnShoot = false;
 		blnSkill = false;
 		intGameSecond = 5;
+		intDeathSecond = 3;
 		
 		// lobby
 		lobbyPanel.countdownLabel.setText("Loading Lobby... 5");
@@ -1024,7 +1026,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		gamePanel.countdownSecond.setText("5");
 		gamePanel.countdownSecond.setVisible(true);
 		gamePanel.countdownLabel.setVisible(true);
-
+		
+		//end
+		
+		endPanel.winner.setText("");
+		
 		//game timer stop
 		timer.stop();
 		
