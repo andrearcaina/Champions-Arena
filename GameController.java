@@ -38,8 +38,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	CPanel charPanel = new CPanel(); //character selection panel
 	GPanel gamePanel = new GPanel(); //actual gameplay panel
 	
-	//leaderboard/win/lost/end panel: UX9
-	EPanel endPanel = new EPanel(); //once game ends panel / leaderboards
+	//win/lost/end panel: UX9
+	EPanel endPanel = new EPanel(); //once game ends panel
 	
 	//sorry/cap limit panel: UX10
 	SPanel capPanel = new SPanel(); //for users trying to join even though there is a lobby with 4 people or a game already has started
@@ -259,17 +259,27 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			c1.intLives = 3; // local player has 3 lives.
 		}else if(evt.getSource() == charPanel.lockIn){ // lock in button
-			charPanel.lockIn.setEnabled(false);
-			intStartCheck = intPlayerTotal;
-			intPlayerTotal = 4;
-			charPanel.c1Button.setEnabled(true);
-			charPanel.c2Button.setEnabled(true);
-			charPanel.c3Button.setEnabled(true);
-			charPanel.c4Button.setEnabled(true);
-			ssm.sendText("lock,1");
+			if(intPlayerTotal == 1){
+				charPanel.chatArea.append("You cannot play by yourself! \n");
+			}else if(intPlayerTotal >= 2 && intPlayerTotal < 5){ 
+				charPanel.lockIn.setEnabled(false);
+				intStartCheck = intPlayerTotal;
+				intPlayerTotal = 4;
+				charPanel.c1Button.setEnabled(true);
+				charPanel.c2Button.setEnabled(true);
+				charPanel.c3Button.setEnabled(true);
+				charPanel.c4Button.setEnabled(true);
+				ssm.sendText("lock,1");
+			}
 		}else if(evt.getSource() == charPanel.chatMessage){
 			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": "+charPanel.chatMessage.getText()+"\n");
 			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+charPanel.chatMessage.getText());
+		}else if(evt.getSource() == gamePanel.enterMessage){
+			gamePanel.gameChat.append(lobbyPanel.enterUsername.getText()+": "+gamePanel.enterMessage.getText()+"\n");
+			ssm.sendText("ingame_chat,"+lobbyPanel.enterUsername.getText()+","+gamePanel.enterMessage.getText());
+			gamePanel.enterMessage.setEnabled(false);
+			gamePanel.enterMessage.setEditable(false);
+			frame.requestFocus();
 		}
 		
 		//SSM STATEMENTS
@@ -321,6 +331,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			// Message type: lobby chat
 			if(strParts[0].equals("chat")){
 				charPanel.chatArea.append(strParts[1]+": "+strParts[2]+"\n");
+			}
+			//Mesage type: game chat
+			if(strParts[0].equals("ingame_chat")){
+				gamePanel.gameChat.append(strParts[1]+": "+strParts[2]+"\n");
 			}
 			// Message type: ID assignment
 			if(strParts[0].equals("IDAssign")){
@@ -399,7 +413,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 							ssm.sendText("winner,"+c1.intID);
 							frame.setContentPane(endPanel);
 							frame.pack();
-							System.out.println(c1.intID);
+							System.out.println("SOMETHING: "+c1.intID);
 							resetVals();
 							ssm.disconnect();
 						}
@@ -410,10 +424,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			// Message type; game done
 			if(strParts[0].equals("gameDone")){
 				if(blnIn){
-					ssm.sendText("winner,"+c1.intID);
 					frame.setContentPane(endPanel);
 					frame.pack();
-					System.out.println(c1.intID);
+					System.out.println("ACTUAL WINNER: "+c1.intID);
+					endPanel.winner.setText(c1.strUser+"!");
+					ssm.sendText("winner,"+c1.intID+","+c1.strUser);
 					resetVals();
 					ssm.disconnect();
 				}
@@ -423,7 +438,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(strParts[0].equals("winner")){
 				frame.setContentPane(endPanel);
 				frame.pack();
-				System.out.println(strParts[1]);
+				System.out.println("YO, YOU LOST BUT THE WINNER IS: "+strParts[1]);
+				endPanel.winner.setText(strParts[2]+"!");
 				resetVals();
 				ssm.disconnect();
 			}
@@ -468,7 +484,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}
 				}
 				
-				/*
+				
 				//detects if character is nearby to prompt dummy shooting
 				if(tutorialPanel.intX > 150 && tutorialPanel.intX < 450 && tutorialPanel.intY < 200){
 					if(intDummyCounter % 7 == 0){
@@ -479,7 +495,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					}
 					intDummyCounter++;	
 				}
-				*/
+				
 				
 				if(blnShootPrompt){
 					if(tutorialPanel.intX != 200 || tutorialPanel.intY != 200){ 
@@ -615,22 +631,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
-		/*
-		if(evt.getKeyChar() == 'l'){
-			if(intPlaying == 1){
-				cT.shoot(63,0,4,10,cT.intX,cT.intY);
-				cT.update();
-				c1.projectiles.addAll(cT.projectiles);
-				cT.projectiles.remove(0);
-			}
-		}
-		*/
 		if(evt.getKeyChar() == 'r'){
 			blnSkill = true;
 			if(blnDonePrompt == true && blnSkillPrompt != true && c1.intSkillTime == 100){
 				tutorialPanel.promptUser.setText("Try killing the dummy!");
 				blnDonePrompt = false;
 			}
+		}else if(evt.getKeyChar() == KeyEvent.VK_ENTER){
+			gamePanel.enterMessage.setText("Press enter to type");
+			gamePanel.enterMessage.setEnabled(true);
+			gamePanel.enterMessage.setEditable(true);
 		}
 	}
 	
@@ -898,6 +908,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		helpPanel.Return.addActionListener(this);
 		helpPanel.Tutorial.addActionListener(this);
 	
+		//tutorialPanel
+		tutorialPanel.changeChamp.addActionListener(this);
+		tutorialPanel.Return.addActionListener(this);
+		
 		//LobbyPanel
 		lobbyPanel.Return.addActionListener(this);
 		lobbyPanel.joinLobby.addActionListener(this);
@@ -912,10 +926,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c4Button.addActionListener(this);
 		charPanel.chatMessage.addActionListener(this);
 		charPanel.lockIn.addActionListener(this);
-				
-		//tutorialPanel
-		tutorialPanel.changeChamp.addActionListener(this);
-		tutorialPanel.Return.addActionListener(this);
+			
+		//gamePanel
+		gamePanel.enterMessage.addActionListener(this); 
 		
 		//capPanel
 		capPanel.Return.addActionListener(this);

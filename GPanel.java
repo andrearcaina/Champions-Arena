@@ -21,13 +21,20 @@ public class GPanel extends JPanel implements ActionListener{
 	JLabel user3 = new JLabel();
 	JLabel user4 = new JLabel();
 	
+	JTextArea gameChat = new JTextArea();
+	JScrollPane gamePane = new JScrollPane(gameChat);	
+	JTextField enterMessage = new JTextField("Press Enter to Message");
+	
+	
 	int intX = 0;
 	int intY = 0;
 	int intSizeX = 40;
 	int intSizeY = 40;
 	int intSkillTime = 0;
-
 	int intHP = 0;
+	
+	int intBoxX = 0;
+	int intBoxY = 0;
 	
 	String[][] mapData = new String[484][5];
 	
@@ -69,7 +76,6 @@ public class GPanel extends JPanel implements ActionListener{
 	}
 	
 	public void paintComponent(Graphics g){
-	
 		for(int intCount = 0; intCount < 484; intCount++){
 			if(mapData[intCount][2] == (null)){
 				break; // change to try catch later
@@ -106,7 +112,7 @@ public class GPanel extends JPanel implements ActionListener{
 				g.drawImage(to, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}
 		}
-		
+			
 		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
 			if(projectiles.get(intCount).intID == 5){
@@ -148,7 +154,7 @@ public class GPanel extends JPanel implements ActionListener{
 			 
 		}
 				
-		g.setColor(Color.GRAY);
+		g.setColor(new Color(102, 102, 102));
 		g.fillRect(660, 0, 620, 720);
 		g.fillRect(0, 660, 660, 60);
 		
@@ -272,17 +278,11 @@ public class GPanel extends JPanel implements ActionListener{
 				}else if(characters.get(intCount).intLives == 1){	
 					g.drawImage(lives4, 780, 650, null);
 				}	
+			}	
 			
-			/* testing:
-			}else if(characters.get(intCount).intID == 9){
-				g.setColor(Color.BLACK);
-				g.fillRect(779, 539, 202, 32);
-				g.setColor(Color.PINK);
-				g.setFont(new Font("OCR A Extended", Font.BOLD, 20));
-				g.drawString("HP: "+characters.get(intCount).intHP, 680, 555);
-				g.fillRect(780, 540, characters.get(intCount).intHP*2, 30);
-			*/
-			}	 
+		g.setColor(new Color(102, 102, 102, 127));
+		g.fillRect(intBoxX, intBoxY, 660, 660);
+		
 		}
 	}
 	
@@ -321,11 +321,15 @@ public class GPanel extends JPanel implements ActionListener{
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(20f);
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(22f);
-			
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.TTF")).deriveFont(20f);
+
 			user1.setFont(customFont1);
 			user2.setFont(customFont1);
 			user3.setFont(customFont1);
 			user4.setFont(customFont1);
+			
+			gameChat.setFont(customFont2);
+			enterMessage.setFont(customFont2);
 			
 		}catch(FileNotFoundException e){
 			System.out.println(e);
@@ -339,11 +343,26 @@ public class GPanel extends JPanel implements ActionListener{
 		user2.setBounds(770, 195, 220, 30);
 		user3.setBounds(770, 365, 220, 30);
 		user4.setBounds(770, 535, 220, 30);
+		gamePane.setBounds(1000, 10, 250, 550);
+		enterMessage.setBounds(1000, 570, 250, 100);
+		
+		enterMessage.setEditable(false);
+		enterMessage.setEnabled(false);
+		gameChat.setEditable(false);
+		
+		gameChat.setCaretPosition(gameChat.getDocument().getLength());
+		gameChat.setBackground(new Color(102, 102, 102));
+		gameChat.setForeground(Color.WHITE);
+		enterMessage.setForeground(Color.WHITE);
+		enterMessage.setBackground(new Color(102, 102, 102));
 		
 		this.add(user1);
 		this.add(user2);
 		this.add(user3);
 		this.add(user4);
+	
+		this.add(gamePane);
+		this.add(enterMessage);
 	}
 		
 }
