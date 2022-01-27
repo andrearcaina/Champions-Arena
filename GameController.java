@@ -241,6 +241,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				intPlaying = 2; // multi player game type
 				frame.setContentPane(gamePanel);
 				frame.pack();
+				gamePanel.intBoxX = 0;
 				gamePanel.projectiles = c1.projectiles; // data setting
 				intRandom = (int)(Math.random()*4)+1; // RANDOM MAP
 				System.out.println("random numb: "+intRandom); // system check
@@ -403,6 +404,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				c1.intLives = 3;
 				c1.spawn();
 				blnIn = true;
+				gamePanel.intBoxX = 0;
 				gamePanel.countdownSecond.setText(""+intGameSecond);
 				if(intGameSecond == 0){ // countdown timer
 					gameTimer.stop(); 
