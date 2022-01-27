@@ -323,8 +323,8 @@ public class GPanel extends JPanel implements ActionListener{
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
 			customFont = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(20f);
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(22f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(20f);
-			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(40f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(20f);
+			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(40f);
 			 
 			user1.setFont(customFont1);
 			user2.setFont(customFont1);

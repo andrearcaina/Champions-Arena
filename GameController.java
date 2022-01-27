@@ -221,14 +221,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME func
 			if(intPlayerCount == intStartCheck){ // if players locked in and playing the game is equal to toal players in the lobby
 				//System.out.println(2);
-				gameTimer.start();
-				
-				frame.removeKeyListener(this); // game formatting stuff
-				frame.removeMouseListener(this);
-				frame.addKeyListener(this); 
-				frame.addMouseListener(this);
-				frame.requestFocus();
-				timer.start(); // start gameplay timer
+				gameTimer.start(); //start countdown game timer
+				timer.start(); //start animation timer for actual gameplay
 				intPlaying = 2; // multi player game type
 				frame.setContentPane(gamePanel);
 				frame.pack();
@@ -377,11 +371,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			// Messaage type: Starto
 			if(strParts[0].equals("starting")){
-				frame.removeKeyListener(this); // game formatting stuff
-				frame.removeMouseListener(this);
-				frame.addKeyListener(this);
-				frame.addMouseListener(this);
-				frame.requestFocus();
+				gameTimer.start();
+				intGameSecond = intGameSecond + 1;
+				intGameSecond--;
 				timer.start();
 				intPlaying = 2;
 				frame.setContentPane(gamePanel);
@@ -391,7 +383,19 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				c1.intLives = 3;
 				c1.spawn();
 				blnIn = true;
-				
+				gamePanel.countdownSecond.setText(""+intGameSecond);
+				if(intGameSecond == 0){
+					gameTimer.stop();
+					gamePanel.intBoxX = 1000000000; 
+					gamePanel.countdownSecond.setText("5");
+					gamePanel.countdownSecond.setVisible(false);
+					gamePanel.countdownLabel.setVisible(false);
+					frame.removeKeyListener(this); // game formatting stuff
+					frame.removeMouseListener(this);
+					frame.addKeyListener(this); 
+					frame.addMouseListener(this);
+					frame.requestFocus();
+				}
 			}
 			// Messaage type: Skill
 			if(strParts[0].equals("skill")){
@@ -580,11 +584,20 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setContentPane(charPanel);
 				frame.pack();
 			}
-		}else if(evt.getSource() == gameTimer){
+		}else if(evt.getSource() == gameTimer){ //countdown timer in game
 			intGameSecond--;
 			gamePanel.countdownSecond.setText(""+intGameSecond);
 			if(intGameSecond == 0){
 				gameTimer.stop();
+				gamePanel.intBoxX = 1000000000; //makes the transparent image go away
+				gamePanel.countdownSecond.setText("5");
+				gamePanel.countdownSecond.setVisible(false);
+				gamePanel.countdownLabel.setVisible(false);
+				frame.removeKeyListener(this); // game formatting stuff
+				frame.removeMouseListener(this);
+				frame.addKeyListener(this); 
+				frame.addMouseListener(this);
+				frame.requestFocus();
 			}
 		}
 	}
@@ -895,6 +908,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		charPanel.c2Button.addActionListener(this);
 		charPanel.c3Button.addActionListener(this);
 		charPanel.c4Button.addActionListener(this);
+		
+		gamePanel.intBoxX = 0; 
+		gamePanel.countdownSecond.setText("5");
+		gamePanel.countdownSecond.setVisible(true);
+		gamePanel.countdownLabel.setVisible(true);
+
 		timer.stop();
 		
 	}

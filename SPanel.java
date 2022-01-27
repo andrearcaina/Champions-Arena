@@ -37,7 +37,7 @@ public class SPanel extends JPanel implements ActionListener{
 		
 		try{ 
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
-			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, SPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(35f);
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, SPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(35f);
 			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, SPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(20f);
 			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, SPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(60f);
 			
