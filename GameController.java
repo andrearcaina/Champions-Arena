@@ -21,8 +21,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	int intPlayerCount = 1; // server only: players PLAYING the game
 	int intPlayerTotal = 1; // server only: players IN the game LOBBY. Is then  used for some player cap commands and server lockout commands.
 	int intStartCheck = 0; //Duplicate var of intPlayerTotal. Amount  of players in the lobby, thus amount of plaers needed to start the game.
-	int intX = 0; // player x location
-	int intY = 0; // player y location.
+	double intX = 0; // player x location
+	double intY = 0; // player y location.
 	boolean blnIn = false; // is the player elimed or not
 	boolean blnShootPrompt = true; //tutorial prompt
 	boolean blnSkillPrompt = true; //tutorial prompt
@@ -348,8 +348,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(strParts[0].equals("data")){ // update info
 				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
 					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){
-						characters.get(intCount).intX = Integer.parseInt(strParts[2]);
-						characters.get(intCount).intY = Integer.parseInt(strParts[3]);
+						characters.get(intCount).intX = Double.parseDouble(strParts[2]);
+						characters.get(intCount).intY = Double.parseDouble(strParts[3]);
 						characters.get(intCount).intHP = Integer.parseInt(strParts[4]);
 						characters.get(intCount).intSkillTime = Integer.parseInt(strParts[5]);
 					}
@@ -357,7 +357,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			// Message type: Shoot
 			if(strParts[0].equals("shoot")){
-				c1.shoot(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]), Integer.parseInt(strParts[3]), Integer.parseInt(strParts[4]), Integer.parseInt(strParts[5]), Integer.parseInt(strParts[6]));
+				c1.shoot(Integer.parseInt(strParts[1]), Double.parseDouble(strParts[2]), Double.parseDouble(strParts[3]), Integer.parseInt(strParts[4]), Double.parseDouble(strParts[5]), Double.parseDouble(strParts[6]));
 			}
 			// Message type: remove proj
 			if(strParts[0].equals("removeProj")){ 
@@ -399,7 +399,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			}
 			// Messaage type: Skill
 			if(strParts[0].equals("skill")){
-				c1.skill(Integer.parseInt(strParts[2]), Integer.parseInt(strParts[1]),Integer.parseInt(strParts[3]), Integer.parseInt(strParts[4]));
+				c1.skill(Integer.parseInt(strParts[2]), Integer.parseInt(strParts[1]),Double.parseDouble(strParts[3]), Double.parseDouble(strParts[4]));
 			}
 			// Message type: die
 			if(strParts[0].equals("die")){
@@ -682,6 +682,21 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			intX = evt.getX();
 			intY = evt.getY();
 			if(SwingUtilities.isLeftMouseButton(evt)){
+			//	double dblAngle = Math.atan2(c1.intX - intX, c1.intY - intY);
+			//	c1.shoot(c1.intID, 2*Math.cos(dblAngle), 2*Math.sin(dblAngle), 5, c1.intX, c1.intY);
+			//	c1.shoot(c1.intID, intX - c1.intX, intY - c1.intY, 2*Math.sin(dblAngle), 5, c1.intX, c1.intY);
+				double dblA = c1.intX - intX;
+				double dblB = c1.intY - intY;
+				double dblC = Math.sqrt(dblA*dblA + dblB*dblB);
+				double dblVelocityX = 1;
+				double dblVelocityY = 0;
+				if (dblC != 0) {
+					dblVelocityX = -5*dblA / dblC;
+					dblVelocityY = -5*dblB / dblC;
+				}
+				c1.shoot(c1.intID, dblVelocityX, dblVelocityY, 5, c1.intX, c1.intY);
+				
+				/*
 				if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
 					c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
 					tutorialPanel.projectiles = c1.projectiles;
@@ -695,6 +710,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					c1.shoot(c1.intID,4,4,5, c1.intX, c1.intY);
 					tutorialPanel.projectiles = c1.projectiles;
 				}
+				*/
 			}
 		}
 		if(intPlaying == 2){ // network
@@ -725,6 +741,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}
 		if(intPlaying == 2){
 			if(blnShoot){
+				double dblA = c1.intX - intX;
+				double dblB = c1.intY - intY;
+				double dblC = Math.sqrt(dblA*dblA + dblB*dblB);
+				double dblVelocityX = 1;
+				double dblVelocityY = 0;
+				if (dblC != 0) {
+					dblVelocityX = -5*dblA / dblC;
+					dblVelocityY = -5*dblB / dblC;
+				}
+				c1.shoot(c1.intID, dblVelocityX, dblVelocityY, 5, c1.intX, c1.intY);
+				ssm.sendText("shoot,"+c1.intID+","+dblVelocityX+","+dblVelocityY+",5,"+c1.intX+","+c1.intY); 
+				/*
 				if(intX <= c1.intX && intY <= c1.intY){ // based on mouse location, will shoot in that location.
 					c1.shoot(c1.intID,-4,-4,5, c1.intX, c1.intY);
 					ssm.sendText("shoot,"+c1.intID+","+-4+","+-4+","+5+","+c1.intX+","+c1.intY);
@@ -742,6 +770,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					ssm.sendText("shoot,"+c1.intID+","+4+","+4+","+5+","+c1.intX+","+c1.intY);
 					gamePanel.projectiles = c1.projectiles;
 				}
+				*/
 			}
 		}
 	}

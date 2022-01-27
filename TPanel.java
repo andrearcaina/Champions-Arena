@@ -20,8 +20,8 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage champion4;
 	
 	//character
-	int intX = 0;
-	int intY = 0;
+	double intX = 0;
+	double intY = 0;
 	int intSizeX = 20;
 	int intSizeY = 20;
 	int intSkillTime = 0;
@@ -31,8 +31,8 @@ public class TPanel extends JPanel implements ActionListener{
 	
 	//dummy 
 	int intDummyHP = 0;
-	int intDummyX;
-	int intDummyY;
+	double intDummyX;
+	double intDummyY;
 	
 	String[][] mapData = new String[484][5];
 	
@@ -111,11 +111,11 @@ public class TPanel extends JPanel implements ActionListener{
 			}
 		}
 		
-		g.drawImage(dummy, intDummyX, intDummyY, null);
+		g.drawImage(dummy, (int)intDummyX, (int)intDummyY, null);
 		
 		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
-			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
+			g.fillRect((int)projectiles.get(intCount).intX, (int)projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
 		g.setColor(Color.WHITE);
 		g.fillRect(660, 0, 620, 720);
@@ -156,13 +156,13 @@ public class TPanel extends JPanel implements ActionListener{
 		}
 		
 		if(intCharType == 1){
-			g.drawImage(flamel, intX, intY, null);
+			g.drawImage(flamel, (int)intX, (int)intY, null);
 		}else if(intCharType == 2){
-			g.drawImage(bishop, intX, intY, null);
+			g.drawImage(bishop, (int)intX, (int)intY, null);
 		}else if(intCharType == 3){
-			g.drawImage(magnus, intX, intY, null);
+			g.drawImage(magnus, (int)intX, (int)intY, null);
 		}else if(intCharType == 4){
-			g.drawImage(shadow, intX, intY, null);
+			g.drawImage(shadow, (int)intX, (int)intY, null);
 		}
 		
 		g.setColor(Color.BLACK);

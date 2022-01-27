@@ -12,12 +12,12 @@ public class GameModel{
 	public class Character1{
 		///properties
 		int intID = 0; //Default Value -- logic reasons, ID number of player
-		int intX = 0; //Default Value -- Char pos x
-		int intY = 0; //Default Value -- Char pos y
+		double intX = 0; //Default Value -- Char pos x
+		double intY = 0; //Default Value -- Char pos y
 		int intHP; // Below are gameplay realted values
 		int intAttack;
-		int intSpeedX = 0;
-		int intSpeedY = 0;
+		double intSpeedX = 0;
+		double intSpeedY = 0;
 		int intSizeX = 20;
 		int intSizeY = 20;
 		int intSkillTime = 0; // Skill CD time
@@ -76,12 +76,12 @@ public class GameModel{
 			intSpeedX = -intSpeedXIn;
 		}
 		
-		public void shoot(int intIDn, int intSpeedXn, int intSpeedYn, int intSize, int intXfrom, int intYfrom){ // projectile adding function, can be from local user can be from other users.
-			projectiles.add(new Projectile1(intIDn, intXfrom, intYfrom, 200, 200, intSpeedXn, intSpeedYn, intSize, intAttack, intXfrom, intYfrom));
+		public void shoot(int intIDn, double dblSpeedXn, double dblSpeedYn, int intSize, double intXfrom, double intYfrom){ // projectile adding function, can be from local user can be from other users.
+			projectiles.add(new Projectile1(intIDn, intXfrom, intYfrom, 200, 200, dblSpeedXn, dblSpeedYn, intSize, intAttack, intXfrom, intYfrom));
 			//Creates new projectile in projectile tracker array, based on input values representing ID (who's bullet it is), speed in x and y, the general size, and where the projectile was shot from (to calculate for the maximum ranges)
 		}
 		
-		public boolean skill(int intIDn, int intCharTypeIn, int intXn, int intYn){ // skills
+		public boolean skill(int intIDn, int intCharTypeIn, double intXn, double intYn){ // skills
 			if(intSkillTime > 99){ // if the skill bar is full, time based charge, will unleash skill upon command.
 				//Projectiles use the same logic as the shoot above, using the projectile class's constructor.
 				if(intCharTypeIn == 1){ //Character one's skill
@@ -179,7 +179,7 @@ public class GameModel{
 		}
 		
 		///constructor
-		public Character1(int intID, int intX, int intY, int intHP, int intAttack, int intSpeedX, int intSpeedY, int intCharType, String strUser){
+		public Character1(int intID, double intX, double intY, int intHP, int intAttack, double intSpeedX, double intSpeedY, int intCharType, String strUser){
 			this.intID = intID;
 			this.intX = intX;
 			this.intY = intY;
@@ -194,8 +194,8 @@ public class GameModel{
 	// TERRAIN OBJECT
 	class Terrain1{
 		/// properties
-		int intX; // location
-		int intY;
+		double intX; // location
+		double intY;
 		int intSizeX; // size
 		int intSizeY;
 		int intID; // type of terrain, uses same ID logic as characters
@@ -203,7 +203,7 @@ public class GameModel{
 		/// methods
 		
 		///constructor
-		public Terrain1(int intX, int intY, int intSizeX, int intSizeY, int intID){
+		public Terrain1(double intX, double intY, int intSizeX, int intSizeY, int intID){
 			this.intX = intX;
 			this.intY = intY;
 			this.intSizeX = intSizeX;
@@ -216,33 +216,33 @@ public class GameModel{
 	class Projectile1{
 		/// properties
 		int intID; // who's projectile it is. Uses same Id logic as characters and terrain.
-		int intX; // location
-		int intY;
-		int intMaxRangeX; //maximum range
-		int intMaxRangeY;
-		int intSpeedX; // speed
-		int intSpeedY;
+		double intX; // location
+		double intY;
+		double intMaxRangeX; //maximum range
+		double intMaxRangeY;
+		double dblSpeedX; // speed
+		double dblSpeedY;
 		int intSize; // general size (always square/circle)
 		int intDamage; // how much damage each projectile does
-		int intShotX; // where it was originally shot (for max range calcs)
-		int intShotY;
+		double intShotX; // where it was originally shot (for max range calcs)
+		double intShotY;
 		
 		/// methods
 		
 		public void move(){ // move projectile location
-			intX += intSpeedX;
-			intY += intSpeedY;
+			intX += dblSpeedX;
+			intY += dblSpeedY;
 		}
 		
 		///constructor
-		public Projectile1(int intID, int intX, int intY, int intMaxRangeX, int intMaxRangeY, int intSpeedX, int intSpeedY, int intSize, int intDamage, int intShotX, int intShotY){
+		public Projectile1(int intID, double intX, double intY, double intMaxRangeX, double intMaxRangeY, double dblSpeedX, double dblSpeedY, int intSize, int intDamage, double intShotX, double intShotY){
 			this.intID = intID;
 			this.intX = intX;
 			this.intY = intY;
 			this.intMaxRangeX = intMaxRangeX;
 			this.intMaxRangeY = intMaxRangeY;
-			this.intSpeedX = intSpeedX;
-			this.intSpeedY = intSpeedY;
+			this.dblSpeedX = dblSpeedX;
+			this.dblSpeedY = dblSpeedY;
 			this.intSize = intSize;
 			this.intDamage = intDamage;
 			this.intShotX = intShotX;

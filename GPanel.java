@@ -28,8 +28,8 @@ public class GPanel extends JPanel implements ActionListener{
 	JScrollPane gamePane = new JScrollPane(gameChat);	
 	JTextField enterMessage = new JTextField("Press Enter to Message");
 	
-	int intX = 0;
-	int intY = 0;
+	double intX = 0;
+	double intY = 0;
 	int intSizeX = 40;
 	int intSizeY = 40;
 	int intSkillTime = 0;
@@ -128,7 +128,7 @@ public class GPanel extends JPanel implements ActionListener{
 			}else if(projectiles.get(intCount).intID == 9){
 				g.setColor(Color.PINK);
 			}
-			g.fillRect(projectiles.get(intCount).intX, projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
+			g.fillRect((int)projectiles.get(intCount).intX, (int)projectiles.get(intCount).intY, projectiles.get(intCount).intSize, projectiles.get(intCount).intSize); 			
 		}
 		
 		for(int intCount = characters.size() -1; intCount >= 0; intCount--){
@@ -143,15 +143,15 @@ public class GPanel extends JPanel implements ActionListener{
 			}else if(characters.get(intCount).intID == 9){
 				g.setColor(Color.PINK);
 			}
-			g.fillRect(characters.get(intCount).intX, characters.get(intCount).intY+15, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY-15); 			
+			g.fillRect((int)characters.get(intCount).intX, (int)characters.get(intCount).intY+15, characters.get(intCount).intSizeX, characters.get(intCount).intSizeY-15); 			
 			if(characters.get(intCount).intCharType == 1){
-				g.drawImage(flamel, characters.get(intCount).intX, characters.get(intCount).intY, null);
+				g.drawImage(flamel, (int)characters.get(intCount).intX, (int)characters.get(intCount).intY, null);
 			}else if(characters.get(intCount).intCharType == 2){
-				g.drawImage(bishop, characters.get(intCount).intX, characters.get(intCount).intY, null);
+				g.drawImage(bishop, (int)characters.get(intCount).intX, (int)characters.get(intCount).intY, null);
 			}else if(characters.get(intCount).intCharType == 3){
-				g.drawImage(magnus, characters.get(intCount).intX, characters.get(intCount).intY, null);
+				g.drawImage(magnus, (int)characters.get(intCount).intX, (int)characters.get(intCount).intY, null);
 			}else if(characters.get(intCount).intCharType == 4){
-				g.drawImage(shadow, characters.get(intCount).intX, characters.get(intCount).intY, null);
+				g.drawImage(shadow, (int)characters.get(intCount).intX, (int)characters.get(intCount).intY, null);
 			}
 			 
 		}
