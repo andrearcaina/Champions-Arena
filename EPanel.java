@@ -92,7 +92,7 @@ public class EPanel extends JPanel implements ActionListener{
 		Return.setBackground(Color.GRAY);
 		
 		Return.setHorizontalAlignment(SwingConstants.CENTER);
-		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		
 		this.add(winner);
 		this.add(funmessage);

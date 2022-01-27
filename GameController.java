@@ -76,7 +76,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			map.clear();
 		}else if(evt.getSource() == lobbyPanel.createLobby){ // CREATE LOBBY
 			//setting GUI elements for LobbyPanel + frame cursor 
-			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("timeCursor.png").getImage(), new Point(0,0),"time cursor"));
+			frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("timeCursor.png")).getImage(), new Point(0,0),"time cursor"));
 			lobbyPanel.joinLobby.setEnabled(false);
 			lobbyPanel.enterIP.setEnabled(false);
 			lobbyPanel.enterUsername.setEnabled(false);
@@ -613,7 +613,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			lobbyPanel.countdownLabel.setText("Loading Lobby... "+ intSecond);
 			if(intSecond == 0){
 				countdownTimer.stop();
-				frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
+				frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 				frame.setContentPane(charPanel);
 				frame.pack();
 			}
@@ -811,10 +811,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//read CSV
 	public void loadMap(String strCSV){ // temporary -- for tutorial
-		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("aimCursor.png").getImage(), new Point(0,0),"aim cursor")); //custom aim cursor
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("aimCursor.png")).getImage(), new Point(0,0),"aim cursor")); //custom aim cursor
 		try{
 			//reading CSV file
-			BufferedReader map1 = new BufferedReader(new FileReader(strCSV));
+			BufferedReader map1 = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(strCSV)));
 			
 			int intCol;
 			int intRow;
@@ -928,7 +928,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//resetting all values that were changed upon interacting/playing once everybody disconnects in end panel screen
 	public void resetVals(){
-		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 		intPlaying = 0;
 		intSecond = 5;
 		intRandom = 1;
@@ -1031,7 +1031,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		endPanel.Return.addActionListener(this);
 		
 		//cursor
-		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
 	} 
 	
 	///main method

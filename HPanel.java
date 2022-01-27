@@ -10,7 +10,6 @@ public class HPanel extends JPanel implements ActionListener{
 	///properties
 	Timer timer = new Timer(1000/60, this);
 	
-	//Icon return = new ImageIcon("Return.png");
 	JButton Return = new JButton("Main Menu");
 	JButton Tutorial = new JButton("Tutorial");
 	JLabel readInstruction = new JLabel("I have read the instructions");
@@ -44,8 +43,8 @@ public class HPanel extends JPanel implements ActionListener{
 		//readInstruction.setBounds();
 		//boxInstruction.setBounds();
 		
-		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
-		Tutorial.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		Tutorial.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		
 		this.add(Return);
 		this.add(Tutorial);
@@ -57,7 +56,6 @@ public class HPanel extends JPanel implements ActionListener{
 		//buffered images
 		try{
 			HelpTitle = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("HelpTitle.png"));
-			//Logo = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("Logo.png"));
 			//Instructions = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("Instructions.png"));
 		}catch(IOException e){
 			System.out.println(e.toString());

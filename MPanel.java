@@ -13,9 +13,9 @@ public class MPanel extends JPanel implements ActionListener{
 	Icon playIcon = new ImageIcon("play.png");
 	Icon helpIcon = new ImageIcon("help.png");
 	Icon quitIcon = new ImageIcon("quit.png");
-	JButton Play = new JButton(playIcon);
-	JButton Help = new JButton(helpIcon);
-	JButton Quit = new JButton(quitIcon);
+	JButton Play = new JButton(new ImageIcon(this.getClass().getResource("play.png")));
+	JButton Help = new JButton(new ImageIcon(this.getClass().getResource("help.png")));
+	JButton Quit = new JButton(new ImageIcon(this.getClass().getResource("quit.png")));
 	
 	BufferedImage Title;
 	BufferedImage Logo;
@@ -41,9 +41,9 @@ public class MPanel extends JPanel implements ActionListener{
 		Help.setBounds(475, 410, 220, 130);
 		Quit.setBounds(725, 410, 220, 130);
 		
-		Play.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
-		Help.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
-		Quit.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Play.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		Help.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		Quit.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		
 		this.add(Play);
 		this.add(Help);

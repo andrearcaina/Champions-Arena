@@ -61,8 +61,8 @@ public class LPanel extends JPanel implements ActionListener{
 
 		try{ //Game Model maybe?
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
-			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(20f);
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, LPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(30f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, LPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(20f);
 			enterUsername.setFont(customFont1);
 			serverInfo.setFont(customFont1);
 			enterIP.setFont(customFont1);
@@ -86,13 +86,13 @@ public class LPanel extends JPanel implements ActionListener{
 		enterUsername.setForeground(Color.WHITE);
 		enterUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		createLobby.setBounds(15, 370, 280, 110);
-		createLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		createLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		joinLobby.setBounds(325, 370, 280, 110);
-		joinLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		joinLobby.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		serverInfo.setBounds(15, 500, 280, 70);
 		enterIP.setBounds(325, 500, 280, 70);
 		Return.setBounds(1050, 20, 180, 80);
-		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		
 		serverInfo.setForeground(Color.WHITE);
 		enterIP.setForeground(Color.WHITE);
