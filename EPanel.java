@@ -71,11 +71,11 @@ public class EPanel extends JPanel implements ActionListener{
 			c4 = ImageIO.read(EPanel.class.getClassLoader().getResourceAsStream("c4.png"));
 		
 		}catch(FileNotFoundException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(FontFormatException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(IOException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}
 		
 		winner.setBounds(50, 220, 1000, 150);	

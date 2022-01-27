@@ -107,11 +107,11 @@ public class CPanel extends JPanel implements ActionListener{
 			readyUp.setFont(customFont4);
 			
 		}catch(FileNotFoundException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(FontFormatException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(IOException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}
 		timer.start();
 		

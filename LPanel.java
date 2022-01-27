@@ -127,7 +127,7 @@ public class LPanel extends JPanel implements ActionListener{
 			championThree = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c3.png"));
 			championFour = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c4.png"));
 		}catch(IOException e){
-			System.out.println("Unable to load image.");
+			System.out.println(e.toString());
 		}
 		
 	}

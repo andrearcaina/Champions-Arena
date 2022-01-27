@@ -55,7 +55,7 @@ public class MPanel extends JPanel implements ActionListener{
 		try{
 			Title = ImageIO.read(MPanel.class.getClassLoader().getResourceAsStream("Title.png"));
 		}catch(IOException e){
-			System.out.println("Unable to load image.");
+			System.out.println(e.toString());
 		}
 		
 	}

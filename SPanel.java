@@ -47,12 +47,10 @@ public class SPanel extends JPanel implements ActionListener{
 			Return.setFont(customFont2);
 			sorryTitle.setFont(customFont3);		
 			sad = ImageIO.read(new File("bigSad.png"));
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(FontFormatException e){
-			System.out.println(e);
 		}catch(IOException e){
-			System.out.println(e);
+			System.out.println(e.toString());
+		}catch(FontFormatException e){
+			System.out.println(e.toString());
 		}
 		
 		sorryTitle.setBounds(50, 10, 300, 200);

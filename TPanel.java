@@ -211,11 +211,11 @@ public class TPanel extends JPanel implements ActionListener{
 			promptUser.setFont(customFont3);
 			
 		}catch(FileNotFoundException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(FontFormatException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(IOException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}
 		
 		changeChamp.setBounds(1000, 10, 250, 70);

@@ -337,11 +337,11 @@ public class GPanel extends JPanel implements ActionListener{
 			countdownLabel.setFont(customFont3);
 			countdownSecond.setFont(customFont3);
 		}catch(FileNotFoundException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(FontFormatException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}catch(IOException e){
-			System.out.println(e);
+			System.out.println(e.toString());
 		}
 
 		user1.setBounds(770, 20, 220, 30);
