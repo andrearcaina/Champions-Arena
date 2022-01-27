@@ -64,10 +64,10 @@ public class EPanel extends JPanel implements ActionListener{
 			Return.setFont(customFont2);
 			endTitle.setFont(customFont3);		
 			
-			c1 = ImageIO.read(new File("c1.png"));
-			c2 = ImageIO.read(new File("c2.png"));
-			c3 = ImageIO.read(new File("c3.png"));
-			c4 = ImageIO.read(new File("c4.png"));
+			c1 = ImageIO.read(EPanel.class.getClassLoader().getResourceAsStream("c1.PNG"));
+			c2 = ImageIO.read(EPanel.class.getClassLoader().getResourceAsStream("c2.png"));
+			c3 = ImageIO.read(EPanel.class.getClassLoader().getResourceAsStream("c3.png"));
+			c4 = ImageIO.read(EPanel.class.getClassLoader().getResourceAsStream("c4.png"));
 		
 		}catch(FileNotFoundException e){
 			System.out.println(e);

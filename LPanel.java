@@ -119,10 +119,10 @@ public class LPanel extends JPanel implements ActionListener{
 		//buffered images
 		try{
 			lobbyTitle = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("lobbyTitle.png"));
-			inputUser = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("userFile.png"));
+			inputUser = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("userFile.PNG"));
 			hostGame = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("hostGame.png"));
-			joinGame = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("joinGame.png"));
-			championOne = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c1.png"));
+			joinGame = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("joinGame.PNG"));
+			championOne = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c1.PNG"));
 			championTwo = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c2.png"));
 			championThree = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c3.png"));
 			championFour = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c4.png"));

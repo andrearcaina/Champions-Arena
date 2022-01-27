@@ -179,9 +179,9 @@ public class TPanel extends JPanel implements ActionListener{
 		try{
 			s = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("statue.png"));
 			gr = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("grass.png"));
-			w = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("water.png"));
+			w = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("water.PNG"));
 			bu = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("building.png"));
-			br = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("bridge.png"));
+			br = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("bridge.PNG"));
 			p = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("path.png"));
 			t = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("tree.png"));
 			l = ImageIO.read(TPanel.class.getClassLoader().getResourceAsStream("lava.png"));

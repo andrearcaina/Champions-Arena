@@ -12,6 +12,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	JFrame frame = new JFrame("Champion's Arena: Fight for Glory"); //one frame only
 	Timer timer = new Timer(1000/60, this); // Gameplay timer.
 	Timer countdownTimer = new Timer(1000, this); // Countdown timer
+	Timer gameTimer = new Timer(1000, this); //in game timer (countdown)
+	int intGameSecond = 5;
 	int intSecond = 5;
 	int intRandom; // Maps
 	SuperSocketMaster ssm; // networks
@@ -219,6 +221,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == charPanel.startGame){ // START GAME func
 			if(intPlayerCount == intStartCheck){ // if players locked in and playing the game is equal to toal players in the lobby
 				//System.out.println(2);
+				gameTimer.start();
+				
 				frame.removeKeyListener(this); // game formatting stuff
 				frame.removeMouseListener(this);
 				frame.addKeyListener(this); 
@@ -575,6 +579,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("customCursor.png").getImage(), new Point(0,0),"custom cursor"));
 				frame.setContentPane(charPanel);
 				frame.pack();
+			}
+		}else if(evt.getSource() == gameTimer){
+			intGameSecond--;
+			gamePanel.countdownSecond.setText(""+intGameSecond);
+			if(intGameSecond == 0){
+				gameTimer.stop();
 			}
 		}
 	}

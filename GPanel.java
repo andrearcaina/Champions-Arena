@@ -21,10 +21,12 @@ public class GPanel extends JPanel implements ActionListener{
 	JLabel user3 = new JLabel();
 	JLabel user4 = new JLabel();
 	
+	JLabel countdownLabel = new JLabel("GAME BEGINS IN");
+	JLabel countdownSecond = new JLabel("5");
+	
 	JTextArea gameChat = new JTextArea();
 	JScrollPane gamePane = new JScrollPane(gameChat);	
 	JTextField enterMessage = new JTextField("Press Enter to Message");
-	
 	
 	int intX = 0;
 	int intY = 0;
@@ -296,9 +298,9 @@ public class GPanel extends JPanel implements ActionListener{
 		try{
 			s = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("statue.png"));
 			gr = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("grass.png"));
-			w = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("water.png"));
+			w = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("water.PNG"));
 			bu = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("building.png"));
-			br = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("bridge.png"));
+			br = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("bridge.PNG"));
 			p = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("path.png"));
 			t = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("tree.png"));
 			l = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lava.png"));
@@ -322,7 +324,8 @@ public class GPanel extends JPanel implements ActionListener{
 			customFont = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(20f);
 			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(22f);
 			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(20f);
-
+			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(40f);
+			 
 			user1.setFont(customFont1);
 			user2.setFont(customFont1);
 			user3.setFont(customFont1);
@@ -330,7 +333,9 @@ public class GPanel extends JPanel implements ActionListener{
 			
 			gameChat.setFont(customFont2);
 			enterMessage.setFont(customFont2);
-			
+		
+			countdownLabel.setFont(customFont3);
+			countdownSecond.setFont(customFont3);
 		}catch(FileNotFoundException e){
 			System.out.println(e);
 		}catch(FontFormatException e){
@@ -345,6 +350,12 @@ public class GPanel extends JPanel implements ActionListener{
 		user4.setBounds(770, 535, 220, 30);
 		gamePane.setBounds(1000, 10, 250, 550);
 		enterMessage.setBounds(1000, 570, 250, 100);
+		
+		countdownLabel.setBounds(200, 240, 300, 30);
+		countdownSecond.setBounds(300, 290, 100, 30);
+		
+		countdownLabel.setForeground(Color.WHITE);
+		countdownSecond.setForeground(Color.WHITE);
 		
 		enterMessage.setEditable(false);
 		enterMessage.setEnabled(false);
@@ -363,6 +374,9 @@ public class GPanel extends JPanel implements ActionListener{
 	
 		this.add(gamePane);
 		this.add(enterMessage);
+		
+		this.add(countdownLabel);
+		this.add(countdownSecond);
 	}
 		
 }
