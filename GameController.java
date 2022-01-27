@@ -13,7 +13,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	Timer timer = new Timer(1000/60, this); // Gameplay timer.
 	Timer countdownTimer = new Timer(1000, this); // Countdown timer
 	Timer gameTimer = new Timer(1000, this); //in game timer (countdown)
-	int intGameSecond = 5;
+	int intGameSecond = 5; // timer vals
 	int intSecond = 5;
 	int intRandom; // Maps
 	SuperSocketMaster ssm; // networks
@@ -180,7 +180,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			ssm.sendText(strSelect); // send network message
 			// After lockIn checks selected character and disables selection of any other characters locally
 			// Fades out all other character images that were not selected
-			if(c1.intCharType == 1){
+			if(c1.intCharType == 1){ // char 1
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Flamel. \n"); 
 				String strPicked = "picked Flamel.";
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
@@ -189,7 +189,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 				endPanel.strDraw = "Flamel";
-			}else if(c1.intCharType == 2){
+			}else if(c1.intCharType == 2){ // char 2
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Bishop. \n"); 
 				String strPicked = "picked Bishop.";
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
@@ -198,7 +198,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c3Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 				endPanel.strDraw = "Bishop";
-			}else if(c1.intCharType == 3){
+			}else if(c1.intCharType == 3){ // char 3
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Magnus. \n"); 
 				String strPicked = "picked Magnus.";
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
@@ -207,7 +207,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				charPanel.c1Button.setEnabled(false);
 				charPanel.c4Button.setEnabled(false);
 				endPanel.strDraw = "Magnus";
-			}else if(c1.intCharType == 4){
+			}else if(c1.intCharType == 4){ // char 4
 				charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+" picked Shadow. \n"); 
 				String strPicked = "picked Shadow.";
 				ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+strPicked);
@@ -257,26 +257,29 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				blnIn = true; // local player is indeed not eliminated
 			}
 			c1.intLives = 3; // local player has 3 lives.
-		}else if(evt.getSource() == charPanel.lockIn){ // lock in button
+		}else if(evt.getSource() == charPanel.lockIn){ // lock in button (lock server in)
 			if(intPlayerTotal == 1){
-				charPanel.chatArea.append("You cannot play by yourself! \n");
-			}else if(intPlayerTotal >= 2 && intPlayerTotal < 5){ 
+				charPanel.chatArea.append("You cannot play by yourself! \n"); // only one player in lobby
+			}else if(intPlayerTotal >= 2 && intPlayerTotal < 5){ // starts game and sets values
 				charPanel.lockIn.setEnabled(false);
-				intStartCheck = intPlayerTotal;
-				intPlayerTotal = 4;
-				charPanel.c1Button.setEnabled(true);
+				intStartCheck = intPlayerTotal; // game start check logic
+				intPlayerTotal = 4; // lobby locking logic
+				charPanel.c1Button.setEnabled(true); // game start stuff for ready up
 				charPanel.c2Button.setEnabled(true);
 				charPanel.c3Button.setEnabled(true);
 				charPanel.c4Button.setEnabled(true);
-				ssm.sendText("lock,1");
+				ssm.sendText("lock,1"); // send network message that server has been locked, and thus game starts
 			}
-		}else if(evt.getSource() == charPanel.chatMessage){
+		}else if(evt.getSource() == charPanel.chatMessage){ // char select chat
 			charPanel.chatArea.append(lobbyPanel.enterUsername.getText()+": "+charPanel.chatMessage.getText()+"\n");
 			ssm.sendText("chat,"+lobbyPanel.enterUsername.getText()+","+charPanel.chatMessage.getText());
-		}else if(evt.getSource() == gamePanel.enterMessage){
-			gamePanel.gameChat.append(lobbyPanel.enterUsername.getText()+": "+gamePanel.enterMessage.getText()+"\n");
+		}else if(evt.getSource() == gamePanel.enterMessage){ // game chat
+			if(gamePanel.enterMessage.getText().equals("")){ // debugging for sync
+				gamePanel.enterMessage.setText(".");
+			}
+			gamePanel.gameChat.append(lobbyPanel.enterUsername.getText()+": "+gamePanel.enterMessage.getText()+"\n"); // send message stuff
 			ssm.sendText("ingame_chat,"+lobbyPanel.enterUsername.getText()+","+gamePanel.enterMessage.getText());
-			gamePanel.enterMessage.setEnabled(false);
+			gamePanel.enterMessage.setEnabled(false); // refocus to game
 			gamePanel.enterMessage.setEditable(false);
 			frame.requestFocus();
 		}
@@ -287,24 +290,24 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			
 			// Message type: connect
 			if(strParts[0].equals("connect")){
-				if(blnServer){
+				if(blnServer){ // if server
 					intPlayerTotal++;
-					if(intPlayerTotal > 4){
-						intPlayerTotal = 4;
-						ssm.sendText("maxCap,"+1);
+					if(intPlayerTotal > 4){ // too many players in lobby/game has started using -- intPlayerTotal is a key for lobby locking
+						intPlayerTotal = 4; // locks server, no one can join once intPlayerTotal = 4
+						ssm.sendText("maxCap,"+1); // tells user they cannot join
 						System.out.println("max cap");
-					}else{
+					}else{ // if lobby is still open, assigns ID
 						ssm.sendText("IDAssign,"+(4+intPlayerTotal));
 						System.out.println(c1.intID);
 						charPanel.chatArea.append((4-intPlayerTotal)+" spot(s) remaining.\n");
 					}
 				}
 			}
-			// Message type: max cap (doesnt work)
+			// Message type: max cap (does work now!)
 			if(strParts[0].equals("maxCap")){
-				if(c1.intID < 2){
-					ssm.disconnect();
-					System.out.println("ME GONE");
+				if(c1.intID < 2){ // if the player does not have an ID assigned, discconects them from game and shows that theyve been dced.
+					ssm.disconnect(); // reason why it is ID is if there was space they would instead be assigned an ID, thus all nonIDed players are over the cap or joined a game in progress, thus are dced.
+					//System.out.println("ME GONE");
 					capPanel.labelTwo.setText("four players in a lobby. Better luck next time "+lobbyPanel.enterUsername.getText()+".");
 					lobbyPanel.enterUsername.setText("E.g: DIABLOGAMER1337");
 					lobbyPanel.enterIP.setText("Enter IP Address");
@@ -314,18 +317,18 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				System.out.println("Max Cap");
 			}
 			// Message type: lock
-			if(strParts[0].equals("lock")){
+			if(strParts[0].equals("lock")){ // once server is locked, players are able to pick a champion
 				charPanel.c1Button.setEnabled(true);
 				charPanel.c2Button.setEnabled(true);
 				charPanel.c3Button.setEnabled(true);
 				charPanel.c4Button.setEnabled(true);
 			}
 			// Message type: select
-			if(strParts[0].equals("select")){
+			if(strParts[0].equals("select")){ 
 				if(blnServer){
-					intPlayerCount++;
+					intPlayerCount++; // players ready to play++ if server
 				}
-				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]), strParts[3]);
+				addChar(Integer.parseInt(strParts[1]), Integer.parseInt(strParts[2]), strParts[3]); // everyone adds the char to the char tracker array
 			}
 			// Message type: lobby chat
 			if(strParts[0].equals("chat")){
@@ -339,16 +342,16 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			if(strParts[0].equals("IDAssign")){
 				System.out.println(Integer.parseInt(strParts[1]));
 				if(c1.intID > 1){
-					
+					//nothing happens if they already have an ID, all IDs are greater than 5. default always 0
 				}else{
-					c1.intID = Integer.parseInt(strParts[1]);
+					c1.intID = Integer.parseInt(strParts[1]); // store internally, will send if needed later
 					System.out.println(c1.intID);
 				}
 			}
 			// Message type: New Data
 			if(strParts[0].equals("data")){ // update info
-				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
-					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){
+				for(int intCount = characters.size()-1; intCount >= 0; intCount--){ 
+					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){ // looks for corresponding characetr IDS, and then updates their data
 						characters.get(intCount).dblX = Double.parseDouble(strParts[2]);
 						characters.get(intCount).dblY = Double.parseDouble(strParts[3]);
 						characters.get(intCount).intHP = Integer.parseInt(strParts[4]);
@@ -357,25 +360,27 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}
 			}
 			// Message type: Shoot
-			if(strParts[0].equals("shoot")){
+			if(strParts[0].equals("shoot")){ // creates new proj
 				c1.shoot(Integer.parseInt(strParts[1]), Double.parseDouble(strParts[2]), Double.parseDouble(strParts[3]), Integer.parseInt(strParts[4]), Double.parseDouble(strParts[5]), Double.parseDouble(strParts[6]));
 			}
 			// Message type: remove proj
-			if(strParts[0].equals("removeProj")){ 
+			if(strParts[0].equals("removeProj")){ // deleting proj after someone sends that they collided with one
 				try{
 					c1.projectiles.remove(Integer.parseInt(strParts[1]));
 					System.out.println("Removed"+Integer.parseInt(strParts[1]));
 				}catch(IndexOutOfBoundsException e){
-					
+					//bug fix where double checks happen (one side detects collision with terrain, other with player
+					//creates double removal where one side removes twice while other once, breaking the array sync and crashing program)
 				}
 				
 			}
 			// Messaage type: Starto
 			if(strParts[0].equals("starting")){
-				gameTimer.start();
+				//Setting values to start game and play game, turning game timer for game updates on.
+				gameTimer.start(); // coutndown timer
 				intGameSecond = intGameSecond + 1;
 				intGameSecond--;
-				timer.start();
+				timer.start(); // game timer
 				intPlaying = 2;
 				frame.setContentPane(gamePanel);
 				frame.pack();
@@ -385,8 +390,8 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				c1.spawn();
 				blnIn = true;
 				gamePanel.countdownSecond.setText(""+intGameSecond);
-				if(intGameSecond == 0){
-					gameTimer.stop();
+				if(intGameSecond == 0){ // countdown timer
+					gameTimer.stop(); 
 					gamePanel.intBoxX = 1000000000; 
 					gamePanel.countdownSecond.setText("5");
 					gamePanel.countdownSecond.setVisible(false);
@@ -397,13 +402,14 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					frame.addMouseListener(this);
 					frame.requestFocus();
 				}
+				// once coutndown timer is 0, sets game into motion and lets game be playable.
 			}
 			// Messaage type: Skill
-			if(strParts[0].equals("skill")){
+			if(strParts[0].equals("skill")){ // creates new special projs
 				c1.skill(Integer.parseInt(strParts[2]), Integer.parseInt(strParts[1]),Double.parseDouble(strParts[3]), Double.parseDouble(strParts[4]));
 			}
 			// Message type: die
-			if(strParts[0].equals("die")){
+			if(strParts[0].equals("die")){ // player died -- updates char track arraylist
 				for(int intCount = characters.size()-1; intCount >= 0; intCount--){
 					if(characters.get(intCount).intID == Integer.parseInt(strParts[1])){
 						characters.get(intCount).intLives = Integer.parseInt(strParts[2]);
