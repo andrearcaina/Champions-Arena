@@ -294,34 +294,34 @@ public class GPanel extends JPanel implements ActionListener{
 		
 		//loading images of map 1 
 		try{
-			s = ImageIO.read(new File("statue.png"));
-			gr = ImageIO.read(new File("grass.png"));
-			w = ImageIO.read(new File("water.png"));
-			bu = ImageIO.read(new File("building.png"));
-			br = ImageIO.read(new File("bridge.png"));
-			p = ImageIO.read(new File("path.png"));
-			t = ImageIO.read(new File("tree.png"));
-			l = ImageIO.read(new File("lava.png"));
-			bo = ImageIO.read(new File("bones.png"));
-			v = ImageIO.read(new File("volcano.png"));
-			r = ImageIO.read(new File("rock.png"));
-			gp = ImageIO.read(new File("grasspath.png"));
-			to = ImageIO.read(new File("torch.png"));
+			s = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("statue.png"));
+			gr = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("grass.png"));
+			w = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("water.png"));
+			bu = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("building.png"));
+			br = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("bridge.png"));
+			p = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("path.png"));
+			t = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("tree.png"));
+			l = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lava.png"));
+			bo = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("bones.png"));
+			v = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("volcano.png"));
+			r = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("rock.png"));
+			gp = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("grasspath.png"));
+			to = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("torch.png"));
 			
-			flamel = ImageIO.read(new File("ingame_flamel.png"));
-			bishop = ImageIO.read(new File("ingame_bishop.png"));
-			magnus = ImageIO.read(new File("ingame_magnus.png"));
-			shadow = ImageIO.read(new File("ingame_shadow.png"));
+			flamel = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("ingame_flamel.png"));
+			bishop = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("ingame_bishop.png"));
+			magnus = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("ingame_magnus.png"));
+			shadow = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("ingame_shadow.png"));
 			
-			lives1 = ImageIO.read(new File("lives1.png"));
-			lives2 = ImageIO.read(new File("lives2.png"));
-			lives3 = ImageIO.read(new File("lives3.png"));
-			lives4 = ImageIO.read(new File("lives4.png"));
+			lives1 = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lives1.png"));
+			lives2 = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lives2.png"));
+			lives3 = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lives3.png"));
+			lives4 = ImageIO.read(GPanel.class.getClassLoader().getResourceAsStream("lives4.png"));
 			
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
-			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(20f);
-			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(22f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.TTF")).deriveFont(20f);
+			customFont = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(20f);
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(22f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, GPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(20f);
 
 			user1.setFont(customFont1);
 			user2.setFont(customFont1);

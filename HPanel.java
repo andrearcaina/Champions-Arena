@@ -56,9 +56,9 @@ public class HPanel extends JPanel implements ActionListener{
 		
 		//buffered images
 		try{
-			HelpTitle = ImageIO.read(new File("HelpTitle.png"));
-			//Logo = ImageIO.read(new File("Logo.png"));
-			//Instructions = ImageIO.read(new File("Instructions.png"));
+			HelpTitle = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("HelpTitle.png"));
+			//Logo = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("Logo.png"));
+			//Instructions = ImageIO.read(HPanel.class.getClassLoader().getResourceAsStream("Instructions.png"));
 		}catch(IOException e){
 			System.out.println("Unable to load image.");
 		}

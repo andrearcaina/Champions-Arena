@@ -81,12 +81,12 @@ public class CPanel extends JPanel implements ActionListener{
 
 		try{
 			//accesses ttf file, creates it into a ttf font with java swing, and derives the font size using float
-			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.ttf")).deriveFont(30f);
-			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.ttf")).deriveFont(40f);
-			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, new File("font3.TTF")).deriveFont(55f);
-			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, new File("font4.TTF")).deriveFont(60f);
-			Font customFont5 = Font.createFont(Font.TRUETYPE_FONT, new File("font1.TTF")).deriveFont(20f);
-			Font customFont6 = Font.createFont(Font.TRUETYPE_FONT, new File("font2.TTF")).deriveFont(20f);
+			Font customFont1 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font1.ttf")).deriveFont(30f);
+			Font customFont2 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font2.ttf")).deriveFont(40f);
+			Font customFont3 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font3.TTF")).deriveFont(55f);
+			Font customFont4 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font4.TTF")).deriveFont(60f);
+			Font customFont5 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font1.TTF")).deriveFont(20f);
+			Font customFont6 = Font.createFont(Font.TRUETYPE_FONT, CPanel.class.getClassLoader().getResourceAsStream("font2.TTF")).deriveFont(20f);
 
 			
 			chatArea.setFont(customFont6);

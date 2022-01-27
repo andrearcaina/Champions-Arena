@@ -118,14 +118,14 @@ public class LPanel extends JPanel implements ActionListener{
 		
 		//buffered images
 		try{
-			lobbyTitle = ImageIO.read(new File("lobbyTitle.png"));
-			inputUser = ImageIO.read(new File("userFile.png"));
-			hostGame = ImageIO.read(new File("hostGame.png"));
-			joinGame = ImageIO.read(new File("joinGame.png"));
-			championOne = ImageIO.read(new File("c1.png"));
-			championTwo = ImageIO.read(new File("c2.png"));
-			championThree = ImageIO.read(new File("c3.png"));
-			championFour = ImageIO.read(new File("c4.png"));
+			lobbyTitle = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("lobbyTitle.png"));
+			inputUser = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("userFile.png"));
+			hostGame = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("hostGame.png"));
+			joinGame = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("joinGame.png"));
+			championOne = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c1.png"));
+			championTwo = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c2.png"));
+			championThree = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c3.png"));
+			championFour = ImageIO.read(LPanel.class.getClassLoader().getResourceAsStream("c4.png"));
 		}catch(IOException e){
 			System.out.println("Unable to load image.");
 		}
