@@ -78,8 +78,8 @@ public class HPanel extends JPanel implements ActionListener{
 		Return.setBounds(1100, 10, 150, 40);
 		Next.setBounds(900, 10, 150, 40);
 			
-		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
-		Next.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("handCursor.png").getImage(), new Point(0,0),"hand cursor"));
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		Next.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
 		
 		Return.setBackground(Color.BLACK);
 		Return.setForeground(Color.WHITE);

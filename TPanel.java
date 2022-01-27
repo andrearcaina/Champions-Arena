@@ -242,6 +242,10 @@ public class TPanel extends JPanel implements ActionListener{
 		changeChamp.setForeground(Color.WHITE);
 		Return.setForeground(Color.WHITE);
 		
+		changeChamp.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		Return.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("handCursor.png")).getImage(), new Point(0,0),"hand cursor"));
+		
+		
 		changeChamp.setHorizontalAlignment(SwingConstants.CENTER);
 		Return.setHorizontalAlignment(SwingConstants.CENTER);
 		
