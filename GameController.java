@@ -25,6 +25,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	boolean blnShootPrompt = true; //tutorial prompt
 	boolean blnSkillPrompt = true; //tutorial prompt
 	boolean blnDonePrompt = true; //tutorial prompt
+	int intDummyCounter; // tutorial dummy shooting timer
 	
 	///GAME VIEW INCORPORATED: ANIMATED JPANELS
 	//general panels: UX1 - UX3
@@ -45,7 +46,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	///Accessing the Character object in the GameModel class
 	GameModel.Character1 c1 = new GameModel().new Character1(1, 200, 200, 100, 1, 0, 0, 3, ""); // Local character
-	GameModel.Character1 cT = new GameModel().new Character1(63, 345, 0, 100, 1, 0, 0, 1, ""); // Dummy character
+	GameModel.Character1 cT = new GameModel().new Character1(63, 330, 0, 100, 1, 0, 0, 1, ""); // Dummy character
 	ArrayList<GameModel.Terrain1> map = new ArrayList<GameModel.Terrain1>(); // map is an arraylist of terrain objects.
 	ArrayList<GameModel.Character1> characters = new ArrayList<GameModel.Character1>(); // all characters in the game's values
 	boolean blnShoot = false; // is shooting
@@ -110,6 +111,9 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				System.out.println("UNSUCCESSFUL CONNECTION."); 
 			}
 		}else if(evt.getSource() == helpPanel.Tutorial){ // tutorial button
+			blnShootPrompt = true;
+			blnSkillPrompt = true; 
+			blnDonePrompt = true; 
 			frame.addKeyListener(this); // add actionlisteners
 			frame.addMouseListener(this);
 			frame.requestFocus();
@@ -124,6 +128,10 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			c1.intHP = 100;
 			c1.intLives = 3;
 			tutorialPanel.intCharType = 3;
+			cT.intLives = 1;
+			cT.intHP = 100;
+			cT.intX = 330;
+			cT.intY = 0;
 			loadMap("map1.csv"); // map info loading
 			frame.requestFocus();
 		}else if(evt.getSource() == tutorialPanel.changeChamp){
@@ -213,7 +221,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				frame.setContentPane(gamePanel);
 				frame.pack();
 				gamePanel.projectiles = c1.projectiles; // data setting
-				intRandom = (int)(Math.random()*3)+1; // RANDOM MAP
+				intRandom = (int)(Math.random()*4)+1; // RANDOM MAP
 				System.out.println("random numb: "+intRandom); // system check
 				//based on the number generated, will load corresponding map in the map arraylisst
 				if(intRandom == 1){
@@ -229,6 +237,11 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}else if(intRandom == 3){
 					System.out.println("Loading game map 3");
 					String strMap = "gamemap3.csv";
+					loadMap(strMap);
+					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
+				}else if(intRandom == 4){
+					System.out.println("Loading game map 4");
+					String strMap = "gamemap4.csv";
 					loadMap(strMap);
 					ssm.sendText("starting,"+intPlayerTotal+","+strMap);
 				}
@@ -424,11 +437,36 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				tutorialPanel.intCharType = c1.intCharType;
 				//dummy
 				tutorialPanel.intDummyHP = cT.intHP;
+				tutorialPanel.intDummyX = cT.intX;
+				tutorialPanel.intDummyY = cT.intY;
 				
 				c1.update();
 				tutorialPanel.projectiles = c1.projectiles;
 				tutorialPanel.intHP = c1.intHP;
 				tutorialPanel.map = map;
+				
+				for(int intCount = c1.projectiles.size() -1; intCount > -1; intCount--){ // projectiles w/ dummy
+					if(c1.projectiles.get(intCount).intX < cT.intX+cT.intSizeX && c1.projectiles.get(intCount).intY < cT.intY+cT.intSizeY && 
+						(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intX) > cT.intX && 
+						(c1.projectiles.get(intCount).intSize+c1.projectiles.get(intCount).intY) > cT.intY){
+						if(c1.projectiles.get(intCount).intID != cT.intID){
+							cT.collision(c1.projectiles.get(intCount).intID, c1.projectiles.get(intCount).intDamage);
+							System.out.println("count: "+c1.projectiles.get(intCount).intDamage);
+							c1.projectiles.remove(intCount);
+						}
+					}
+				}
+				
+				//detects if character is nearby to prompt dummy shooting
+				if(tutorialPanel.intX > 150 && tutorialPanel.intX < 450 && tutorialPanel.intY < 200){
+					if(intDummyCounter % 7 == 0){
+						cT.shoot(63,0,4,10,cT.intX+10,cT.intY+20);
+						cT.update();
+						c1.projectiles.addAll(cT.projectiles);
+						cT.projectiles.remove(0);
+					}
+					intDummyCounter++;	
+				}
 				
 				if(blnShootPrompt){
 					if(tutorialPanel.intX != 200 || tutorialPanel.intY != 200){ 
@@ -436,7 +474,12 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 						blnShootPrompt = false;
 					}
 				}
-				
+				//checking death dummy
+				if(cT.deathCheck()){
+					if(cT.outCheck()){
+						tutorialPanel.promptUser.setText("You are ready for the arena!");
+					}
+				}
 				//tutorial spawn + checking death
 				if(c1.deathCheck()){
 					c1.intX = 200;
@@ -559,6 +602,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	
 	//methods for KeyListener (PROJECTILES)
 	public void keyTyped(KeyEvent evt){
+		/*
 		if(evt.getKeyChar() == 'l'){
 			if(intPlaying == 1){
 				cT.shoot(63,0,4,10,cT.intX,cT.intY);
@@ -567,6 +611,7 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				cT.projectiles.remove(0);
 			}
 		}
+		*/
 		if(evt.getKeyChar() == 'r'){
 			blnSkill = true;
 			if(blnDonePrompt == true && blnSkillPrompt != true && c1.intSkillTime == 100){

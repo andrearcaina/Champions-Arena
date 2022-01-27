@@ -22,8 +22,8 @@ public class TPanel extends JPanel implements ActionListener{
 	//character
 	int intX = 0;
 	int intY = 0;
-	int intSizeX = 40;
-	int intSizeY = 40;
+	int intSizeX = 20;
+	int intSizeY = 20;
 	int intSkillTime = 0;
 	int intLives = 3;
 	int intCharType = 3; //tutorial character is defaulted to: MAGNUS
@@ -31,6 +31,8 @@ public class TPanel extends JPanel implements ActionListener{
 	
 	//dummy 
 	int intDummyHP = 0;
+	int intDummyX;
+	int intDummyY;
 	
 	String[][] mapData = new String[484][5];
 	
@@ -41,7 +43,6 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage bu;
 	BufferedImage br;
 	BufferedImage p;
-	BufferedImage d;
 	BufferedImage t;
 	BufferedImage v;
 	BufferedImage l;
@@ -54,6 +55,7 @@ public class TPanel extends JPanel implements ActionListener{
 	BufferedImage bishop;
 	BufferedImage magnus;
 	BufferedImage shadow;
+	BufferedImage dummy;
 	
 	BufferedImage lives1;
 	
@@ -78,8 +80,6 @@ public class TPanel extends JPanel implements ActionListener{
 			}
 			if(mapData[intCount][2].equals("water")){	
 				g.drawImage(w, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
-			}else if(mapData[intCount][2].equals("dummy")){
-				g.drawImage(d, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("tree")){
 				g.drawImage(t, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}else if(mapData[intCount][2].equals("statue")){
@@ -110,6 +110,8 @@ public class TPanel extends JPanel implements ActionListener{
 				g.drawImage(to, Integer.parseInt(mapData[intCount][0]), Integer.parseInt(mapData[intCount][1]), Integer.parseInt(mapData[intCount][3]), Integer.parseInt(mapData[intCount][4]), this);
 			}
 		}
+		
+		g.drawImage(dummy, intDummyX, intDummyY, null);
 		
 		g.setColor(Color.RED);
 		for(int intCount = projectiles.size() -1; intCount >= 0; intCount--){
@@ -181,7 +183,6 @@ public class TPanel extends JPanel implements ActionListener{
 			bu = ImageIO.read(new File("building.png"));
 			br = ImageIO.read(new File("bridge.png"));
 			p = ImageIO.read(new File("path.png"));
-			d = ImageIO.read(new File("dummy.png"));
 			t = ImageIO.read(new File("tree.png"));
 			l = ImageIO.read(new File("lava.png"));
 			bo = ImageIO.read(new File("bones.png"));
@@ -194,6 +195,7 @@ public class TPanel extends JPanel implements ActionListener{
 			bishop = ImageIO.read(new File("ingame_bishop.png"));
 			magnus = ImageIO.read(new File("ingame_magnus.png"));
 			shadow = ImageIO.read(new File("ingame_shadow.png"));
+			dummy = ImageIO.read(new File("dummy.png"));
 			
 			lives1 = ImageIO.read(new File("lives1.png"));
 			
