@@ -94,7 +94,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			charPanel.waitHost.setVisible(false);
 			countdownTimer.start(); //countdown lobby creation
 			ssm = new SuperSocketMaster(6112, this); // set up network info
-			boolean blnConnect = ssm.connect(); // connect
 			lobbyPanel.serverInfo.setText("IP: "+ssm.getMyAddress()); // visuals
 			charPanel.serverIP.setText("IP: "+ssm.getMyAddress());
 			blnServer = true; // is server
