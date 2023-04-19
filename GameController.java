@@ -7,10 +7,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.event.*;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class GameController implements ActionListener, KeyListener, MouseListener{
