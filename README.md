@@ -24,6 +24,7 @@ Choose from 4 champions with unique skills:
 ## Technologies:
 This project was created with:
 * Programming Language: Java
+* Tools: Java Awt, Java Swing, Java Socket
 * IDE: Geany
 
 ***
