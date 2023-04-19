@@ -1,8 +1,9 @@
-/// TPanel - Tutorial Menu Panel
+/// Game Controller
 /// By: Andre Arcaina, Nicholas Hioe, Sean Kwee
 /// ICS 4U1
 /// Version 1.0
 /// 2022-01-27
+/// Final Grade: 99.8%
 
 import java.awt.*;
 import javax.swing.*;
