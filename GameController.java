@@ -60,6 +60,57 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 	boolean blnSkill = false; // is attempting skil
 	int intPlaying = 0; // what type of game are they playing (not playing = 0, is playing single = 1, is playing multi = 2)
 	
+	///constructor
+	public GameController(){
+		//frame
+		frame.setPreferredSize(new Dimension(1280, 720));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		
+		//MainPanel
+		mainPanel.Play.addActionListener(this);
+		mainPanel.Help.addActionListener(this);
+		mainPanel.Quit.addActionListener(this);
+		frame.setContentPane(mainPanel);
+		frame.pack();
+		
+		//HelpPanel
+		helpPanel.Return.addActionListener(this);
+		helpPanel.Next.addActionListener(this);
+
+		//tutorialPanel
+		tutorialPanel.changeChamp.addActionListener(this);
+		tutorialPanel.Return.addActionListener(this);
+		
+		//LobbyPanel
+		lobbyPanel.Return.addActionListener(this);
+		lobbyPanel.joinLobby.addActionListener(this);
+		lobbyPanel.createLobby.addActionListener(this);
+		
+		//charPanel
+		charPanel.startGame.addActionListener(this);
+		charPanel.readyUp.addActionListener(this);
+		charPanel.c1Button.addActionListener(this);
+		charPanel.c2Button.addActionListener(this);
+		charPanel.c3Button.addActionListener(this);
+		charPanel.c4Button.addActionListener(this);
+		charPanel.chatMessage.addActionListener(this);
+		charPanel.lockIn.addActionListener(this);
+			
+		//gamePanel
+		gamePanel.enterMessage.addActionListener(this); 
+		
+		//capPanel
+		capPanel.Return.addActionListener(this);
+		
+		//endPanel
+		endPanel.Return.addActionListener(this);
+		
+		//cursor
+		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
+	}
+
 	///CONTROLLER METHODS BELOW: BUTTON INTERACTIONS, CHARACTER MOVEMENTS, PROJECTILES
 	//methods for ActionListener (BUTTON INTERACTIONS + SSM)
 	public void actionPerformed(ActionEvent evt){
@@ -756,22 +807,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 					dblVelocityY = -5*dblB / dblC;
 				}
 				c1.shoot(c1.intID, dblVelocityX, dblVelocityY, 5, c1.dblX, c1.dblY);
-				
-				/*
-				if(dblX <= c1.dblX && dblY <= c1.dblY){ // based on mouse location, will shoot in that location.
-					c1.shoot(c1.intID,-4,-4,5, c1.dblX, c1.dblY);
-					tutorialPanel.projectiles = c1.projectiles;
-				}else if(dblX <= c1.dblX && dblY >= c1.dblY){
-					c1.shoot(c1.intID,-4,4,5, c1.dblX, c1.dblY);
-					tutorialPanel.projectiles = c1.projectiles;
-				}else if(dblX >= c1.dblX && dblY <= c1.dblY){
-					c1.shoot(c1.intID,4,-4,5, c1.dblX, c1.dblY);
-					tutorialPanel.projectiles = c1.projectiles;
-				}else if(dblX >= c1.dblX && dblY >= c1.dblY){
-					c1.shoot(c1.intID,4,4,5, c1.dblX, c1.dblY);
-					tutorialPanel.projectiles = c1.projectiles;
-				}
-				*/
 			}
 		}
 		if(intPlaying == 2){ // network related projectiles confirmation of shoot
@@ -813,25 +848,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 				}
 				c1.shoot(c1.intID, dblVelocityX, dblVelocityY, 5, c1.dblX, c1.dblY);
 				ssm.sendText("shoot,"+c1.intID+","+dblVelocityX+","+dblVelocityY+",5,"+c1.dblX+","+c1.dblY); 
-				/*
-				if(dblX <= c1.dblX && dblY <= c1.dblY){ // based on mouse location, will shoot in that location.
-					c1.shoot(c1.intID,-4,-4,5, c1.dblX, c1.dblY);
-					ssm.sendText("shoot,"+c1.intID+","+-4+","+-4+","+5+","+c1.dblX+","+c1.dblY);
-					gamePanel.projectiles = c1.projectiles;
-				}else if(dblX <= c1.dblX && dblY >= c1.dblY){
-					c1.shoot(c1.intID,-4,4,5, c1.dblX, c1.dblY);
-					ssm.sendText("shoot,"+c1.intID+","+-4+","+4+","+5+","+c1.dblX+","+c1.dblY);
-					gamePanel.projectiles = c1.projectiles;
-				}else if(dblX >= c1.dblX && dblY <= c1.dblY){
-					c1.shoot(c1.intID,4,-4,5, c1.dblX, c1.dblY);
-					ssm.sendText("shoot,"+c1.intID+","+4+","+-4+","+5+","+c1.dblX+","+c1.dblY);
-					gamePanel.projectiles = c1.projectiles;
-				}else if(dblX >= c1.dblX && dblY >= c1.dblY){
-					c1.shoot(c1.intID,4,4,5, c1.dblX, c1.dblY);
-					ssm.sendText("shoot,"+c1.intID+","+4+","+4+","+5+","+c1.dblX+","+c1.dblY);
-					gamePanel.projectiles = c1.projectiles;
-				}
-				*/
 			}
 		}
 	}
@@ -920,7 +936,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 			(map.get(intCount).intSizeX+map.get(intCount).dblX) > c1.dblX && 
 			(map.get(intCount).intSizeY+map.get(intCount).dblY) > c1.dblY){
 				c1.collision(map.get(intCount).intID, 0);
-				//System.out.println(1);
 			}
 			for(int intCount2 = c1.projectiles.size() -1; intCount2 > -1; intCount2--){ // projectiles w/ terrain
 				if(c1.projectiles.get(intCount2).dblX < map.get(intCount).dblX+map.get(intCount).intSizeX && c1.projectiles.get(intCount2).dblY < map.get(intCount).intSizeY+map.get(intCount).dblY && 
@@ -1012,58 +1027,6 @@ public class GameController implements ActionListener, KeyListener, MouseListene
 		timer.stop();
 		
 	}
-	
-	///constructor
-	public GameController(){
-		//frame
-		frame.setPreferredSize(new Dimension(1280, 720));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.setResizable(false);
-		
-		//MainPanel
-		mainPanel.Play.addActionListener(this);
-		mainPanel.Help.addActionListener(this);
-		mainPanel.Quit.addActionListener(this);
-		frame.setContentPane(mainPanel);
-		frame.pack();
-		
-		//HelpPanel
-		helpPanel.Return.addActionListener(this);
-		helpPanel.Next.addActionListener(this);
-
-		//tutorialPanel
-		tutorialPanel.changeChamp.addActionListener(this);
-		tutorialPanel.Return.addActionListener(this);
-		
-		//LobbyPanel
-		lobbyPanel.Return.addActionListener(this);
-		lobbyPanel.joinLobby.addActionListener(this);
-		lobbyPanel.createLobby.addActionListener(this);
-		
-		//charPanel
-		charPanel.startGame.addActionListener(this);
-		charPanel.readyUp.addActionListener(this);
-		charPanel.c1Button.addActionListener(this);
-		charPanel.c2Button.addActionListener(this);
-		charPanel.c3Button.addActionListener(this);
-		charPanel.c4Button.addActionListener(this);
-		charPanel.chatMessage.addActionListener(this);
-		charPanel.lockIn.addActionListener(this);
-			
-		//gamePanel
-		gamePanel.enterMessage.addActionListener(this); 
-		
-		//capPanel
-		capPanel.Return.addActionListener(this);
-		
-		//endPanel
-		endPanel.Return.addActionListener(this);
-		
-		//cursor
-		frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(this.getClass().getResource("customCursor.png")).getImage(), new Point(0,0),"custom cursor"));
-	} 
-	
 	///main method
 	public static void main(String[] args){
 		new GameController();
